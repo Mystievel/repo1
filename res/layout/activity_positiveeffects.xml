@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".PositiveEffectsActivity">
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:layout_marginTop="60dp"
-        android:text="Happy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
@@ -51,7 +41,6 @@
         android:checkedButton="@+id/radioButton3"
         android:orientation="horizontal"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/textView9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
@@ -190,23 +179,25 @@
         android:id="@+id/lblRelaxed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="37dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="100dp"
         android:text="Relaxed"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/relaxedRadio"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="59dp"
         android:text="Happy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintStart_toEndOf="@+id/happyRadio"
+        app:layout_constraintTop_toBottomOf="@+id/lblRelaxed" />
 
     <TextView
         android:id="@+id/textView11"
@@ -214,10 +205,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="72dp"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="6dp"
         android:text="Hungry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/hungryRadio"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/hungryRadio" />
 
 </android.support.constraint.ConstraintLayout>
