@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
 
         final TextView relaxedLabel = findViewById(R.id.lblRelaxed);
         final RadioGroup relaxedRadioGroup = findViewById(R.id.relaxedRadio);
+        final RadioButton btnrelaxedIgnore = findViewById(R.id.relaxed_ignore);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,8 +38,27 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
             @Override
             public void onClick(View view) {
                 int checkedButtonID = relaxedRadioGroup.getCheckedRadioButtonId();
+                int relaxedIgnoreID = 0;
+
+                int ignoreRelaxedBtnID = btnrelaxedIgnore.getId();
+
                 RadioButton radioButton = findViewById(checkedButtonID);
-                Toast.makeText(PositiveEffectsActivity.this,radioButton.getText(), Toast.LENGTH_SHORT).show();
+                switch(checkedButtonID){
+                    case R.id.relaxed_ignore: {
+                        Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case R.id.relaxed_max: {
+                        Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                    case R.id.relaxed_min: {
+                        Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(radioButton.isChecked()), Toast.LENGTH_SHORT).show();
 
                 // TODO uncomment the code below when the code above is fully functioning
                 //startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
