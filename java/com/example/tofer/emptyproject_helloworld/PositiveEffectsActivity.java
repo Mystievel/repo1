@@ -17,7 +17,22 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbAdapter = new CannabisStrainDatabase_Adapter(getApplicationContext());
+        dbAdapter.open();
         setContentView(R.layout.activity_positiveeffects);
+
+        // database list stuff
+        contacts = new ArrayList<Contact>();
+        contacts = dbAdapter.fetchAllContacts();
+
+        //empty placeholders
+        if (contacts.size() < 5) for (int i = 0; i < 5 - contacts.size(); i++)
+        {
+            Contact c = new Contact();
+            c.empty();
+            contacts.add(c);
+        }
+        //      contacts.addAll(dbAdapter.fetchAllContacts());
 
         // Setup Button variables and listeners
         Button cancelButton = (Button)findViewById(R.id.btnCancel); // TODO Can this be moved to global?
