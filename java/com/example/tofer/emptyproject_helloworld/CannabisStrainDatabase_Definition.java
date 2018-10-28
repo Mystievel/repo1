@@ -4,48 +4,43 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class CannabisStrainDatabase_Definition {
-    //key identifiers / column names
-    public static final String      KEY_ROWID       = "_id";        // First column title
-    public static final String      KEY_NAME        = "name";       // Second column title
-    public static final String      KEY_URI         = "uri";        // Third column title
-    public static final String      TABLE_NAME      = "contacts";
 
-    //useful stuff
-    public static final String[]    TABLE_COLUMNS   = { KEY_ROWID, KEY_NAME, KEY_URI };     //public makes it more useful
-    private static final String[]   TABLE_COLTYPES  = { "integer primary key autoincrement",
-                                                        "text not null",
-                                                        "text not null" }; // Type associated with each column types (column titles)
+    private int id;
+    private String title;
+    private String author;
 
-    // Database creation SQL statement in lazy-pretty version
-    private static final String     TABLE_CREATE    = "create table " + TABLE_NAME + "("
-                                                                    + TABLE_COLUMNS[0] + " " + TABLE_COLTYPES[0] + ","
-                                                                    + TABLE_COLUMNS[1] + " " + TABLE_COLTYPES[1] + ","
-                                                                    + TABLE_COLUMNS[2] + " " + TABLE_COLTYPES[2] + ");";
+    public CannabisStrainDatabase_Definition(){}
 
-    private static final String     LOGTAG          = "ContactTable";
-
-
-
-    // ------Note to self, continue review here------
-
-
-
-
-    public CannabisStrainDatabase_Definition() {
+    public CannabisStrainDatabase_Definition(String title, String author) {
+        super();
+        this.title = title;
+        this.author = author;
     }
 
-    public static void onCreate(SQLiteDatabase database) {
-        database.execSQL(TABLE_CREATE);
+    //getters & setters
+
+    @Override
+    public String toString() {
+        return "Book [id=" + id + ", title=" + title + ", author=" + author + "]";
     }
 
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        Log.w(LOGTAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(database);
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public static void scratch(SQLiteDatabase database) {
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        database.execSQL(TABLE_CREATE);
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }

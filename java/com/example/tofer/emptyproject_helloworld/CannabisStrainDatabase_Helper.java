@@ -1,134 +1,104 @@
 package com.example.tofer.emptyproject_helloworld;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
-    // 'main' package name
-    private static final String PACKAGE_NAME = "com.test.demo";
 
-    private static final String DATABASE_PATH = "/data/data/" + PACKAGE_NAME + "/databases/";
-    private static final String DATABASE_NAME = "contactdata";
+    // Database Version & Name
     private static final int DATABASE_VERSION = 1;
-
-    private Context myContext;
+    private static final String DATABASE_NAME = "StrainDB";
 
     public CannabisStrainDatabase_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        myContext = context;
     }
 
-    // Method is called during creation of the database
     @Override
-    public void onCreate(SQLiteDatabase database) {
-        CannabisStrainDatabase_Definition.onCreate(database);
+    public void onCreate(SQLiteDatabase db) {
+        // SQL statement to create book table
+        String CREATE_BOOK_TABLE = "CREATE TABLE DATABASE_NAME ( " +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT, "+
+                "author TEXT )";
+
+        // create books table
+        db.execSQL(CREATE_BOOK_TABLE);
     }
 
-    // Method is called during an upgrade of the database,
-// e.g. if you increase the database version
     @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        CannabisStrainDatabase_Definition.onUpgrade(database, oldVersion, newVersion);
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Drop older books table if existed
+        db.execSQL("DROP TABLE IF EXISTS books");
 
-    public void scratch(SQLiteDatabase database) {
-        CannabisStrainDatabase_Definition.scratch(database);
+        // create fresh books table
+        this.onCreate(db);
     }
+    //---------------------------------------------------------------------
 
     /**
-     * Creates a empty database on the system and rewrites it with your own
-     * database.
+     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
      */
-    public void createDataBase() throws IOException {
-        boolean dbExist = checkDataBase();
-        if (dbExist) {
-            // do nothing - database already exist
-        } else {
 
-            // By calling this method and empty database will be created into
-            // the default system path
-            // of your application so we are gonna be able to overwrite that
-            // database with our database.
-            File dirFile = new File(DATABASE_PATH);
-            if (!dirFile.exists()) {
-                dirFile.mkdir();
-            }
+    // Books table name
+    private static final String TABLE_TITLE = "Strain Database";
 
-            this.getReadableDatabase();
+    // Books Table Columns names
+    private static final String STRAIN_ID = "id";
+    private static final String COLUMN_1 = "title";
+    private static final String COLUMN_2 = "author";
 
-            try {
-                copyDataBase();
-            } catch (IOException e) {
-                throw new Error("Error copying database");
-            }
-        }
+    private static final String[] COLUMNS = {STRAIN_ID, COLUMN_1, COLUMN_2};
 
+    public void addStrainRow(CannabisStrainDatabase_Definition strainRow){
+        Log.d("addStrainRow", strainRow.toString());
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_1, strainRow.getTitle()); // get title
+        values.put(COLUMN_2, strainRow.getAuthor()); // get author
+        // 3. insert
+        db.insert(TABLE_TITLE, // table
+                null, //nullColumnHack
+                values); // key/value -> keys = column names/ values = column values
+        // 4. close
+        db.close();
     }
 
-    /**
-     * Check if the database already exist to avoid re-copying the file each
-     * time you open the application.
-     *
-     * @return true if it exists, false if it doesn't
-     */
-    private boolean checkDataBase() {
-        SQLiteDatabase checkDB = null;
-        try {
-            String myPath = DATABASE_PATH + DATABASE_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-        } catch (SQLiteException e) {
-            // database does't exist yet.
-        }
-        if (checkDB != null) checkDB.close();
+    public CannabisStrainDatabase_Definition getStrainData(int id){
 
-        return checkDB != null ? true : false;
-    }
+        // 1. get reference to readable DB
+        SQLiteDatabase db = this.getReadableDatabase();
 
-    /**
-     * Copies your database from your local assets-folder to the just created
-     * empty database in the system folder, from where it can be accessed and
-     * handled. This is done by transfering bytestream.
-     */
-    private void copyDataBase() throws IOException {
+        // 2. build query
+        Cursor cursor =
+                db.query(TABLE_TITLE, // a. table
+                        COLUMNS, // b. column names
+                        " id = ?", // c. selections
+                        new String[] { String.valueOf(id) }, // d. selections args
+                        null, // e. group by
+                        null, // f. having
+                        null, // g. order by
+                        null); // h. limit
 
-        // Open your local db as the input stream
-        InputStream myInput = myContext.getAssets().open(DATABASE_NAME);
-
-        // Path to the just created empty db
-        String outFileName = DATABASE_PATH + DATABASE_NAME;
-
-        // Open the empty db as the output stream
-        OutputStream myOutput = new FileOutputStream(outFileName);
-
-        // transfer bytes from the inputfile to the outputfile
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = myInput.read(buffer)) > 0) {
-            myOutput.write(buffer, 0, length);
+        // 3. if we got results get the first one
+        if (cursor != null) {
+            cursor.moveToFirst();
         }
 
-        // Close the streams
-        myOutput.flush();
-        myOutput.close();
-        myInput.close();
+        // 4. build book object
+        CannabisStrainDatabase_Definition strainDatabase = new CannabisStrainDatabase_Definition();
+        strainDatabase.setId(Integer.parseInt(cursor.getString(0)));
+        strainDatabase.setTitle(cursor.getString(1));
+        strainDatabase.setAuthor(cursor.getString(2));
+
+        Log.d("getStrainData("+id+")", strainDatabase.toString());
+
+        // 5. return book
+        return strainDatabase;
     }
 }
-
-/*
-public void openDataBase() throws SQLException
-{
-
-    // Open the database
-    String myPath = DB_PATH + DB_NAME;
-    myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-
-}
-*/
