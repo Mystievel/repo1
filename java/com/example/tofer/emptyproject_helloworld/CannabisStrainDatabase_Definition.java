@@ -4,43 +4,45 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class CannabisStrainDatabase_Definition {
-
     private int id;
-    private String title;
-    private String author;
+    private String strainName;
+    private String effectsRelaxed;
 
     public CannabisStrainDatabase_Definition(){}
 
-    public CannabisStrainDatabase_Definition(String title, String author) {
+    public CannabisStrainDatabase_Definition(String strainName, String effectsRelaxed) {
         super();
-        this.title = title;
-        this.author = author;
+        this.strainName = strainName;
+        this.effectsRelaxed = effectsRelaxed;
     }
 
     //getters & setters
-
     @Override
     public String toString() {
-        return "Book [id=" + id + ", title=" + title + ", author=" + author + "]";
+        return "CannabisStrainDatabase_Definition [id=" + id + ", strainName=" + strainName + ", effectsRelaxed=" + effectsRelaxed + "]";
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getStrainName() {
+        return strainName;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setStrainName(String strainName) {
+        this.strainName = strainName;
     }
 
-    public String getTitle() {
-        return title;
+    public String getEffectsRelaxed() {
+        return effectsRelaxed;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setEffectsRelaxed(String effectsRelaxed) {
+        this.effectsRelaxed = effectsRelaxed;
     }
 }
