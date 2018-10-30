@@ -75,7 +75,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     }
 
     // Get Strain Information by Database Row
-    public CannabisStrainDatabase_Definition getStrainDataByID(int id){
+    public CannabisStrainDatabase_Definition getStrainData(int id){
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -99,7 +99,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         CannabisStrainDatabase_Definition strainInfo = new CannabisStrainDatabase_Definition();
         strainInfo.setId(Integer.parseInt(cursor.getString(0)));
         strainInfo.setStrainName(cursor.getString(1));
-        strainInfo.setEffectsRelaxed(cursor.getString(2));
+        strainInfo.setEffectsRelaxed(cursor.getDouble(2));
 
         Log.d("getStrainData("+id+")", strainInfo.toString());
 
@@ -108,7 +108,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     }
 
     // Update Strain Information
-    public int updateBook(CannabisStrainDatabase_Definition strainInfo) {
+    public int updateStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -126,7 +126,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     }
 
     // Delete a Strain
-    public void deleteBook(CannabisStrainDatabase_Definition book) {
+    public void deleteStrain(CannabisStrainDatabase_Definition book) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 

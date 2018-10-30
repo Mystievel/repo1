@@ -6,11 +6,11 @@ import android.util.Log;
 public class CannabisStrainDatabase_Definition {
     private int id;
     private String strainName;
-    private String effectsRelaxed;
+    private double effectsRelaxed;
 
     public CannabisStrainDatabase_Definition(){}
 
-    public CannabisStrainDatabase_Definition(String strainName, String effectsRelaxed) {
+    public CannabisStrainDatabase_Definition(String strainName, double effectsRelaxed) {
         super();
         this.strainName = strainName;
         this.effectsRelaxed = effectsRelaxed;
@@ -38,11 +38,11 @@ public class CannabisStrainDatabase_Definition {
         this.strainName = strainName;
     }
 
-    public String getEffectsRelaxed() {
+    public double getEffectsRelaxed() {
         return effectsRelaxed;
     }
 
-    public void setEffectsRelaxed(String effectsRelaxed) {
+    public void setEffectsRelaxed(double effectsRelaxed) {
         this.effectsRelaxed = effectsRelaxed;
     }
 }
