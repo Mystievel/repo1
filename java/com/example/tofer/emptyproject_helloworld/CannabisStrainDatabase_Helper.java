@@ -3,6 +3,7 @@ package com.example.tofer.emptyproject_helloworld;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -31,17 +32,13 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.w("onUpgrade", "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
         // Drop older strainDB table if existed
-        db.execSQL("DROP TABLE IF EXISTS strainDatabase");
-
-        // create fresh books table
-        this.onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
+        // Create new table
+        onCreate(db);
     }
     //---------------------------------------------------------------------
-
-    /**
-     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
-     */
 
     // Books table name
     private static final String TABLE_TITLE = "StrainDatabase";
@@ -54,24 +51,25 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final String[] COLUMNS = {STRAIN_ID, COLUMN_1, COLUMN_2};
 
     // Add a strain to the database
-    public void addStrain(CannabisStrainDatabase_Definition strainRow){
-        Log.d("addStrainRow", strainRow.toString());
+    public long addStrain(CannabisStrainDatabase_Definition strainInfo) {
+        Log.d("addStrainRow", strainInfo.toString());
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(COLUMN_1, strainRow.getStrainName()); // get strain name
-        values.put(COLUMN_2, strainRow.getEffectsRelaxed()); // get effect - relaxed
+        values.put(COLUMN_1, strainInfo.getStrainName()); // get strain name
+        values.put(COLUMN_2, strainInfo.getEffectsRelaxed()); // get effect - relaxed
 
         // 3. insert
-        db.insert(TABLE_TITLE, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        long id = db.insert(TABLE_TITLE,null, values);
 
         // 4. close
         db.close();
+
+        // Return newly inserted row id.
+        return id;
     }
 
     // Get Strain Information by Database Row
@@ -80,11 +78,11 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
-        Cursor cursor =
-                db.query(TABLE_TITLE,                           // a. table
+        // Todo the error is below this line
+        Cursor cursor = db.query(TABLE_TITLE,                    // a. table
                         COLUMNS,                                // b. column names
-                        " id = ?",                      // c. selections
-                        new String[] { String.valueOf(id) },    // d. selections args
+                        " id = ?",                   // c. selections
+                        new String[] {String.valueOf(id)},      // d. selections args
                         null,                           // e. group by
                         null,                           // f. having
                         null,                           // g. order by
@@ -95,12 +93,13 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
-        // 4. build book object
+        // 4. build strainInfo object
         CannabisStrainDatabase_Definition strainInfo = new CannabisStrainDatabase_Definition();
         strainInfo.setId(Integer.parseInt(cursor.getString(0)));
         strainInfo.setStrainName(cursor.getString(1));
-        strainInfo.setEffectsRelaxed(cursor.getDouble(2));
+        strainInfo.setEffectsRelaxed(cursor.getString(2));
 
+        // TODO the error is here above this
         Log.d("getStrainData("+id+")", strainInfo.toString());
 
         // 5. return strain information
@@ -126,15 +125,15 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     }
 
     // Delete a Strain
-    public void deleteStrain(CannabisStrainDatabase_Definition book) {
+    public void deleteStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. delete
-        db.delete(TABLE_TITLE,STRAIN_ID+" = ?", new String[] { String.valueOf(book.getId()) });
+        db.delete(TABLE_TITLE,STRAIN_ID+" = ?", new String[] { String.valueOf(strainInfo.getId()) });
 
         // 3. close
         db.close();
-        Log.d("deleteBook", book.toString());
+        Log.d("delete strainInfo", strainInfo.toString());
     }
 }

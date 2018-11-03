@@ -19,10 +19,9 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         setContentView(R.layout.activity_positiveeffects);
 
         final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
-        //db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 1", "Hungry"));
 
         // Setup Button variables and listeners
-        Button cancelButton = (Button)findViewById(R.id.btnCancel); // TODO Can this be moved to global?
+        Button cancelButton = (Button)findViewById(R.id.btnCancel);
         Button setFilterButton = (Button)findViewById(R.id.btnSetFilter);
         final RadioButton relaxedIgnoreRadioBtn = (RadioButton)findViewById(R.id.relaxed_ignore);
         final RadioButton relaxedMaxRadioBtn = (RadioButton)findViewById(R.id.relaxed_max);
@@ -45,7 +44,6 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 int checkedButtonID = relaxedRadioGroup.getCheckedRadioButtonId();
                 int relaxedIgnoreID = 0;
                 int ignoreRelaxedBtnID = btnRelaxedIgnore.getId();
-
 
                 RadioButton radioButton = findViewById(checkedButtonID);
                 switch(checkedButtonID){
@@ -72,25 +70,16 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", 55.5));
-                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(relaxedIgnoreRadioBtn.getId()), Toast.LENGTH_SHORT).show();
+                long id = db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", "55.5"));
+                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(id), Toast.LENGTH_SHORT).show();
             }
         });
 
-        //
-        //
-        // Note to self:
-        //
-        // It appears the database isn't saving locally or at least not
-        // updating the index (row), clicking "ignore" creates an entry only at
-        // index 0.
-        //
-        //
         relaxedMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(0)), Toast.LENGTH_SHORT).show();
-                Log.d("addStrainRow", db.getStrainData(0).getStrainName());
+                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(0).getStrainName()), Toast.LENGTH_SHORT).show();
+                //Log.d("addStrainRow", db.getStrainData(0).getStrainName());
             }
         });
     }
