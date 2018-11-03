@@ -27,11 +27,11 @@ public class CannabisStrainDatabase_Definition {
         return "CannabisStrainDatabase_Definition [id=" + id + ", strainName=" + strainName + ", effectsRelaxed=" + effectsRelaxed + "]";
     }
 
-    public int getId() {
+    public int getStrainId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setStrainId(int id) {
         this.id = id;
     }
 

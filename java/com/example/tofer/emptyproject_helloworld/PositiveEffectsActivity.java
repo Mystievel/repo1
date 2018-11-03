@@ -72,6 +72,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
             public void onClick(View view) {
                 long id = db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", "55.5"));
                 Toast.makeText(PositiveEffectsActivity.this,String.valueOf(id), Toast.LENGTH_SHORT).show();
+                Log.d("addStrain returned", ""+id);
             }
         });
 
