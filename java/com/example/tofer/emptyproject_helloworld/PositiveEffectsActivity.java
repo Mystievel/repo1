@@ -79,7 +79,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(0).getStrainName()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(3).getEffectsRelaxed()), Toast.LENGTH_SHORT).show();
                 //Log.d("addStrainRow", db.getStrainData(0).getStrainName());
             }
         });
