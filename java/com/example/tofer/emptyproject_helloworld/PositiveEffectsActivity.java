@@ -25,6 +25,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         Button setFilterButton = (Button)findViewById(R.id.btnSetFilter);
         final RadioButton relaxedIgnoreRadioBtn = (RadioButton)findViewById(R.id.relaxed_ignore);
         final RadioButton relaxedMaxRadioBtn = (RadioButton)findViewById(R.id.relaxed_max);
+        final RadioButton relaxedMinRadioBtn = (RadioButton)findViewById(R.id.relaxed_min);
 
         final TextView relaxedLabel = findViewById(R.id.lblRelaxed);
         final RadioGroup relaxedRadioGroup = findViewById(R.id.relaxedRadio);
@@ -70,17 +71,27 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long id = db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", "55.5"));
+                long id = db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", 55.5));
                 Toast.makeText(PositiveEffectsActivity.this,String.valueOf(id), Toast.LENGTH_SHORT).show();
-                Log.d("addStrain returned", ""+id);
+                //Log.d("addStrain returned", ""+id);
+            }
+        });
+
+        relaxedMinRadioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double effectsRelaxedValue = db.getStrainData(3).getEffectsRelaxed() + 1;
+                //db.getStrainData(4).setEffectsRelaxed(effectsRelaxedValue + db.getStrainData(4).getEffectsRelaxed());
+                db.updateStrain(db.getStrainData(4));
+                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(" value: " + effectsRelaxedValue + " data: " + db.getStrainData(3).getEffectsRelaxed()), Toast.LENGTH_SHORT).show();
             }
         });
 
         relaxedMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(3).getEffectsRelaxed()), Toast.LENGTH_SHORT).show();
-                //Log.d("addStrainRow", db.getStrainData(0).getStrainName());
+                db.deleteStrain(db.getStrainData(4));
+                //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(4).getEffectsRelaxed()), Toast.LENGTH_SHORT).show();
             }
         });
     }

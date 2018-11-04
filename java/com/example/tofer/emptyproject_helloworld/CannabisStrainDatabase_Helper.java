@@ -21,10 +21,10 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // SQL statement to create book table
-        String CREATE_DATABASE_TABLE = "CREATE TABLE strainDatabase ( " +
+        String CREATE_DATABASE_TABLE = "CREATE TABLE " + DATABASE_NAME + "( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "strainName TEXT, "+
-                "effectsRelaxed TEXT)";
+                "effectsRelaxed DOUBLE)";
 
         // create books table
         db.execSQL(CREATE_DATABASE_TABLE);
@@ -55,8 +55,8 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // TODO: Why does this method return -1 all the time?
     public long addStrain(CannabisStrainDatabase_Definition strainInfo) {
         //Log.d("addStrainRow()", strainInfo.toString());   // Display all incoming data.
-        Log.d("strainName", strainInfo.getStrainName());
-        Log.d("effectsRelaxed", strainInfo.getEffectsRelaxed());
+        //Log.d("strainName", strainInfo.getStrainName());
+        //Log.d("effectsRelaxed", strainInfo.getEffectsRelaxed());
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -101,9 +101,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         CannabisStrainDatabase_Definition strainInfo = new CannabisStrainDatabase_Definition();
         strainInfo.setStrainId(Integer.parseInt(cursor.getString(0)));
         strainInfo.setStrainName(cursor.getString(1));
-        strainInfo.setEffectsRelaxed(cursor.getString(2));
+        strainInfo.setEffectsRelaxed(cursor.getDouble(2));
 
-        Log.d("getStrainData("+id+")", strainInfo.toString());
+        //Log.d("getStrainData("+id+")", strainInfo.toString());
 
         // 5. return strain information
         return strainInfo;
@@ -116,11 +116,11 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put("strainName", strainInfo.getStrainName());
-        values.put("effectsRelaxed", strainInfo.getEffectsRelaxed());
+        values.put(COLUMN_1, strainInfo.getStrainName());
+        values.put(COLUMN_2, strainInfo.getEffectsRelaxed());
 
         // 3. updating row
-        int i = db.update(TABLE_TITLE, values,STRAIN_ID+" = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
+        int i = db.update(TABLE_TITLE, values,STRAIN_ID + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
 
         // 4. close
         db.close();
@@ -137,6 +137,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
         // 3. close
         db.close();
-        Log.d("delete strainInfo", strainInfo.toString());
+        //Log.d("delete strainInfo", strainInfo.toString());
     }
 }

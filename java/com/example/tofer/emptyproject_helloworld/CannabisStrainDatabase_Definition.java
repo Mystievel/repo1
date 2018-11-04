@@ -6,7 +6,7 @@ import android.util.Log;
 public class CannabisStrainDatabase_Definition {
     private int id;
     private String strainName;
-    private String effectsRelaxed;
+    private double effectsRelaxed;
 
     public CannabisStrainDatabase_Definition(){}
 
@@ -14,7 +14,7 @@ public class CannabisStrainDatabase_Definition {
     // search for "createDataBase"
     // Issue is we aren't actually creating a database, also we don't know, does "put" place text in LogCat
     // or is our LogCat routine actually working? make a dummy printout to test just before subject lines of code.
-    public CannabisStrainDatabase_Definition(String strainName, String effectsRelaxed) {
+    public CannabisStrainDatabase_Definition(String strainName, double effectsRelaxed) {
         super();
         //this.id = id;
 		this.strainName = strainName;
@@ -43,11 +43,11 @@ public class CannabisStrainDatabase_Definition {
         this.strainName = strainName;
     }
 
-    public String getEffectsRelaxed() {
+    public double getEffectsRelaxed() {
         return effectsRelaxed;
     }
 
-    public void setEffectsRelaxed(String effectsRelaxed) {
+    public void setEffectsRelaxed(double effectsRelaxed) {
         this.effectsRelaxed = effectsRelaxed;
     }
 }
