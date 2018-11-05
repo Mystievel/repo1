@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // Database Version & Name
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "StrainDB";
+    private static final String DATABASE_NAME = "CannabisStrainDatabase";
 
     public CannabisStrainDatabase_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,7 +33,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w("onUpgrade", "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-        // Drop older strainDB table if existed
+        // Drop older database table if existed
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
         // Create new table
         onCreate(db);
@@ -41,15 +41,15 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     //---------------------------------------------------------------------
 
     // Books table name
-    private static final String TABLE_TITLE = "StrainDatabase";
+    private static final String TABLE_TITLE = "CannabisStrainDatabase";
 
     // Strain Database (Table) Columns names
     // These values MUST match the Strings in the db definition file.
-    private static final String STRAIN_ID = "id";
+    private static final String _ID = "id";
     private static final String COLUMN_1 = "strainName";
     private static final String COLUMN_2 = "effectsRelaxed";
 
-    private static final String[] COLUMNS = {STRAIN_ID, COLUMN_1, COLUMN_2};
+    private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2};
 
     // Add a strain to the database
     // TODO: Why does this method return -1 all the time?
@@ -103,8 +103,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         strainInfo.setStrainName(cursor.getString(1));
         strainInfo.setEffectsRelaxed(cursor.getDouble(2));
 
-        //Log.d("getStrainData("+id+")", strainInfo.toString());
-
         // 5. return strain information
         return strainInfo;
     }
@@ -120,7 +118,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         values.put(COLUMN_2, strainInfo.getEffectsRelaxed());
 
         // 3. updating row
-        int i = db.update(TABLE_TITLE, values,STRAIN_ID + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
+        int i = db.update(TABLE_TITLE, values,_ID + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
 
         // 4. close
         db.close();
@@ -128,15 +126,15 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     }
 
     // Delete a Strain
-    public void deleteStrain(CannabisStrainDatabase_Definition strainInfo) {
+    public int deleteStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. delete
-        db.delete(TABLE_TITLE,STRAIN_ID+" = ?", new String[] { String.valueOf(strainInfo.getStrainId()) });
+        int i = db.delete(TABLE_TITLE,_ID + " = ?", new String[] { String.valueOf(strainInfo.getStrainId()) });
 
         // 3. close
         db.close();
-        //Log.d("delete strainInfo", strainInfo.toString());
+        return i;
     }
 }

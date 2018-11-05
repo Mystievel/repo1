@@ -18,6 +18,7 @@ public class FindStrainsActivity extends MainActivity {
 
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
+    String listItem1 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

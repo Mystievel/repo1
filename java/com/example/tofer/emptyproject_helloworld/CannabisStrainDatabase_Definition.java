@@ -24,7 +24,7 @@ public class CannabisStrainDatabase_Definition {
     //getters & setters
     @Override
     public String toString() {
-        return "CannabisStrainDatabase_Definition [id=" + id + ", Strain Name=" + strainName + ", Effects - Relaxed=" + effectsRelaxed + "]";
+        return "CannabisStrainDatabase_Definition [dbRowID=" + id + ", Strain Name=" + strainName + ", Effects - Relaxed=" + effectsRelaxed + "]";
     }
 
     public int getStrainId() {
