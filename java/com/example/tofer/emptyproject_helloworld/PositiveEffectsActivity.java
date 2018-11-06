@@ -49,22 +49,22 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 RadioButton radioButton = findViewById(checkedButtonID);
                 switch(checkedButtonID){
                     case R.id.relaxed_ignore: { //ID: 2131165311
-                        Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.relaxed_min: { //ID: 2131165313
-                        Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.relaxed_max: { //ID: 2131165312
-                        Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(radioButton.isChecked()), Toast.LENGTH_SHORT).show();
 
                 // TODO uncomment the code below when the code above is fully functioning
-                //startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
+                startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
             }
         });
 
