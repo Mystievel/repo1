@@ -21,13 +21,12 @@ public class ResultsActivity extends FindStrainsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-
         // 1. get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.resultsList);
         // this is data for the recycler view
-        ItemData itemsData[] = { new ItemData("item 1","description text 1"),
-                new ItemData(listItem1,"more text"),
-                new ItemData("item 3","more textss")};
+        ItemData itemsData[] = { new ItemData("title 1","description 1"),
+                new ItemData("title 2","description 2"),
+                new ItemData("title 3","description 3")};
         // 2. set layoutManger
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // 3. create an adapter

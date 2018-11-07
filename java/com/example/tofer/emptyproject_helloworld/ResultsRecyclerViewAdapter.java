@@ -31,7 +31,7 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
         viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
-        viewHolder.txtViewTitle.setText(itemsData[position].getDescription());
+        viewHolder.txtViewDescription.setText(itemsData[position].getDescription());
     }
 
     // inner class to hold a reference to each item of RecyclerView

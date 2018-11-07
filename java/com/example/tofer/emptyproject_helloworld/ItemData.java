@@ -5,11 +5,11 @@ public class ItemData {
     private String description;
 
     public ItemData(String title,String description){
-
         this.title = title;
         this.description = description;
     }
 
+    // getters & setters
     public String getTitle() {
         return title;
     }
@@ -17,7 +17,4 @@ public class ItemData {
     public String getDescription() {
         return description;
     }
-
-    // getters & setters
-
 }
