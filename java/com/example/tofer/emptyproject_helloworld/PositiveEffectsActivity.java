@@ -71,7 +71,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listItem1 = "test 1";
+                listItem1 = db.getStrainData(3).getStrainName();
                 //long id = db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", 55.5));
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(id), Toast.LENGTH_SHORT).show();
             }
@@ -80,7 +80,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedMinRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listItem1 = "test 2";
+                listItem1 = db.getStrainData(2).getStrainName();
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(3).getStrainName()), Toast.LENGTH_SHORT).show();
             }
         });

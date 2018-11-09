@@ -24,18 +24,21 @@ public class ResultsActivity extends FindStrainsActivity {
         // 1. get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.resultsList);
         // this is data for the recycler view
-        ItemData itemsData[] = { new ItemData("title 1","description 1"),
-                new ItemData("title 2","description 2"),
-                new ItemData("title 3","description 3")};
-        // 2. set layoutManger
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // 3. create an adapter
-        ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);
-        // 4. set adapter
-        recyclerView.setAdapter(mAdapter);
-        // 5. set item animator to DefaultAnimator
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+/*        ItemData itemsData[] = {new ItemData("title 1", "description 1"),
+                new ItemData("title 2", "" + listItem1),
+                new ItemData("title 3", "description 3")};*/
+        ItemData itemsData[] = new ItemData[numberOfResults];
 
+        for (int i = 0; i<numberOfResults; i++) {
+            itemsData[i] = new ItemData(String.format("title %d", i), String.format("description %d", i));
+        }
+        //itemsData[0] = new ItemData("title 1", "description 1");
+        //itemsData[1] = new ItemData("title 2", "description 2");
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
+        ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
+        recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
+        recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
         // Buttons
         Button btnMainPage = (Button)findViewById(R.id.btnMainPage);

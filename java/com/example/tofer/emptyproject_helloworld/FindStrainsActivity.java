@@ -1,6 +1,5 @@
 package com.example.tofer.emptyproject_helloworld;
 
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,13 +11,12 @@ import android.widget.Toast;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
-
-// Note to self: is it ok to extend MainACtivity? Or should it be appcompbatwhatever like in MainActivity.java?
 public class FindStrainsActivity extends MainActivity {
 
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
-    String listItem1 = "";
+    static String listItem1 = "";   // Declare as 'static' to not lose memory when changing intents...or activities, not sure which one.
+    static int numberOfResults = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
