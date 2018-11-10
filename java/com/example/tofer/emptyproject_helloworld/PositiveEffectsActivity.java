@@ -63,7 +63,6 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 }
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(radioButton.isChecked()), Toast.LENGTH_SHORT).show();
 
-                // TODO uncomment the code below when the code above is fully functioning
                 startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
             }
         });
@@ -82,6 +81,14 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
             public void onClick(View view) {
                 listItem1 = db.getStrainData(2).getStrainName();
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(3).getStrainName()), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        relaxedMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long dbRows = db.getStrainDatabaseRows();
+                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(dbRows), Toast.LENGTH_SHORT).show();
             }
         });
     }

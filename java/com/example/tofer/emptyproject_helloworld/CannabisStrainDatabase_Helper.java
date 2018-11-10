@@ -3,20 +3,29 @@ package com.example.tofer.emptyproject_helloworld;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+
+
+// TODO: Find a way to get the number of rows in the database. (for results calculations).
+// TODO: Then find how to get the number of results out of the total number of rows. (for results display).
+
+
 public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // Database Version & Name
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CannabisStrainDatabase";
 
+
     public CannabisStrainDatabase_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -30,6 +39,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         db.execSQL(CREATE_DATABASE_TABLE);
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w("onUpgrade", "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
@@ -38,9 +48,12 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         // Create new table
         onCreate(db);
     }
-    //---------------------------------------------------------------------
 
-    // Books table name
+    //------------------------------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------------------------------
+
+    // Database table name
     private static final String TABLE_TITLE = "CannabisStrainDatabase";
 
     // Strain Database (Table) Columns names
@@ -48,16 +61,11 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final String _ID = "id";
     private static final String COLUMN_1 = "strainName";
     private static final String COLUMN_2 = "effectsRelaxed";
-
     private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2};
 
-    // Add a strain to the database
-    // TODO: Why does this method return -1 all the time?
-    public long addStrain(CannabisStrainDatabase_Definition strainInfo) {
-        //Log.d("addStrainRow()", strainInfo.toString());   // Display all incoming data.
-        //Log.d("strainName", strainInfo.getStrainName());
-        //Log.d("effectsRelaxed", strainInfo.getEffectsRelaxed());
 
+    // Add a strain to the database
+    public long addStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -69,13 +77,10 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
         // 3. insert
         long id = db.insert(TABLE_TITLE,null, values);
-
-        // 4. close
-        db.close();
-
-        // Return newly inserted row id.
-        return id;
+        db.close();     // 4. close
+        return id;      // Return newly inserted row id.
     }
+
 
     // Get Strain Information by Database Row
     public CannabisStrainDatabase_Definition getStrainData(int id){
@@ -107,6 +112,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         return strainInfo;
     }
 
+
     // Update Strain Information
     public int updateStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
@@ -125,6 +131,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         return i;
     }
 
+
     // Delete a Strain
     public int deleteStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
@@ -136,5 +143,12 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         // 3. close
         db.close();
         return i;
+    }
+
+    public long getStrainDatabaseRows() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, TABLE_TITLE);
+        db.close();
+        return count;
     }
 }

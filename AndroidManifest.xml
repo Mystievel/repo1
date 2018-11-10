@@ -24,6 +24,11 @@
         <activity
             android:name=".PositiveEffectsActivity"
             android:label="@string/app_name">
+            <!--- Place the code chunk below in the activity desired to launch on app startup. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ConstructorActivity"
@@ -36,11 +41,6 @@
         <activity
             android:name=".ResultsActivity"
             android:label="@string/app_name">
-            <!--- Place the code chunk below in the activity desired to launch on app startup. -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SupportActivity"

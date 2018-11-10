@@ -27,8 +27,9 @@ public class ResultsActivity extends FindStrainsActivity {
 /*        ItemData itemsData[] = {new ItemData("title 1", "description 1"),
                 new ItemData("title 2", "" + listItem1),
                 new ItemData("title 3", "description 3")};*/
-        ItemData itemsData[] = new ItemData[numberOfResults];
 
+        // This is how to display all of the results found from the database based on the search criteria
+        ItemData itemsData[] = new ItemData[numberOfResults];
         for (int i = 0; i<numberOfResults; i++) {
             itemsData[i] = new ItemData(String.format("title %d", i), String.format("description %d", i));
         }
