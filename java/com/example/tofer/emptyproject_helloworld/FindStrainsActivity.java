@@ -13,10 +13,12 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class FindStrainsActivity extends MainActivity {
 
+    final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
-    static String listItem1 = "";   // Declare as 'static' to not lose memory when changing intents...or activities, not sure which one.
-    static int numberOfResults = 5;
+    static long numberOfResults;
+    static String relaxed_results[];
+    static int tempNumberOfResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

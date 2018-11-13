@@ -12,13 +12,19 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static java.lang.StrictMath.toIntExact;
+
+
+// TODO: keep radio buttons highlighted when exit/return to screen.
+
+
 public class PositiveEffectsActivity extends FindStrainsActivity {
+    static int relaxedBtnSelected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_positiveeffects);
-
-        final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
 
         // Setup Button variables and listeners
         Button cancelButton = (Button)findViewById(R.id.btnCancel);
@@ -63,6 +69,46 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 }
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(radioButton.isChecked()), Toast.LENGTH_SHORT).show();
 
+                // Get the strain data for the items that meet the "relaxed" search criteria
+                tempNumberOfResults = 0;
+                numberOfResults = db.getStrainDatabaseRows();
+                // Get the array size of the "reduced" array due to search criterion.
+                if (relaxedBtnSelected == 1) {
+                    for (int i=1; i<numberOfResults; i++) {
+                        if (db.getStrainData(i).getEffectsRelaxed() < 0.5) {
+                            tempNumberOfResults++;
+                        }
+                    }
+                } else if (relaxedBtnSelected == 2){
+                    for (int i=1; i<numberOfResults; i++) {
+                        if (db.getStrainData(i).getEffectsRelaxed() >= 0.5) {
+                            tempNumberOfResults++;
+                        }
+                    }
+                }
+
+                // Store the final results into a results array.
+                relaxed_results = new String[(int) tempNumberOfResults];
+                if (relaxedBtnSelected == 1) {
+                    for (int i=0; i<tempNumberOfResults; i++) {
+                        if (db.getStrainData(i+1).getEffectsRelaxed() < 0.5) {
+                            relaxed_results[i] = db.getStrainData(i+1).getStrainName();
+                        } else {
+                            relaxed_results[i] = "";
+                        }
+                    }
+                } else if (relaxedBtnSelected == 2){
+                    for (int i=0; i<tempNumberOfResults; i++) {
+                        if (db.getStrainData(i+1).getEffectsRelaxed() >= 0.5) {
+                            relaxed_results[i] = db.getStrainData(i+1).getStrainName();
+                        } else {
+                            relaxed_results[i] = "";
+                        }
+                    }
+                }
+
+                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(tempNumberOfResults), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(relaxed_results[3]), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
             }
         });
@@ -70,7 +116,8 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listItem1 = db.getStrainData(3).getStrainName();
+                relaxedBtnSelected = 0;
+                //listItem1 = db.getStrainData(3).getStrainName();
                 //long id = db.addStrain(new CannabisStrainDatabase_Definition("Cannabis Strain 2", 55.5));
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(id), Toast.LENGTH_SHORT).show();
             }
@@ -79,7 +126,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedMinRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listItem1 = db.getStrainData(2).getStrainName();
+                relaxedBtnSelected = 1;
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(db.getStrainData(3).getStrainName()), Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,8 +134,9 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         relaxedMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long dbRows = db.getStrainDatabaseRows();
-                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(dbRows), Toast.LENGTH_SHORT).show();
+                relaxedBtnSelected = 2;
+                //int dbRows = db.getStrainDatabaseRows();
+                //Toast.makeText(PositiveEffectsActivity.this, String.valueOf(dbRows), Toast.LENGTH_SHORT).show();
             }
         });
     }

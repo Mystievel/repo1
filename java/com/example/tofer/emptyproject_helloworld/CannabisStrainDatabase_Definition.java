@@ -10,10 +10,6 @@ public class CannabisStrainDatabase_Definition {
 
     public CannabisStrainDatabase_Definition(){}
 
-    // TODO:  see https://stackoverflow.com/questions/15415623/android-database-to-array
-    // search for "createDataBase"
-    // Issue is we aren't actually creating a database, also we don't know, does "put" place text in LogCat
-    // or is our LogCat routine actually working? make a dummy printout to test just before subject lines of code.
     public CannabisStrainDatabase_Definition(String strainName, double effectsRelaxed) {
         super();
         //this.id = id;

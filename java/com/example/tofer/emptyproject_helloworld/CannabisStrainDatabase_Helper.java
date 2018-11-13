@@ -11,9 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-
-// TODO: Find a way to get the number of rows in the database. (for results calculations).
-// TODO: Then find how to get the number of results out of the total number of rows. (for results display).
+// TODO: Find how to get the number of results out of the total number of rows. (for results display).
 
 
 public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
@@ -21,11 +19,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CannabisStrainDatabase";
 
-
     public CannabisStrainDatabase_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -38,7 +34,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         // create books table
         db.execSQL(CREATE_DATABASE_TABLE);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -63,8 +58,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final String COLUMN_2 = "effectsRelaxed";
     private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2};
 
-
-    // Add a strain to the database
+    // Add a strain to the database.
     public long addStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -81,8 +75,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         return id;      // Return newly inserted row id.
     }
 
-
-    // Get Strain Information by Database Row
+    // Get Strain Information by Database Row.
     public CannabisStrainDatabase_Definition getStrainData(int id){
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
@@ -112,8 +105,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         return strainInfo;
     }
 
-
-    // Update Strain Information
+    // Update Strain Information.
     public int updateStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -131,8 +123,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         return i;
     }
 
-
-    // Delete a Strain
+    // Delete a Strain.
     public int deleteStrain(CannabisStrainDatabase_Definition strainInfo) {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -145,6 +136,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         return i;
     }
 
+    // Returns the number of rows in the Strain Database.
     public long getStrainDatabaseRows() {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, TABLE_TITLE);
