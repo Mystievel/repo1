@@ -15,8 +15,8 @@ public class FindStrainsActivity extends MainActivity {
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
-    static int finalResultsArraySize;
-    static String[] filteredArray;
+    static int finalArraySize;
+    static String[] finalArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 // TODO: keep radio buttons highlighted when exit/return to screen.
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 public class PositiveEffectsActivity extends FindStrainsActivity {
     static int relaxedBtnSelected;
+    String blankEntry = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +23,11 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         setContentView(R.layout.activity_positiveeffects);
 
         // Setup Button variables and listeners
-        Button cancelButton = (Button)findViewById(R.id.btnCancel);
-        Button setFilterButton = (Button)findViewById(R.id.btnSetFilter);
-        final RadioButton relaxedIgnoreRadioBtn = (RadioButton)findViewById(R.id.relaxed_ignore);
-        final RadioButton relaxedMaxRadioBtn = (RadioButton)findViewById(R.id.relaxed_max);
-        final RadioButton relaxedMinRadioBtn = (RadioButton)findViewById(R.id.relaxed_min);
+        Button cancelButton = (Button) findViewById(R.id.btnCancel);
+        Button setFilterButton = (Button) findViewById(R.id.btnSetFilter);
+        final RadioButton relaxedIgnoreRadioBtn = (RadioButton) findViewById(R.id.relaxed_ignore);
+        final RadioButton relaxedMaxRadioBtn = (RadioButton) findViewById(R.id.relaxed_max);
+        final RadioButton relaxedMinRadioBtn = (RadioButton) findViewById(R.id.relaxed_min);
 
         final TextView relaxedLabel = findViewById(R.id.lblRelaxed);
         final RadioGroup relaxedRadioGroup = findViewById(R.id.relaxedRadio);
@@ -49,7 +49,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 int ignoreRelaxedBtnID = btnRelaxedIgnore.getId();
 
                 RadioButton radioButton = findViewById(checkedButtonID);
-                switch(checkedButtonID){
+                switch (checkedButtonID) {
                     case R.id.relaxed_ignore: { //ID: 2131165311
                         //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(checkedButtonID), Toast.LENGTH_SHORT).show();
                         break;
@@ -65,8 +65,19 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 }
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(radioButton.isChecked()), Toast.LENGTH_SHORT).show();
 
-                filteredArray = new String[(int) db.getStrainDatabaseRows()];
+                // 1) Filter the database results by type 1
+                String[] filteredArray = new String[(int) db.getStrainDatabaseRows()];
                 filteredArray = filterArrayByColumn(relaxedBtnSelected, db);
+
+                // 2) Reduce the array to non-null values only.
+                finalArraySize = getFinalArraySize(filteredArray, db);
+                Log.d("_main", "Final array size: " + String.valueOf(finalArraySize));
+
+                finalArray = new String[finalArraySize];
+                finalArray = reduceFilteredArray(filteredArray, db);
+
+                // 3) Store for FindStrainsActivity
+
                 startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
             }
         });
@@ -97,7 +108,8 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 //Toast.makeText(PositiveEffectsActivity.this, String.valueOf(dbRows), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    } //********************************************************************************************
+
 
     //**********************************************************************************************
     //                             Filter Array by db Column
@@ -105,42 +117,80 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     // Search a single column within a database, make invalid entries == "" (null), and return the final array.
     // How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
     // Later we take out all "" (null) entries, so we know the array length = database entries.
+    //
+    // ToDo: remove dependency to getEffectsRelaxed, exchange with any column
     //**********************************************************************************************
-    public static String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db) {
+    public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db) {
         // Declare local variables
-        Log.d("_filterArrayByColumn", "1");
-        Log.d("_filterArrayByColumn", "2");
         int databaseRows = (int) db.getStrainDatabaseRows();
         int index = 0;
-        String resultsArray[] = new String[databaseRows];
-        Log.d("_filterArrayByColumn", "3");
+        String filteredArray[] = new String[databaseRows];
 
         if (btnResult == 1) {
             for (index = 0; index < databaseRows; index++) {
-                if (db.getStrainData(index+1).getEffectsRelaxed() < 0.5) {
-                    resultsArray[index] = db.getStrainData(index+1).getStrainName();
+                if (db.getStrainData(index + 1).getEffectsRelaxed() < 0.5) {
+                    filteredArray[index] = db.getStrainData(index + 1).getStrainName();
                 } else {
-                    resultsArray[index] = "";
+                    filteredArray[index] = blankEntry;
                 }
             }
         } else if (btnResult == 2) {
             for (index = 0; index < databaseRows; index++) {
-                if (db.getStrainData(index+1).getEffectsRelaxed() >= 0.5) {
-                    resultsArray[index] = db.getStrainData(index+1).getStrainName();
+                if (db.getStrainData(index + 1).getEffectsRelaxed() >= 0.5) {
+                    filteredArray[index] = db.getStrainData(index + 1).getStrainName();
                 } else {
-                    resultsArray[index] = "";
+                    filteredArray[index] = blankEntry;
                 }
             }
         } else {
             for (index = 0; index < databaseRows; index++) {
-                resultsArray[index] = db.getStrainData(index+1).getStrainName();
+                filteredArray[index] = db.getStrainData(index + 1).getStrainName();
             }
         }
-        Log.d("_filterArrayByColumn", "4");
-        // Store the resulting array size
-        finalResultsArraySize = databaseRows;
 
         // Return the reduced array
-        return resultsArray;
-    }
+        return filteredArray;
+    } //********************************************************************************************
+
+
+    //**********************************************************************************************
+    //                             Get Filtered Array Size
+    //**********************************************************************************************
+    public int getFinalArraySize(String[] filteredArray, CannabisStrainDatabase_Helper db) {
+        // Declare local variables
+        int databaseRows = (int) db.getStrainDatabaseRows();
+        int index;
+        int count = 0;
+
+        // get the size that the new array will be
+        for (index = 0; index < databaseRows; index++) {
+            if (filteredArray[index] != blankEntry) {
+                count++;
+            }
+        }
+        return count;
+    } //********************************************************************************************
+
+
+    //**********************************************************************************************
+    //                             Reduce Filtered Array
+    //**********************************************************************************************
+    public String[] reduceFilteredArray(String[] filteredArray, CannabisStrainDatabase_Helper db) {
+        // Declare local variables
+        int databaseRows = (int) db.getStrainDatabaseRows();
+        int index;
+        int count = getFinalArraySize(filteredArray, db);
+        int subtractor = 0;
+        String reducedArray[] = new String[databaseRows];
+
+        // Now populate the reducedArray without the blank items from the original array.
+        for (index = 0; index < count; index++) {
+            if (filteredArray[index] != blankEntry) {
+                reducedArray[index - subtractor] = filteredArray[index];
+            } else {
+                subtractor++;
+            }
+        }
+        return reducedArray;
+    } //********************************************************************************************
 }
