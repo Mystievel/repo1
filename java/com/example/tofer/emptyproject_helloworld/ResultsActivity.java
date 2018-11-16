@@ -23,15 +23,14 @@ public class ResultsActivity extends FindStrainsActivity {
 
         // 1. get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.resultsList);
-        // this is data for the recycler view
-/*        ItemData itemsData[] = {new ItemData("title 1", "description 1"),
-                new ItemData("title 2", "" + listItem1),
-                new ItemData("title 3", "description 3")};*/
 
-        // This is how to display all of the results found from the database based on the search criteria
-        ItemData itemsData[] = new ItemData[(int) tempNumberOfResults]; // Populate Array size of reduced number of results.
-        for (int i=0; i<tempNumberOfResults; i++) {                         // Check resulting array for all items in database.
-            //if (relaxed_results[i] != "") {
+        // Display filtered results in the RecyclerView.
+        //ItemData itemsData[] = new ItemData[(int) finalResultsArraySize]; // Populate Array size of reduced number of results.
+        //for (int i = 0; i < finalResultsArraySize; i++) {                         // Check resulting array for all items in database.
+
+        ItemData itemsData[] = new ItemData[(int) 10]; // Populate Array size of reduced number of results.
+        for (int i = 0; i < 10; i++) {                         // Check resulting array for all items in database.
+        //if (relaxed_results[i] != "") {
                 //itemsData[i] = new ItemData(String.format("title %d", i), String.format("description %d", i));
                 itemsData[i] = new ItemData(String.valueOf(db.getStrainData(i+1).getStrainName()), String.valueOf(db.getStrainData(i+1).getEffectsRelaxed()));
             //}

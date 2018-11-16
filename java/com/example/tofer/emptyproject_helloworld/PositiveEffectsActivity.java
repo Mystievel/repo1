@@ -2,17 +2,13 @@ package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import static java.lang.StrictMath.toIntExact;
 
 
 // TODO: keep radio buttons highlighted when exit/return to screen.
@@ -69,46 +65,8 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 }
                 //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(radioButton.isChecked()), Toast.LENGTH_SHORT).show();
 
-                // Get the strain data for the items that meet the "relaxed" search criteria
-                tempNumberOfResults = 0;
-                numberOfResults = db.getStrainDatabaseRows();
-                // Get the array size of the "reduced" array due to search criterion.
-                if (relaxedBtnSelected == 1) {
-                    for (int i=1; i<numberOfResults; i++) {
-                        if (db.getStrainData(i).getEffectsRelaxed() < 0.5) {
-                            tempNumberOfResults++;
-                        }
-                    }
-                } else if (relaxedBtnSelected == 2){
-                    for (int i=1; i<numberOfResults; i++) {
-                        if (db.getStrainData(i).getEffectsRelaxed() >= 0.5) {
-                            tempNumberOfResults++;
-                        }
-                    }
-                }
-
-                // Store the final results into a results array.
-                relaxed_results = new String[(int) tempNumberOfResults];
-                if (relaxedBtnSelected == 1) {
-                    for (int i=0; i<tempNumberOfResults; i++) {
-                        if (db.getStrainData(i+1).getEffectsRelaxed() < 0.5) {
-                            relaxed_results[i] = db.getStrainData(i+1).getStrainName();
-                        } else {
-                            relaxed_results[i] = "";
-                        }
-                    }
-                } else if (relaxedBtnSelected == 2){
-                    for (int i=0; i<tempNumberOfResults; i++) {
-                        if (db.getStrainData(i+1).getEffectsRelaxed() >= 0.5) {
-                            relaxed_results[i] = db.getStrainData(i+1).getStrainName();
-                        } else {
-                            relaxed_results[i] = "";
-                        }
-                    }
-                }
-
-                Toast.makeText(PositiveEffectsActivity.this,String.valueOf(tempNumberOfResults), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(PositiveEffectsActivity.this,String.valueOf(relaxed_results[3]), Toast.LENGTH_SHORT).show();
+                filteredArray = new String[(int) db.getStrainDatabaseRows()];
+                filteredArray = filterArrayByColumn(relaxedBtnSelected, db);
                 startActivity(new Intent(PositiveEffectsActivity.this, FindStrainsActivity.class));
             }
         });
@@ -135,9 +93,45 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
             @Override
             public void onClick(View view) {
                 relaxedBtnSelected = 2;
-                //int dbRows = db.getStrainDatabaseRows();
+                //long dbRows = db.getStrainDatabaseRows();
                 //Toast.makeText(PositiveEffectsActivity.this, String.valueOf(dbRows), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //**********************************************************************************************
+    //                             Filter Array by db Column
+    //
+    // Search a single column within a database, make invalid entries == "0", and return the final array.
+    // How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
+    // Later we take out all "0" entries, so we know the array length = database entries.
+    //**********************************************************************************************
+    public static String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db) {
+        // Declare local variables
+        Log.d("_filterArrayByColumn", "1");
+        Log.d("_filterArrayByColumn", "2");
+        int tempNumberOfResults = 0;
+        int index = 0;
+        String relaxed_results[] = new String[(int) db.getStrainDatabaseRows()];
+        Log.d("_filterArrayByColumn", "3");
+        if (btnResult == 1) {
+            for (index = 0; index < tempNumberOfResults; index++) {
+                if (db.getStrainData(index+1).getEffectsRelaxed() < 0.5) {
+                    relaxed_results[index] = db.getStrainData(index+1).getStrainName();
+                }
+            }
+        } else if (btnResult == 2) {
+            for (index = 0; index < tempNumberOfResults; index++) {
+                if (db.getStrainData(index+1).getEffectsRelaxed() >= 0.5) {
+                    relaxed_results[index] = db.getStrainData(index+1).getStrainName();
+                }
+            }
+        }
+        Log.d("_filterArrayByColumn", "4");
+        // Store the resulting array size
+        finalResultsArraySize = tempNumberOfResults;
+
+        // Return the reduced array
+        return relaxed_results;
     }
 }

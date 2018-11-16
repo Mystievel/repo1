@@ -12,13 +12,11 @@ import android.widget.Toast;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class FindStrainsActivity extends MainActivity {
-
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
-    static long numberOfResults;
-    static String relaxed_results[];
-    static int tempNumberOfResults;
+    static int finalResultsArraySize;
+    static String[] filteredArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

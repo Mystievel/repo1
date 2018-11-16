@@ -143,4 +143,10 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         db.close();
         return count;
     }
+
+    // Returns the number of columns in the Strain Database.
+    public int getStrainDatabaseColumns() {
+        int count = 13;
+        return count;
+    }
 }
