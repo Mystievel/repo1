@@ -102,36 +102,45 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     //**********************************************************************************************
     //                             Filter Array by db Column
     //
-    // Search a single column within a database, make invalid entries == "0", and return the final array.
+    // Search a single column within a database, make invalid entries == "" (null), and return the final array.
     // How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
-    // Later we take out all "0" entries, so we know the array length = database entries.
+    // Later we take out all "" (null) entries, so we know the array length = database entries.
     //**********************************************************************************************
     public static String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db) {
         // Declare local variables
         Log.d("_filterArrayByColumn", "1");
         Log.d("_filterArrayByColumn", "2");
-        int tempNumberOfResults = 0;
+        int databaseRows = (int) db.getStrainDatabaseRows();
         int index = 0;
-        String relaxed_results[] = new String[(int) db.getStrainDatabaseRows()];
+        String resultsArray[] = new String[databaseRows];
         Log.d("_filterArrayByColumn", "3");
+
         if (btnResult == 1) {
-            for (index = 0; index < tempNumberOfResults; index++) {
+            for (index = 0; index < databaseRows; index++) {
                 if (db.getStrainData(index+1).getEffectsRelaxed() < 0.5) {
-                    relaxed_results[index] = db.getStrainData(index+1).getStrainName();
+                    resultsArray[index] = db.getStrainData(index+1).getStrainName();
+                } else {
+                    resultsArray[index] = "";
                 }
             }
         } else if (btnResult == 2) {
-            for (index = 0; index < tempNumberOfResults; index++) {
+            for (index = 0; index < databaseRows; index++) {
                 if (db.getStrainData(index+1).getEffectsRelaxed() >= 0.5) {
-                    relaxed_results[index] = db.getStrainData(index+1).getStrainName();
+                    resultsArray[index] = db.getStrainData(index+1).getStrainName();
+                } else {
+                    resultsArray[index] = "";
                 }
+            }
+        } else {
+            for (index = 0; index < databaseRows; index++) {
+                resultsArray[index] = db.getStrainData(index+1).getStrainName();
             }
         }
         Log.d("_filterArrayByColumn", "4");
         // Store the resulting array size
-        finalResultsArraySize = tempNumberOfResults;
+        finalResultsArraySize = databaseRows;
 
         // Return the reduced array
-        return relaxed_results;
+        return resultsArray;
     }
 }

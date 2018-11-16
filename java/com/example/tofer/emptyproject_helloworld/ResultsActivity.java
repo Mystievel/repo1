@@ -29,11 +29,10 @@ public class ResultsActivity extends FindStrainsActivity {
         //for (int i = 0; i < finalResultsArraySize; i++) {                         // Check resulting array for all items in database.
 
         ItemData itemsData[] = new ItemData[(int) 10]; // Populate Array size of reduced number of results.
-        for (int i = 0; i < 10; i++) {                         // Check resulting array for all items in database.
-        //if (relaxed_results[i] != "") {
-                //itemsData[i] = new ItemData(String.format("title %d", i), String.format("description %d", i));
-                itemsData[i] = new ItemData(String.valueOf(db.getStrainData(i+1).getStrainName()), String.valueOf(db.getStrainData(i+1).getEffectsRelaxed()));
-            //}
+        for (int i = 0; i < 10; i++) {                 // Check resulting array for all items in database.
+            //itemsData[i] = new ItemData(String.format("title %d", i), String.format("description %d", i));
+            //itemsData[i] = new ItemData(String.valueOf(db.getStrainData(i+1).getStrainName()), String.valueOf(db.getStrainData(i+1).getEffectsRelaxed()));
+            itemsData[i] = new ItemData("" + filteredArray[i], "Sativa/Indica/Hybrid");
         }
         //itemsData[0] = new ItemData("title 1", "description 1");
         //itemsData[1] = new ItemData("title 2", "description 2");
