@@ -10,10 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
-
-// TODO: Find how to get the number of results out of the total number of rows. (for results display).
-
-
 public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // Database Version & Name
     private static final int DATABASE_VERSION = 1;
@@ -56,7 +52,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final String _ID = "id";
     private static final String COLUMN_1 = "strainName";
     private static final String COLUMN_2 = "effectsRelaxed";
-    private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2};
+    private static final String COLUMN_3 = "effectsHappy";
+    private static final String COLUMN_4 = "effectsHungry";
+    private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4};
 
     // Add a strain to the database.
     public long addStrain(CannabisStrainDatabase_Definition strainInfo) {
@@ -100,6 +98,8 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         strainInfo.setStrainId(Integer.parseInt(cursor.getString(0)));
         strainInfo.setStrainName(cursor.getString(1));
         strainInfo.setEffectsRelaxed(cursor.getDouble(2));
+        strainInfo.setEffectsHappy(cursor.getDouble(3));
+        strainInfo.setEffectsHungry(cursor.getDouble(4));
 
         // 5. return strain information
         return strainInfo;

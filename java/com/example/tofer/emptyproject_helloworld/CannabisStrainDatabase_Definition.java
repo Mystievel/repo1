@@ -7,15 +7,10 @@ public class CannabisStrainDatabase_Definition {
     private int id;
     private String strainName;
     private double effectsRelaxed;
+    private double effectsHappy;
+    private double effectsHungry;
 
     public CannabisStrainDatabase_Definition(){}
-
-    public CannabisStrainDatabase_Definition(String strainName, double effectsRelaxed) {
-        super();
-        //this.id = id;
-		this.strainName = strainName;
-        this.effectsRelaxed = effectsRelaxed;
-    }
 
     //getters & setters
     @Override
@@ -43,7 +38,23 @@ public class CannabisStrainDatabase_Definition {
         return effectsRelaxed;
     }
 
-    public void setEffectsRelaxed(double effectsRelaxed) {
-        this.effectsRelaxed = effectsRelaxed;
+    public void setEffectsRelaxed(double data) {
+        this.effectsRelaxed = data;
+    }
+
+    public void setEffectsHappy(double data) {
+        this.effectsHappy = data;
+    }
+
+    public double getEffectsHappy() {
+        return effectsHappy;
+    }
+
+    public void setEffectsHungry(double data) {
+        this.effectsHungry= data;
+    }
+
+    public double getEffectsHungry() {
+        return effectsHungry;
     }
 }
