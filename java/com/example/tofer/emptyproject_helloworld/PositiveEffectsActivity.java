@@ -2,25 +2,22 @@ package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 public class PositiveEffectsActivity extends FindStrainsActivity {
     // Defines
     int IGNORE = 0;
     int MIN = 1;
     int MAX = 2;
+    String BLANK_ENTRY = "";
 
     // Local variables
     static int relaxedBtnSelected;
     static int happyBtnSelected;
     static int hungryBtnSelected;
-    String blankEntry = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +63,10 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
             public void onClick(View view) {
                 // 1) Filter the database results by type 1
                 String[] filteredArray = new String[(int) db.getStrainDatabaseRows()];
-                filteredArray = filterArrayByColumn(relaxedBtnSelected, db);
+                filteredArray = filterArrayByColumn(happyBtnSelected, db, HAPPY);
 
                 // 2) Reduce the array to non-null values only.
+                // Todo #1 fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
                 finalArraySize = getFinalArraySize(filteredArray, db);
                 finalArray = new String[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
@@ -178,10 +176,9 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     // How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
     // Later we take out all "" (null) entries, so we know the array length = database entries.
     //
-    // ToDo: remove dependency to getEffectsRelaxed, exchange with any column.
-    // Todo: Update "0.5" to something else (a percentile based off search intensity bar).
+    // Todo: #2 important --- Update "0.5" to something else (a percentile based off search intensity bar).
     //**********************************************************************************************
-    public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db) {
+    public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect) {
         // Declare local variables
         int databaseRows = (int) db.getStrainDatabaseRows();
         int index;
@@ -189,18 +186,18 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
 
         if (btnResult == MIN) {
             for (index = 0; index < databaseRows; index++) {
-                if (db.getStrainData(index + 1).getEffectsRelaxed() < 0.5) {
+                if (db.getStrainData(index + 1).getEffect(effect) < 0.5) {
                     filteredArray[index] = db.getStrainData(index + 1).getStrainName();
                 } else {
-                    filteredArray[index] = blankEntry;
+                    filteredArray[index] = BLANK_ENTRY;
                 }
             }
         } else if (btnResult == MAX) {
             for (index = 0; index < databaseRows; index++) {
-                if (db.getStrainData(index + 1).getEffectsRelaxed() >= 0.5) {
+                if (db.getStrainData(index + 1).getEffect(effect) >= 0.5) {
                     filteredArray[index] = db.getStrainData(index + 1).getStrainName();
                 } else {
-                    filteredArray[index] = blankEntry;
+                    filteredArray[index] = BLANK_ENTRY;
                 }
             }
         } else {
@@ -225,7 +222,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
 
         // get the size that the new array will be
         for (index = 0; index < databaseRows; index++) {
-            if (filteredArray[index] != blankEntry) {
+            if (filteredArray[index] != BLANK_ENTRY) {
                 count++;
             }
         }
@@ -246,7 +243,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
 
         // Now populate the reducedArray without the blank items from the original array.
         for (index = 0; index < count; index++) {
-            if (filteredArray[index] != blankEntry) {
+            if (filteredArray[index] != BLANK_ENTRY) {
                 reducedArray[index - subtractor] = filteredArray[index];
             } else {
                 subtractor++;

@@ -12,6 +12,10 @@ import android.widget.Toast;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class FindStrainsActivity extends MainActivity {
+    final static int RELAXED = 1;
+    final static int HAPPY = 2;
+    final static int HUNGRY = 3;
+
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
