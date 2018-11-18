@@ -63,7 +63,10 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
             public void onClick(View view) {
                 // 1) Filter the database results by type 1
                 String[] filteredArray = new String[(int) db.getStrainDatabaseRows()];
-                filteredArray = filterArrayByColumn(happyBtnSelected, db, HAPPY);
+                filteredArray = getAllStrainNames();
+                // todo: #1.1 Loop through ALL effects now, be sure to concatenate one filter to another per category...
+                filteredArray = filterArrayByColumn(relaxedBtnSelected, db, RELAXED, filteredArray);
+                filteredArray = filterArrayByColumn(happyBtnSelected, db, HAPPY, filteredArray);
 
                 // 2) Reduce the array to non-null values only.
                 // Todo #1 fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
@@ -156,6 +159,18 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
 
 
     //**********************************************************************************************
+    //                    Gets any single Column from the Strains Database
+    //**********************************************************************************************
+    public String[] getAllStrainNames() {
+        String[] allStrainNames = new String[(int) db.getStrainDatabaseRows()];
+        for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
+            allStrainNames[i] = db.getStrainData(i+1).getStrainName();
+        }
+        return allStrainNames;
+    }
+
+
+    //**********************************************************************************************
     //                              Set Default Radio Button Selection
     //**********************************************************************************************
     public void setDefaultRadioButtonSelection(int btnSelection, RadioButton minBtn, RadioButton maxBtn, RadioButton ignoreBtn) {
@@ -178,36 +193,44 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     //
     // Todo: #2 important --- Update "0.5" to something else (a percentile based off search intensity bar).
     //**********************************************************************************************
-    public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect) {
+    public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, String[] originalArray) {
         // Declare local variables
         int databaseRows = (int) db.getStrainDatabaseRows();
         int index;
-        String filteredArray[] = new String[databaseRows];
+        String newArray[] = new String[databaseRows];
 
         if (btnResult == MIN) {
             for (index = 0; index < databaseRows; index++) {
                 if (db.getStrainData(index + 1).getEffect(effect) < 0.5) {
-                    filteredArray[index] = db.getStrainData(index + 1).getStrainName();
+                	if (originalArray[index] == BLANK_ENTRY) {
+                        newArray[index] = BLANK_ENTRY;
+                    } else {
+                        newArray[index] = db.getStrainData(index + 1).getStrainName();
+                    }
                 } else {
-                    filteredArray[index] = BLANK_ENTRY;
+                    newArray[index] = BLANK_ENTRY; // Add the original array to preserve loss of data from filter to filter.
                 }
             }
         } else if (btnResult == MAX) {
             for (index = 0; index < databaseRows; index++) {
                 if (db.getStrainData(index + 1).getEffect(effect) >= 0.5) {
-                    filteredArray[index] = db.getStrainData(index + 1).getStrainName();
+                    if (originalArray[index] == BLANK_ENTRY) {
+                        newArray[index] = BLANK_ENTRY;
+                    } else {
+                        newArray[index] = db.getStrainData(index + 1).getStrainName();
+                    }
                 } else {
-                    filteredArray[index] = BLANK_ENTRY;
+                    newArray[index] = BLANK_ENTRY; // Add the original array to preserve loss of data from filter to filter.
                 }
             }
         } else {
             for (index = 0; index < databaseRows; index++) {
-                filteredArray[index] = db.getStrainData(index + 1).getStrainName();
+                newArray[index] = db.getStrainData(index + 1).getStrainName();
             }
         }
 
         // Return the reduced array
-        return filteredArray;
+        return newArray;
     } //********************************************************************************************
 
 
