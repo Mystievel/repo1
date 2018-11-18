@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// Todo, start populating this activity and see what shared items need to be moved.
+
 public class NegativeEffectsActivity extends FindStrainsActivity {
 
     @Override

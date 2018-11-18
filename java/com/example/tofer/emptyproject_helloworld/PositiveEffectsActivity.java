@@ -2,6 +2,7 @@ package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -65,7 +66,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                 // Start out with a list of all strains.
                 String[] filteredArray = getAllStrainNames();
 
-                // Crete an array for all radio buttons.
+                // Create an array for all radio buttons.
 				effectsBtnSelected = new int[]{relaxedBtnSelected, happyBtnSelected, hungryBtnSelected};
 
 				// Loop through the buttons array and filter based on each buttons' selection.
@@ -74,8 +75,9 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
 				}
 
                 // Reduce the array to non-null values only.
-                // Todo #1 fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
+                // Todo fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
                 finalArraySize = getFinalArraySize(filteredArray, db);
+				//Log.d("asdkljsdglkj", finalArraySize + "");
                 finalArray = new String[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
 
@@ -181,7 +183,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     public void setDefaultRadioButtonSelection(int btnSelection, RadioButton minBtn, RadioButton maxBtn, RadioButton ignoreBtn) {
         if (btnSelection == MIN) {
             minBtn.setChecked(true);
-        } else if (btnSelection == MAX){
+        } else if (btnSelection == MAX) {
             maxBtn.setChecked(true);
         } else {
             ignoreBtn.setChecked(true);
@@ -196,7 +198,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     // How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
     // Later we take out all "" (null) entries, so we know the array length = database entries.
     //
-    // Todo: #2 important --- Update "0.5" to something else (a percentile based off search intensity bar).
+    // Todo: Update "0.5" to something else (a percentile based off search intensity bar).
     // todo find the 'null' list item bug. is it in this method?
     //**********************************************************************************************
     public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, String[] originalArray) {
@@ -214,7 +216,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                         newArray[index] = db.getStrainData(index + 1).getStrainName();
                     }
                 } else {
-                    newArray[index] = BLANK_ENTRY; // Add the original array to preserve loss of data from filter to filter.
+                    newArray[index] = BLANK_ENTRY;
                 }
             }
         } else if (btnResult == MAX) {
@@ -226,7 +228,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
                         newArray[index] = db.getStrainData(index + 1).getStrainName();
                     }
                 } else {
-                    newArray[index] = BLANK_ENTRY; // Add the original array to preserve loss of data from filter to filter.
+                    newArray[index] = BLANK_ENTRY;
                 }
             }
         } else {
