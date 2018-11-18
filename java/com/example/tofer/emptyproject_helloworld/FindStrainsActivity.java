@@ -15,6 +15,7 @@ public class FindStrainsActivity extends MainActivity {
     final static int RELAXED = 1;
     final static int HAPPY = 2;
     final static int HUNGRY = 3;
+    final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY};
 
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;

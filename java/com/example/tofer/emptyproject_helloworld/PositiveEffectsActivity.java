@@ -17,6 +17,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     static int relaxedBtnSelected;
     static int happyBtnSelected;
     static int hungryBtnSelected;
+    static int[] effectsBtnSelected;
 
 
     @Override
@@ -61,14 +62,18 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
         setFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 1) Filter the database results by type 1
-                String[] filteredArray = new String[(int) db.getStrainDatabaseRows()];
-                filteredArray = getAllStrainNames();
-                // todo: #1.1 Loop through ALL effects now, be sure to concatenate one filter to another per category...
-                filteredArray = filterArrayByColumn(relaxedBtnSelected, db, RELAXED, filteredArray);
-                filteredArray = filterArrayByColumn(happyBtnSelected, db, HAPPY, filteredArray);
+                // Start out with a list of all strains.
+                String[] filteredArray = getAllStrainNames();
 
-                // 2) Reduce the array to non-null values only.
+                // Crete an array for all radio buttons.
+				effectsBtnSelected = new int[]{relaxedBtnSelected, happyBtnSelected, hungryBtnSelected};
+
+				// Loop through the buttons array and filter based on each buttons' selection.
+				for (int i = 0; i < effectsBtnSelected.length; i++) {
+					filteredArray = filterArrayByColumn(effectsBtnSelected[i], db, effectsArray[i], filteredArray);
+				}
+
+                // Reduce the array to non-null values only.
                 // Todo #1 fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
                 finalArraySize = getFinalArraySize(filteredArray, db);
                 finalArray = new String[finalArraySize];
@@ -192,6 +197,7 @@ public class PositiveEffectsActivity extends FindStrainsActivity {
     // Later we take out all "" (null) entries, so we know the array length = database entries.
     //
     // Todo: #2 important --- Update "0.5" to something else (a percentile based off search intensity bar).
+    // todo find the 'null' list item bug. is it in this method?
     //**********************************************************************************************
     public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, String[] originalArray) {
         // Declare local variables

@@ -116,7 +116,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/btnSetFilter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
@@ -127,16 +127,16 @@
             android:text="" />
 
         <RadioButton
-            android:id="@+id/hungry_max"
+            android:id="@+id/hungry_min"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
 
         <RadioButton
-            android:id="@+id/hungry_min"
+            android:id="@+id/hungry_max"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="" />
 
