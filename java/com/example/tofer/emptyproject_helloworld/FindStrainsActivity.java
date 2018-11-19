@@ -30,8 +30,8 @@ public class FindStrainsActivity extends MainActivity {
 
     // Todo: got to figure out how to declare the initial filtered array that is filled with the Strain Names
     // must be shared between both Positive and Negative Effects activities.
-    static long arraySize = db.getStrainDatabaseRows();
-    static String[] filteredArray = new String[(int) arraySize];
+    //static long arraySize = db.getStrainDatabaseRows();
+    //static String[] filteredArray = new String[(int) arraySize];
     //getAllStrainNames();
 
 
