@@ -25,14 +25,10 @@ public class ResultsActivity extends FindStrainsActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.resultsList);
 
         // Display filtered results in the RecyclerView.
-        ItemData itemsData[] = new ItemData[(int) finalArraySize]; // Populate Array size of reduced number of results.
-        for (int i = 0; i < finalArraySize; i++) {                         // Check resulting array for all items in database.
-            //itemsData[i] = new ItemData(String.format("title %d", i), String.format("description %d", i));
-            //itemsData[i] = new ItemData(String.valueOf(db.getStrainData(i+1).getStrainName()), String.valueOf(db.getStrainData(i+1).getEffectsRelaxed()));
+        ItemData itemsData[] = new ItemData[(int) finalArraySize];	// Populate Array size of reduced number of results.
+        for (int i = 0; i < finalArraySize; i++) {					// Check resulting array for all items in database.
             itemsData[i] = new ItemData("" + finalArray[i], "Sativa/Indica/Hybrid");
         }
-        //itemsData[0] = new ItemData("title 1", "description 1");
-        //itemsData[1] = new ItemData("title 2", "description 2");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
