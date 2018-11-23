@@ -1,10 +1,10 @@
 package com.example.tofer.emptyproject_helloworld;
 
-public class ItemData {
+public class ResultsItemData {
     private String title;
     private String description;
 
-    public ItemData(String title,String description){
+    public ResultsItemData(String title, String description){
         this.title = title;
         this.description = description;
     }

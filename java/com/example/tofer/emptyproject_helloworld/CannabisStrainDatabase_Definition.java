@@ -9,15 +9,13 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 	private double effectsRelaxed;
 	private double effectsHappy;
 	private double effectsHungry;
+	private double effectsDryEyes;
+	private double effectsDryMouth;
+	private double effectsDizzy;
 
 	public CannabisStrainDatabase_Definition(){}
 
 	// Getters and Setters
-	@Override
-	public String toString() {
-		return "CannabisStrainDatabase_Definition [dbRowID=" + id + ", Strain Name=" + strainName + ", Effects - Relaxed=" + effectsRelaxed + "]";
-	}
-
 	// Strain ID
 	public int getStrainId() {
 		return id;
@@ -47,6 +45,15 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 				break;
 			case HUNGRY:
 				getEffect = getEffectsHungry();
+				break;
+			case DRY_EYES:
+				getEffect = getEffectsDryEyes();
+				break;
+			case DRY_MOUTH:
+				getEffect = getEffectsDryMouth();
+				break;
+			case DIZZY:
+				getEffect = getEffectsDizzy();
 				break;
 			default:
 				getEffect = -1;
@@ -79,19 +86,43 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 		this.effectsRelaxed = data;
 	}
 
+	public double getEffectsHappy() {
+		return effectsHappy;
+	}
+
 	public void setEffectsHappy(double data) {
 		this.effectsHappy = data;
 	}
 
-	public double getEffectsHappy() {
-		return effectsHappy;
+	public double getEffectsHungry() {
+		return effectsHungry;
 	}
 
 	public void setEffectsHungry(double data) {
 		this.effectsHungry= data;
 	}
 
-	public double getEffectsHungry() {
-		return effectsHungry;
+	public double getEffectsDryEyes() {
+		return effectsDryEyes;
+	}
+
+	public void setEffectsDryEyes(double data) {
+		this.effectsDryEyes = data;
+	}
+
+	public double getEffectsDryMouth() {
+		return effectsDryMouth;
+	}
+
+	public void setEffectsDryMouth(double data) {
+		this.effectsDryMouth = data;
+	}
+
+	public double getEffectsDizzy() {
+		return effectsDizzy;
+	}
+
+	public void setEffectsDizzy(double data) {
+		this.effectsDizzy = data;
 	}
 }

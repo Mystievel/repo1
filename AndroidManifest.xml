@@ -16,14 +16,6 @@
         <activity
             android:name=".FindStrainsActivity"
             android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name=".NegativeEffectsActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name=".PositiveEffectsActivity"
-            android:label="@string/app_name">
             <!--- Place the code chunk below in the activity desired to launch on app startup. -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

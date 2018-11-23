@@ -25,9 +25,9 @@ public class ResultsActivity extends FindStrainsActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.resultsList);
 
         // Display filtered results in the RecyclerView.
-        ItemData itemsData[] = new ItemData[(int) finalArraySize];	// Populate Array size of reduced number of results.
+        ResultsItemData itemsData[] = new ResultsItemData[(int) finalArraySize];	// Populate Array size of reduced number of results.
         for (int i = 0; i < finalArraySize; i++) {					// Check resulting array for all items in database.
-            itemsData[i] = new ItemData("" + finalArray[i], "Sativa/Indica/Hybrid");
+            itemsData[i] = new ResultsItemData("" + finalArray[i], "Sativa/Indica/Hybrid");
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger

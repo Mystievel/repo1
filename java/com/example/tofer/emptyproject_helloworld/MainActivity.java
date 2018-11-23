@@ -63,14 +63,6 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_findstrains);
     }
 
-    public void changePageNegativeEffects(View view) {
-        setContentView(R.layout.activity_negativeeffects);
-    }
-
-    public void changePagePositiveEffects(View view) {
-        setContentView(R.layout.activity_positiveeffects);
-    }
-
     public void changePageResults(View view) {
         setContentView(R.layout.activity_results);
     }
