@@ -41,14 +41,21 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 		viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				int IGNORE = 0;
+				int MIN = 1;
+				int MAX = 2;
+
 				switch (checkedId) {
 					case R.id.effect_ignore:
+						itemsData[position].setFilter(IGNORE);
 						Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
 						break;
 					case R.id.effect_min:
+						itemsData[position].setFilter(MIN);
 						Log.d("RecyclerViewItemClicked", "min clicked at " + position);
 						break;
 					case R.id.effect_max:
+						itemsData[position].setFilter(MAX);
 						Log.d("RecyclerViewItemClicked", "max clicked at " + position);
 						break;
 					default:

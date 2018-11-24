@@ -68,7 +68,7 @@ public class FindStrainsActivity extends MainActivity {
 
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
-		FindStrainsItemData itemsData[] = new FindStrainsItemData[5];
+		final FindStrainsItemData itemsData[] = new FindStrainsItemData[5];
 		for (int i = 0; i < 5; i++) {
             itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i+2));
 		}
@@ -78,50 +78,14 @@ public class FindStrainsActivity extends MainActivity {
 		recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
 
-        // Todo: Define all of this junk in a loop for all of the buttons and groups IDs...possible?
-/*        // Relaxed
-        final RadioButton relaxedIgnoreRadioBtn = findViewById(R.id.relaxed_ignore);
-        final RadioButton relaxedMaxRadioBtn = findViewById(R.id.relaxed_max);
-        final RadioButton relaxedMinRadioBtn = findViewById(R.id.relaxed_min);
-        // Happy
-        final RadioButton happyIgnoreRadioBtn = findViewById(R.id.happy_ignore);
-        final RadioButton happyMaxRadioBtn = findViewById(R.id.happy_max);
-        final RadioButton happyMinRadioBtn = findViewById(R.id.happy_min);
-        // Hungry
-        final RadioButton hungryIgnoreRadioBtn = findViewById(R.id.hungry_ignore);
-        final RadioButton hungryMaxRadioBtn = findViewById(R.id.hungry_max);
-        final RadioButton hungryMinRadioBtn = findViewById(R.id.hungry_min);
-        // Dry Eyes
-        final RadioButton dryEyesIgnoreRadioBtn = findViewById(R.id.dryEyes_ignore);
-        final RadioButton dryEyesMaxRadioBtn = findViewById(R.id.dryEyes_max);
-        final RadioButton dryEyesMinRadioBtn = findViewById(R.id.dryEyes_min);
-        // Dry Mouth
-        final RadioButton dryMouthIgnoreRadioBtn = findViewById(R.id.dryMouth_ignore);
-        final RadioButton dryMouthMaxRadioBtn = findViewById(R.id.dryMouth_max);
-        final RadioButton dryMouthMinRadioBtn = findViewById(R.id.dryMouth_min);
-        // Dizzy
-        final RadioButton dizzyIgnoreRadioBtn = findViewById(R.id.dizzy_ignore);
-        final RadioButton dizzyMaxRadioBtn = findViewById(R.id.dizzy_max);
-        final RadioButton dizzyMinRadioBtn = findViewById(R.id.dizzy_min);
-
-
-        // Keep radio buttons selected same as the previous selection.
-        // Todo: Define all of this junk in a loop for all of the buttons and groups IDs...possible?
-        setDefaultRadioButtonSelection(relaxedBtnSelected, relaxedMinRadioBtn, relaxedMaxRadioBtn, relaxedIgnoreRadioBtn);
-        setDefaultRadioButtonSelection(happyBtnSelected, happyMinRadioBtn, happyMaxRadioBtn, happyIgnoreRadioBtn);
-        setDefaultRadioButtonSelection(hungryBtnSelected, hungryMinRadioBtn, hungryMaxRadioBtn, hungryIgnoreRadioBtn);
-        setDefaultRadioButtonSelection(dryEyesBtnSelected, dryEyesMinRadioBtn, dryEyesMaxRadioBtn, dryEyesIgnoreRadioBtn);
-        setDefaultRadioButtonSelection(dryMouthBtnSelected, dryMouthMinRadioBtn, dryMouthMaxRadioBtn, dryMouthIgnoreRadioBtn);
-        setDefaultRadioButtonSelection(dizzyBtnSelected, dizzyMinRadioBtn, dizzyMaxRadioBtn, dizzyIgnoreRadioBtn);*/
-
-
         //******************************************************************************************
-        // Event: Click Button - "Start Search"
+        // Start Search Clicked
         //******************************************************************************************
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-/*                // Start out with a list of all strains.
+            	// Old code below
+/*              // Start out with a list of all strains.
                 String[] filteredArray = getAllStrainNames();
 
                 // Create an array for all radio buttons.
@@ -139,13 +103,21 @@ public class FindStrainsActivity extends MainActivity {
                 finalArray = new String[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
                 */
+
+
+				// new code
+				// for all elements in the itemsData array, printout which elements are clicked
+				for (int i = 0; i < itemsData.length; i++) {
+					Log.d("plmxdgs", "" + itemsData[i].getFilter());
+				}
+
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
 
 
         //******************************************************************************************
-        // Event: Click Button - "Main Page"
+        // Main Page Clicked
         //******************************************************************************************
         mainPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +127,9 @@ public class FindStrainsActivity extends MainActivity {
         }); //**************************************************************************************
 
 
-        // perform seek bar change listener event used for getting the progress value
+		//******************************************************************************************
+		// Seek Bar: Perform seek bar change listener event used for getting the progress value
+		//******************************************************************************************
         searchIntensitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             // Localized variables
             int progressChangedValue = startingValue;
@@ -174,144 +148,7 @@ public class FindStrainsActivity extends MainActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 searchIntensityValue.setText("Search Intensity: " + progressChangedValue);
             }
-        });
-
-
-/*		// 'Relaxed' Buttons
-		relaxedIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				relaxedBtnSelected = IGNORE;
-			}
-		});
-
-		relaxedMinRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				relaxedBtnSelected = MIN;
-			}
-		});
-
-		relaxedMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				relaxedBtnSelected = MAX;
-			}
-		});
-
-		// 'Happy' Buttons
-		happyIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				happyBtnSelected = IGNORE;
-			}
-		});
-
-		happyMinRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				happyBtnSelected = MIN;
-			}
-		});
-
-		happyMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				happyBtnSelected = MAX;
-			}
-		});
-
-
-		// 'Hungry' Buttons
-		hungryIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				hungryBtnSelected = IGNORE;
-			}
-		});
-
-		hungryMinRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				hungryBtnSelected = MIN;
-			}
-		});
-
-		hungryMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				hungryBtnSelected = MAX;
-			}
-		});
-
-
-		// 'Dry Eyes' Buttons
-		dryEyesIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dryEyesBtnSelected = IGNORE;
-			}
-		});
-
-		dryEyesMinRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dryEyesBtnSelected = MIN;
-			}
-		});
-
-		dryEyesMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dryEyesBtnSelected = MAX;
-			}
-		});
-
-
-		// 'Dry Mouth' Buttons
-		dryMouthIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dryMouthBtnSelected = IGNORE;
-			}
-		});
-
-		dryMouthMinRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dryMouthBtnSelected = MIN;
-			}
-		});
-
-		dryMouthMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dryMouthBtnSelected = MAX;
-			}
-		});
-
-
-		// 'Dizzy' Buttons
-		dizzyIgnoreRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dizzyBtnSelected = IGNORE;
-			}
-		});
-
-		dizzyMinRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dizzyBtnSelected = MIN;
-			}
-		});
-
-		dizzyMaxRadioBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dizzyBtnSelected = MAX;
-			}
-		});*/
+        }); //**************************************************************************************
 	} //********************************************************************************************
 
 
