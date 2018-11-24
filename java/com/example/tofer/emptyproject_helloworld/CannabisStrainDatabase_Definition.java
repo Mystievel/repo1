@@ -46,15 +46,6 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 			case HUNGRY:
 				getEffect = getEffectsHungry();
 				break;
-			case DRY_EYES:
-				getEffect = getEffectsDryEyes();
-				break;
-			case DRY_MOUTH:
-				getEffect = getEffectsDryMouth();
-				break;
-			case DIZZY:
-				getEffect = getEffectsDizzy();
-				break;
 			default:
 				getEffect = -1;
 				break;

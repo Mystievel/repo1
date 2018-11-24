@@ -35,12 +35,13 @@ public class FindStrainsActivity extends MainActivity {
     final static int RELAXED = 1;
     final static int HAPPY = 2;
     final static int HUNGRY = 3;
-    final static int DRY_EYES = 4;
-    final static int DRY_MOUTH = 5;
-    final static int DIZZY = 6;
-    final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY};
+    final static int SLEEPY = 4;
+    final static int CREATIVE = 5;
+	final static int ENERGETIC = 6;
+	final static int EUPHORIC = 7;
+    final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
 
-    final String[] effectList = new String[]{"Relaxed", "Happy", "Hungry"};
+    final String[] effectList = new String[]{"Relaxed", "Happy", "Hungry", "Sleepy", "Creative", "Energetic", "Euphoric"};
 
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;
@@ -67,15 +68,15 @@ public class FindStrainsActivity extends MainActivity {
 
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
-		FindStrainsItemData itemsData[] = new FindStrainsItemData[effectList.length];
-		for (int i = 0; i < effectList.length; i++) {
-            itemsData[i] = new FindStrainsItemData("" + effectList[i]);
+		FindStrainsItemData itemsData[] = new FindStrainsItemData[5];
+		for (int i = 0; i < 5; i++) {
+            itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i+2));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
 		recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
 		recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
-		
+
 
         // Todo: Define all of this junk in a loop for all of the buttons and groups IDs...possible?
 /*        // Relaxed

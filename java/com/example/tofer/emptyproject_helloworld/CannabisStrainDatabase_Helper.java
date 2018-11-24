@@ -54,9 +54,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final String COLUMN_2 = "effectsRelaxed";
     private static final String COLUMN_3 = "effectsHappy";
     private static final String COLUMN_4 = "effectsHungry";
-    private static final String COLUMN_5 = "effectsDryEyes";
-    private static final String COLUMN_6 = "effectsDryMouth";
-    private static final String COLUMN_7 = "effectsDizzy";
     private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4};
 
     // Add a strain to the database.
@@ -152,4 +149,12 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         int count = 13;
         return count;
     }
+
+    // Returns the titles of the Strain Database table.
+	public String getStrainDatabaseColumnTitles(int i) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(TABLE_TITLE, null, null, null, null, null, null);
+		String column[] = cursor.getColumnNames();
+		return column[i];
+	}
 }
