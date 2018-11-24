@@ -18,7 +18,6 @@ import android.widget.Toast;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 // Todo: make each radiobutton a label "ignore" "min" "max" not just circle, show when selected
-// Todo: Better text in list, ex: effectHungry --> Hungry
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
@@ -97,7 +96,6 @@ public class FindStrainsActivity extends MainActivity {
                 }
 
                 // Reduce the array to non-null values only.
-                // Todo fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
                 finalArraySize = getFinalArraySize(filteredArray, db);
                 finalArray = new String[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
@@ -169,8 +167,6 @@ public class FindStrainsActivity extends MainActivity {
 	// Search a single column within a database, make invalid entries == "" (null), and return the final array.
 	// How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
 	// Later we take out all "" (null) entries, so we know the array length = database entries.
-	//
-	// todo find the 'null' list item bug. is it in this method?
 	//**********************************************************************************************
 	public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, String[] originalArray) {
 		// Declare local variables

@@ -18,8 +18,6 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 
 	// Create new views (invoked by the layout manager)
 	@Override
-	// todo: view this https://www.codexpedia.com/android/defining-item-click-listener-for-recyclerview-in-android/
-	// todo: and this https://stackoverflow.com/questions/28296708/get-clicked-item-and-its-position-in-recyclerview
 	public FindStrainsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_strains_item_layout, null);
 		ViewHolder viewHolder = new ViewHolder(itemLayoutView);
@@ -36,7 +34,6 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 		viewHolder.effectLbl.setText(itemsData[position].getEffect());
 
 		// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
-		// TODO: After getting this working (individual radio btn click listeners) then test with 10+ items that info isnt lost or distorted while scrolling through the list.
 		viewHolder.effectsBtnGroup.check(position);
 		viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
