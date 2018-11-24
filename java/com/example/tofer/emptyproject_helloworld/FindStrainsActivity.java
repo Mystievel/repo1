@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
+// Todo: make each radiobutton a label "ignore" "min" "max" not just circle, show when selected
+// Todo: Better text in list, ex: effectHungry --> Hungry
+
 public class FindStrainsActivity extends MainActivity {
     // Defines
     int IGNORE = 0;
@@ -25,7 +28,10 @@ public class FindStrainsActivity extends MainActivity {
     String BLANK_ENTRY = "";
 
     // Local variables
-    final static int RELAXED = 1;
+	static int startingValue = 50;
+	static int progressChangedValue = startingValue;
+
+	final static int RELAXED = 1;
     final static int HAPPY = 2;
     final static int HUNGRY = 3;
     final static int SLEEPY = 4;
@@ -46,11 +52,10 @@ public class FindStrainsActivity extends MainActivity {
         setContentView(R.layout.activity_findstrains);
 
         // Initiate Views
-        final int startingValue = 95;
         searchIntensitySeekBar = findViewById(R.id.seekBarSearchIntensity);
-        searchIntensitySeekBar.setProgress(startingValue);
+        searchIntensitySeekBar.setProgress(progressChangedValue);
         searchIntensityValue = findViewById(R.id.lblSearchIntensity);
-        searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress());
+        searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress() + "%");
 
         // Setup Button variables
         Button searchButton = findViewById(R.id.btnStartSearch);
@@ -109,9 +114,6 @@ public class FindStrainsActivity extends MainActivity {
 		// Seek Bar: Perform seek bar change listener event used for getting the progress value
 		//******************************************************************************************
         searchIntensitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            // Localized variables
-            int progressChangedValue = startingValue;
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
@@ -119,12 +121,12 @@ public class FindStrainsActivity extends MainActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                searchIntensityValue.setText("Search Intensity: " + progressChangedValue);
+                searchIntensityValue.setText("Search Intensity: " + progressChangedValue + "%");
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                searchIntensityValue.setText("Search Intensity: " + progressChangedValue);
+                searchIntensityValue.setText("Search Intensity: " + progressChangedValue + "%");
             }
         }); //**************************************************************************************
 	} //********************************************************************************************
@@ -160,7 +162,7 @@ public class FindStrainsActivity extends MainActivity {
 
 		if (btnResult == MIN) {
 			for (index = 0; index < databaseRows; index++) {
-				if (db.getStrainData(index + 1).getEffect(effect) < 0.5) {
+				if (db.getStrainData(index + 1).getEffect(effect) < (1 - progressChangedValue/100)) {
 					if (originalArray[index] == BLANK_ENTRY) {
 						newArray[index] = BLANK_ENTRY;
 					} else {
@@ -172,7 +174,7 @@ public class FindStrainsActivity extends MainActivity {
 			}
 		} else if (btnResult == MAX) {
 			for (index = 0; index < databaseRows; index++) {
-				if (db.getStrainData(index + 1).getEffect(effect) >= 0.5) {
+				if (db.getStrainData(index + 1).getEffect(effect) >= (progressChangedValue/100)) {
 					if (originalArray[index] == BLANK_ENTRY) {
 						newArray[index] = BLANK_ENTRY;
 					} else {

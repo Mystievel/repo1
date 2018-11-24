@@ -5,10 +5,10 @@ import android.util.Log;
 
 public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 	private int id;
-	private String strainName;
-	private double effectsRelaxed;
-	private double effectsHappy;
-	private double effectsHungry;
+	private String StrainName;
+	private double Relaxed;
+	private double Happy;
+	private double Hungry;
 	private double effectsDryEyes;
 	private double effectsDryMouth;
 	private double effectsDizzy;
@@ -26,10 +26,10 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 
 	// Strain Name
 	public String getStrainName() {
-		return strainName;
+		return StrainName;
 	}
 	public void setStrainName(String strainName) {
-		this.strainName = strainName;
+		this.StrainName = strainName;
 	}
 
 
@@ -70,27 +70,27 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 	}
 
 	public double getEffectsRelaxed() {
-		return effectsRelaxed;
+		return Relaxed;
 	}
 
 	public void setEffectsRelaxed(double data) {
-		this.effectsRelaxed = data;
+		this.Relaxed = data;
 	}
 
 	public double getEffectsHappy() {
-		return effectsHappy;
+		return Happy;
 	}
 
 	public void setEffectsHappy(double data) {
-		this.effectsHappy = data;
+		this.Happy = data;
 	}
 
 	public double getEffectsHungry() {
-		return effectsHungry;
+		return Hungry;
 	}
 
 	public void setEffectsHungry(double data) {
-		this.effectsHungry= data;
+		this.Hungry= data;
 	}
 
 	public double getEffectsDryEyes() {

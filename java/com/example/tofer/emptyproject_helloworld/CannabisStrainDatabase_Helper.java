@@ -50,10 +50,10 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // Strain Database (Table) Columns names
     // These values MUST match the Strings in the db definition file.
     private static final String _ID = "id";
-    private static final String COLUMN_1 = "strainName";
-    private static final String COLUMN_2 = "effectsRelaxed";
-    private static final String COLUMN_3 = "effectsHappy";
-    private static final String COLUMN_4 = "effectsHungry";
+    private static final String COLUMN_1 = "StrainName";
+    private static final String COLUMN_2 = "Relaxed";
+    private static final String COLUMN_3 = "Happy";
+    private static final String COLUMN_4 = "Hungry";
     private static final String[] COLUMNS = {_ID, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4};
 
     // Add a strain to the database.
