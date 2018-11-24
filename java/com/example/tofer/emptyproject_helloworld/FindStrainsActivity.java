@@ -75,38 +75,7 @@ public class FindStrainsActivity extends MainActivity {
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
 		recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
 		recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
-
-
-
-/*		// That below does NOT work
-		RadioButton ignoreBtn = findViewById(R.id.effect_ignore);
-		RadioButton minBtn = findViewById(R.id.effect_min);
-		RadioButton maxBtn = findViewById(R.id.effect_max);
-
-		ignoreBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Log.d("RecyclerViewItemClicked", "Ignore Clicked");
-			}
-		});
-
-		minBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Log.d("RecyclerViewItemClicked", "Min Clicked");
-			}
-		});
-
-		maxBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Log.d("RecyclerViewItemClicked", "Max Clicked");
-			}
-		});*/
-
-
-
-
+		
 
         // Todo: Define all of this junk in a loop for all of the buttons and groups IDs...possible?
 /*        // Relaxed
