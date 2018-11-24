@@ -25,13 +25,6 @@ public class FindStrainsActivity extends MainActivity {
     String BLANK_ENTRY = "";
 
     // Local variables
-    static int relaxedBtnSelected;
-    static int happyBtnSelected;
-    static int hungryBtnSelected;
-    static int dryEyesBtnSelected;
-    static int dryMouthBtnSelected;
-    static int dizzyBtnSelected;
-    static int[] effectsBtnSelected;
     final static int RELAXED = 1;
     final static int HAPPY = 2;
     final static int HUNGRY = 3;
@@ -40,8 +33,6 @@ public class FindStrainsActivity extends MainActivity {
 	final static int ENERGETIC = 6;
 	final static int EUPHORIC = 7;
     final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
-
-    final String[] effectList = new String[]{"Relaxed", "Happy", "Hungry", "Sleepy", "Creative", "Energetic", "Euphoric"};
 
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
     private TextView searchIntensityValue;
@@ -68,8 +59,8 @@ public class FindStrainsActivity extends MainActivity {
 
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
-		final FindStrainsItemData itemsData[] = new FindStrainsItemData[5];
-		for (int i = 0; i < 5; i++) {
+		final FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
+		for (int i = 0; i < 3; i++) {
             itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i+2));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
@@ -84,32 +75,19 @@ public class FindStrainsActivity extends MainActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            	// Old code below
-/*              // Start out with a list of all strains.
+				// Start out with a list of all strains.
                 String[] filteredArray = getAllStrainNames();
 
-                // Create an array for all radio buttons.
-                effectsBtnSelected = new int[]{relaxedBtnSelected, happyBtnSelected, hungryBtnSelected, dryEyesBtnSelected, dryMouthBtnSelected, dizzyBtnSelected};
-
                 // Loop through the buttons array and filter based on each buttons' selection.
-                for (int i = 0; i < effectsBtnSelected.length; i++) {
-                    filteredArray = filterArrayByColumn(effectsBtnSelected[i], db, effectsArray[i], filteredArray);
+                for (int i = 0; i < itemsData.length; i++) {
+                    filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
                 }
 
                 // Reduce the array to non-null values only.
                 // Todo fix odd bug, if you scroll down in the final list you'll see a lot of null values. not sure exactly how many.
                 finalArraySize = getFinalArraySize(filteredArray, db);
-                //Log.d("asdkljsdglkj", finalArraySize + "");
                 finalArray = new String[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
-                */
-
-
-				// new code
-				// for all elements in the itemsData array, printout which elements are clicked
-				for (int i = 0; i < itemsData.length; i++) {
-					Log.d("plmxdgs", "" + itemsData[i].getFilter());
-				}
 
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
@@ -162,20 +140,6 @@ public class FindStrainsActivity extends MainActivity {
 		}
 		return allStrainNames;
 	}
-
-
-	//**********************************************************************************************
-	//                              Set Default Radio Button Selection
-	//**********************************************************************************************
-	public void setDefaultRadioButtonSelection(int btnSelection, RadioButton minBtn, RadioButton maxBtn, RadioButton ignoreBtn) {
-		if (btnSelection == MIN) {
-			minBtn.setChecked(true);
-		} else if (btnSelection == MAX) {
-			maxBtn.setChecked(true);
-		} else {
-			ignoreBtn.setChecked(true);
-		}
-	} //********************************************************************************************
 
 
 	//**********************************************************************************************
