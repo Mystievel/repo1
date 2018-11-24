@@ -84,10 +84,16 @@ public class FindStrainsActivity extends MainActivity {
                 String[] filteredArray = getAllStrainNames();
 
                 Log.d("ItemLength", "" + itemsData.length);
+				Log.d("FilteredArrayIndex 02", "" + filteredArray[2]);
 
                 // Loop through the buttons array and filter based on each buttons' selection.
                 for (int i = 0; i < itemsData.length; i++) {
                     filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
+
+					Log.d("FilteredArraySize", "" + getFinalArraySize(filteredArray, db));
+					//Log.d("FilteredArrayIndex 2", "" + filteredArray[2]); // not working
+					//Log.d("FilteredArrayIndex 25", "" + filteredArray[25]); // not working
+					//Log.d("FilteredArrayIndex 60", "" + filteredArray[60]); // not working
                 }
 
                 // Reduce the array to non-null values only.
@@ -95,7 +101,10 @@ public class FindStrainsActivity extends MainActivity {
                 finalArraySize = getFinalArraySize(filteredArray, db);
                 finalArray = new String[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
-
+                Log.d("FinalArraySize", "" + finalArraySize);
+                Log.d("FinalArrayIndex 2", "" + finalArray[2]);
+				Log.d("FinalArrayIndex 25", "" + finalArray[25]);
+				Log.d("FinalArrayIndex 60", "" + finalArray[60]);
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
@@ -136,13 +145,20 @@ public class FindStrainsActivity extends MainActivity {
 
 	//**********************************************************************************************
 	//                    Gets any single Column from the Strains Database
+	// todo: see todo below or move items into database rather than memory.
+	//https://stackoverflow.com/questions/24121589/how-to-iterate-through-very-large-string-arrays-in-android
+	//
+	// todo: instead of getting all strains at once, get just the n amount that are shown on the screen
+	// due to the recycler view loading, this will speed up the searching too (must also be applied to
+	// the searching routines too! This is not an easy task but is recommended for speed improvments.
+	// https://developer.android.com/training/articles/perf-tips
 	//**********************************************************************************************
 	public String[] getAllStrainNames() {
 		String[] allStrainNames = new String[(int) db.getStrainDatabaseRows()];
 		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
 			allStrainNames[i] = db.getStrainData(i+1).getStrainName();
 		}
-		Log.d("getAllStrainNames()", "Got all strains.");
+		//Log.d("getAllStrainNames()", "Got all strains.");
 		return allStrainNames;
 	}
 
@@ -167,46 +183,50 @@ public class FindStrainsActivity extends MainActivity {
 
 		if (btnResult == MIN) {
 			for (index = 0; index < databaseRows; index++) {
-				//Log.d("minSelected", "Min is on effect #: " + effect + ".");
 				effectResult = db.getStrainData(index + 1).getEffect(effect);
+				Log.d("minSelected", "Min is selected for effect #: " + effect + ". original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 				if (effectResult < minLimit) {
 					if (originalArray[index] == BLANK_ENTRY) {
 						newArray[index] = BLANK_ENTRY;
-						//Log.d("Keepminblank", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
+						Log.d("KeepMinFieldBlank", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 					} else {
 						newArray[index] = db.getStrainData(index + 1).getStrainName();
-						//Log.d("Keepminfield", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
+						Log.d("KeepMinField", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 					}
 				} else {
 					newArray[index] = BLANK_ENTRY;
-					//Log.d("makeminblank", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
+					Log.d("ScrapMinField", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 				}
-				//Log.d("filterArrayByColumnmin", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + db.getStrainData(index+1).getEffect(effect));
+				Log.d("filterArrayByColumnMin", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + db.getStrainData(index+1).getEffect(effect));
 			}
 		} else if (btnResult == MAX) {
-			//Log.d("maxSelected", "Max is on effect #: " + effect + ".");
 			for (index = 0; index < databaseRows; index++) {
 				effectResult = db.getStrainData(index + 1).getEffect(effect);
+				Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + maxLimit);
 				if (effectResult >= maxLimit) {
 					if (originalArray[index] == BLANK_ENTRY) {
 						newArray[index] = BLANK_ENTRY;
+						Log.d("KeepMaxFieldBlank", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + maxLimit);
 					} else {
 						newArray[index] = db.getStrainData(index + 1).getStrainName();
+						Log.d("KeepMaxField", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + maxLimit);
 					}
 				} else {
 					newArray[index] = BLANK_ENTRY;
+					Log.d("ScrapMaxField", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + maxLimit);
 				}
-				//Log.d("filterArrayByColumnmax", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + db.getStrainData(index+1).getEffect(effect));
+				Log.d("filterArrayByColumnMax", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + db.getStrainData(index+1).getEffect(effect));
 			}
 		} else {
-			//Log.d("ignoreSelected", "Ignore is on effect #: " + effect + ".");
+			Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect + ".");
 			for (index = 0; index < databaseRows; index++) {
 				newArray[index] = db.getStrainData(index + 1).getStrainName();
 			}
 		}
 
 		// Return the reduced array
-		//Log.d("filterArrayByColumn()", "Filter x complete.");
+		//Log.d("filterArrayByColumn()", "Filter " + effect + " complete.");
+		//Log.d("arraysize", "" + getFinalArraySize(newArray, db));
 		return newArray;
 	} //********************************************************************************************
 
@@ -238,17 +258,22 @@ public class FindStrainsActivity extends MainActivity {
 		int databaseRows = (int) db.getStrainDatabaseRows();
 		int index;
 		int count = getFinalArraySize(filteredArray, db);
+		Log.d("reduceFilteredArrayCt", "Final array size: " + count);
 		int subtractor = 0;
 		String reducedArray[] = new String[databaseRows];
 
 		// Now populate the reducedArray without the blank items from the original array.
-		for (index = 0; index < count; index++) {
-			if (filteredArray[index] != BLANK_ENTRY) {
-				reducedArray[index - subtractor] = filteredArray[index];
-			} else {
+		for (index = 0; index < databaseRows; index++) {
+			if (filteredArray[index] == BLANK_ENTRY) {
 				subtractor++;
+				Log.d("reduceFilteredArrayIf", "Found blank at index: " + index + ". filteredArray = " + filteredArray[index] + ".");
+			} else {
+				reducedArray[index - subtractor] = filteredArray[index];
+				Log.d("reduceFilteredArrayEl", "index: " + (index - subtractor) + ". reducedArray " + reducedArray[index - subtractor] + ". filteredArray " + filteredArray[index]);
 			}
+			Log.d("subtractorMath", "index: " + index + ". subtractor: " + subtractor + ". difference: " + (index - subtractor));
 		}
+		Log.d("reduceFilteredArrayEnd", "Blanks found: " + subtractor + " out of " + getFinalArraySize(filteredArray, db) + " items.");
 		return reducedArray;
 	} //********************************************************************************************
 }
