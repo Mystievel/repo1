@@ -83,6 +83,8 @@ public class FindStrainsActivity extends MainActivity {
 				// Start out with a list of all strains.
                 String[] filteredArray = getAllStrainNames();
 
+                Log.d("ItemLength", "" + itemsData.length);
+
                 // Loop through the buttons array and filter based on each buttons' selection.
                 for (int i = 0; i < itemsData.length; i++) {
                     filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
@@ -140,6 +142,7 @@ public class FindStrainsActivity extends MainActivity {
 		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
 			allStrainNames[i] = db.getStrainData(i+1).getStrainName();
 		}
+		Log.d("getAllStrainNames()", "Got all strains.");
 		return allStrainNames;
 	}
 
@@ -151,30 +154,40 @@ public class FindStrainsActivity extends MainActivity {
 	// How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
 	// Later we take out all "" (null) entries, so we know the array length = database entries.
 	//
-	// Todo: Update "0.5" to something else (a percentile based off search intensity bar).
 	// todo find the 'null' list item bug. is it in this method?
 	//**********************************************************************************************
 	public String[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, String[] originalArray) {
 		// Declare local variables
 		int databaseRows = (int) db.getStrainDatabaseRows();
 		int index;
+		double minLimit = (1.0 - (progressChangedValue/100.0));
+		double maxLimit = (progressChangedValue/100.0);
+		double effectResult = 0;
 		String newArray[] = new String[databaseRows];
 
 		if (btnResult == MIN) {
 			for (index = 0; index < databaseRows; index++) {
-				if (db.getStrainData(index + 1).getEffect(effect) < (1 - progressChangedValue/100)) {
+				//Log.d("minSelected", "Min is on effect #: " + effect + ".");
+				effectResult = db.getStrainData(index + 1).getEffect(effect);
+				if (effectResult < minLimit) {
 					if (originalArray[index] == BLANK_ENTRY) {
 						newArray[index] = BLANK_ENTRY;
+						//Log.d("Keepminblank", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 					} else {
 						newArray[index] = db.getStrainData(index + 1).getStrainName();
+						//Log.d("Keepminfield", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 					}
 				} else {
 					newArray[index] = BLANK_ENTRY;
+					//Log.d("makeminblank", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + effectResult + ". limit: " + minLimit);
 				}
+				//Log.d("filterArrayByColumnmin", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + db.getStrainData(index+1).getEffect(effect));
 			}
 		} else if (btnResult == MAX) {
+			//Log.d("maxSelected", "Max is on effect #: " + effect + ".");
 			for (index = 0; index < databaseRows; index++) {
-				if (db.getStrainData(index + 1).getEffect(effect) >= (progressChangedValue/100)) {
+				effectResult = db.getStrainData(index + 1).getEffect(effect);
+				if (effectResult >= maxLimit) {
 					if (originalArray[index] == BLANK_ENTRY) {
 						newArray[index] = BLANK_ENTRY;
 					} else {
@@ -183,14 +196,17 @@ public class FindStrainsActivity extends MainActivity {
 				} else {
 					newArray[index] = BLANK_ENTRY;
 				}
+				//Log.d("filterArrayByColumnmax", "original: " + originalArray[index] + ". new: " + newArray[index] + ". data: " + db.getStrainData(index+1).getEffect(effect));
 			}
 		} else {
+			//Log.d("ignoreSelected", "Ignore is on effect #: " + effect + ".");
 			for (index = 0; index < databaseRows; index++) {
 				newArray[index] = db.getStrainData(index + 1).getStrainName();
 			}
 		}
 
 		// Return the reduced array
+		//Log.d("filterArrayByColumn()", "Filter x complete.");
 		return newArray;
 	} //********************************************************************************************
 
