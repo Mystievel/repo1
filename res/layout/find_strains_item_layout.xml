@@ -8,12 +8,11 @@
 
     <!-- title -->
 	<RadioGroup
-		android:id="@+id/effectRadio"
+		android:id="@+id/effect_group"
 		android:layout_width="wrap_content"
 		android:layout_height="48dp"
 		android:layout_marginStart="39dp"
 		android:layout_marginEnd="8dp"
-		android:checkedButton="@+id/radioButton3"
 		android:orientation="horizontal"
 		android:visibility="visible"
 		app:layout_constraintEnd_toEndOf="parent"
