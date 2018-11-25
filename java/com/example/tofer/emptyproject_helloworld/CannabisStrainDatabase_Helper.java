@@ -43,8 +43,8 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     //------------------------------------------------------------------------------------------------------------------------------------------
 
     // Database table name
-    private static final String ALL_STRAINS_TABLE_TITLE = "CannabisStrainDatabase";
-    private static final String MY_STRAINS_TABLE_TITLE = "MyStrainsDatabase";
+    private static final String ALL_STRAINS_TABLE_TITLE = "CannabisStrainTable";
+    private static final String MY_STRAINS_TABLE_TITLE = "MyStrainsTable";
 
     // Strain Database (Table) Columns names
     // These values MUST match the Strings in the db definition file.
@@ -64,7 +64,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//----------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------
-
     //**********************************************************************************************
     // Add a strain to the database.
     //**********************************************************************************************
@@ -93,14 +92,14 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
-        Cursor cursor = db.query(MY_STRAINS_TABLE_TITLE,                    // a. table
-				MY_COLUMNS,                                // b. column names
-                " id = ?",                   // c. selections
-                new String[] {String.valueOf(id)},      // d. selections args
-                null,                           // e. group by
-                null,                           // f. having
-                null,                           // g. order by
-                null);                              // h. limit
+        Cursor cursor = db.query(MY_STRAINS_TABLE_TITLE,	// a. table
+				MY_COLUMNS,									// b. column names
+                " id = ?", 						// c. selections
+                new String[] {String.valueOf(id)},			// d. selections args
+                null,								// e. group by
+                null,								// f. having
+                null,								// g. order by
+                null);									// h. limit
 
         // 3. if we got results get the first one
         if (cursor != null) {
@@ -131,14 +130,14 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
-        Cursor cursor = db.query(ALL_STRAINS_TABLE_TITLE,                    // a. table
-				ALL_COLUMNS,                                // b. column names
-                        " id = ?",                   // c. selections
-                        new String[] {String.valueOf(id)},      // d. selections args
-                        null,                           // e. group by
-                        null,                           // f. having
-                        null,                           // g. order by
-                        null);                              // h. limit
+        Cursor cursor = db.query(ALL_STRAINS_TABLE_TITLE,		// a. table
+				ALL_COLUMNS,									// b. column names
+                        " id = ?",						// c. selections
+                        new String[] {String.valueOf(id)},     	// d. selections args
+                        null,							// e. group by
+                        null,							// f. having
+                        null,							// g. order by
+                        null);								// h. limit
 
         // 3. if we got results get the first one
         if (cursor != null) {
