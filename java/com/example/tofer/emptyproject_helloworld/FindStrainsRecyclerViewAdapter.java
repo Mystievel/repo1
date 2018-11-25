@@ -91,6 +91,8 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 		@Override
 		public void onClick(View view) {
 			int position = getLayoutPosition();
+			// get ID of the item clicked on
+			// Add to TABLE "MY_STRAINS_TABLE"
 			Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
 		}
 	} //********************************************************************************************

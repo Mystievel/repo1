@@ -13,10 +13,8 @@ import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
     private List resultsList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private ResultsRecyclerViewAdapter mAdapter;
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);

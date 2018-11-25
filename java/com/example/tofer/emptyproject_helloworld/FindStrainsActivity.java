@@ -40,6 +40,7 @@ public class FindStrainsActivity extends MainActivity {
     final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
 
     final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
+
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
     static int finalArraySize;
