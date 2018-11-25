@@ -91,7 +91,7 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 		@Override
 		public void onClick(View view) {
 			int position = getLayoutPosition();
-			Log.d("RecyclerViewItemClicked", "Item # Clicked: " + String.valueOf(position) + ".");
+			Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
 		}
 	} //********************************************************************************************
 

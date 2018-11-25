@@ -1,9 +1,11 @@
 package com.example.tofer.emptyproject_helloworld;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecyclerViewAdapter.ViewHolder> {
@@ -45,14 +47,24 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
     //**********************************************************************************************
     // View Holder: Inner class to hold a reference to each item of RecyclerView
     //**********************************************************************************************
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtViewTitle;
         public TextView txtViewDescription;
+        public Button btnAddToMyStrains;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.item_title);
-            txtViewDescription = (TextView) itemLayoutView.findViewById(R.id.item_description);
+            txtViewTitle = itemLayoutView.findViewById(R.id.item_title);
+            txtViewDescription = itemLayoutView.findViewById(R.id.item_description);
+            btnAddToMyStrains = itemLayoutView.findViewById(R.id.btnAddToMyStrains);
+            btnAddToMyStrains.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+        }
+
+        // Use this method to determine which item in the recyclerView was clicked
+        @Override
+        public void onClick(View view) {
+            int position = getLayoutPosition();
+            Log.d("ResultsRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
         }
     } //********************************************************************************************
 
