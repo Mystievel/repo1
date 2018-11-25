@@ -10,19 +10,28 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStrainsRecyclerViewAdapter.ViewHolder> {
+	// Local variables
 	private FindStrainsItemData[] itemsData;
 
+
+	//**********************************************************************************************
+	// Create Adapter
+	//**********************************************************************************************
 	public FindStrainsRecyclerViewAdapter(FindStrainsItemData[] itemsData) {
 		this.itemsData = itemsData;
-	}
+	} //********************************************************************************************
 
+
+	//**********************************************************************************************
 	// Create new views (invoked by the layout manager)
+	//**********************************************************************************************
 	@Override
 	public FindStrainsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_strains_item_layout, null);
 		ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 		return viewHolder;
-	}
+	} //********************************************************************************************
+
 
 	//**********************************************************************************************
 	// Bind View Holder: Replace the contents of a view (invoked by the layout manager)
@@ -85,8 +94,6 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 			Log.d("RecyclerViewItemClicked", "Item # Clicked: " + String.valueOf(position) + ".");
 		}
 	} //********************************************************************************************
-
-
 
 
 	// Return the size of your itemsData (invoked by the layout manager)

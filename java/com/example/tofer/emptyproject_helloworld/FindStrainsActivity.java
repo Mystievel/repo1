@@ -27,7 +27,7 @@ public class FindStrainsActivity extends MainActivity {
     String BLANK_ENTRY = "";
 
     // Local variables
-	static int startingValue = 50;
+	static int startingValue = 75;
 	static int progressChangedValue = startingValue;
 
 	final static int RELAXED = 1;
@@ -268,14 +268,14 @@ public class FindStrainsActivity extends MainActivity {
 				subtractor++;
 				Log.d("reduceFilteredArrayIf", "Found blank at index: " + index + ". filteredArray = " + filteredArray[index].getStrainName() + ".");
 			} else {
-				reducedArray[index - subtractor] = new FilteredArray(db.getStrainData(index - subtractor).getStrainId() + 0, "" + db.getStrainData(index - subtractor).getStrainName());
-				Log.d("reduceFilteredArrayEl", "index: " + (index - subtractor) + ". reducedArray " + reducedArray[index - subtractor] + ". filteredArray " + filteredArray[index]);
+				reducedArray[index - subtractor] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + db.getStrainData(index + 0).getStrainName());
+				Log.d("reduceFilteredArrayEl", "index: " + (index - subtractor) + ". reducedArray " + reducedArray[index - subtractor].getStrainName() + ". filteredArray " + filteredArray[index].getStrainName());
 			}
 			Log.d("subtractorMath", "index: " + index + ". subtractor: " + subtractor + ". difference: " + (index - subtractor));
 		}
 
 		// Return the result
-		Log.d("reduceFilteredArrayEnd", "Blanks found: " + subtractor + " out of " + getFinalArraySize(filteredArray, db) + " items.");
+		Log.d("reduceFilteredArrayEnd", "Blanks found: " + subtractor + " out of " + databaseRows + " items.");
 		return reducedArray;
 	} //********************************************************************************************
 }
