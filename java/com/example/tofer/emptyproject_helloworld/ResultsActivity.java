@@ -22,11 +22,11 @@ public class ResultsActivity extends FindStrainsActivity {
         setContentView(R.layout.activity_results);
 
         // 1. get a reference to recyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.resultsList);
+        RecyclerView recyclerView = findViewById(R.id.resultsList);
 
         // Display filtered results in the RecyclerView.
-        ResultsItemData itemsData[] = new ResultsItemData[(int) finalArraySize];	// Populate Array size of reduced number of results.
-        for (int i = 0; i < finalArraySize; i++) {					// Check resulting array for all items in database.
+        ResultsItemData itemsData[] = new ResultsItemData[finalArraySize];	// Populate Array size of reduced number of results.
+        for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
             itemsData[i] = new ResultsItemData("" + finalArray[i], "Sativa/Indica/Hybrid");
         }
 
@@ -36,8 +36,8 @@ public class ResultsActivity extends FindStrainsActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
         // Buttons
-        Button btnMainPage = (Button)findViewById(R.id.btnMainPage);
-        Button btnReviseSearch = (Button)findViewById(R.id.btnReviseSearch);
+        Button btnMainPage = findViewById(R.id.btnMainPage);
+        Button btnReviseSearch = findViewById(R.id.btnReviseSearch);
 
         btnMainPage.setOnClickListener(new View.OnClickListener() {
             @Override
