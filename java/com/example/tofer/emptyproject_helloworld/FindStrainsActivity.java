@@ -80,7 +80,6 @@ public class FindStrainsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 				// Start out with a list of all strains.
-				// Todo make this a [x][y] 2D array, x = strainName y = id from db associated column
 				FilteredArray[] filteredArray = new FilteredArray[(int) db.getStrainDatabaseRows()];
 				filteredArray = getAllStrainNamesAndIDs(filteredArray);
 				Log.d("FObjName", "" + filteredArray[77].getStrainName());
@@ -267,9 +266,9 @@ public class FindStrainsActivity extends MainActivity {
 		for (index = 0; index < databaseRows; index++) {
 			if (filteredArray[index].getStrainName() == BLANK_ENTRY) {
 				subtractor++;
-				Log.d("reduceFilteredArrayIf", "Found blank at index: " + index + ". filteredArray = " + filteredArray[index] + ".");
+				Log.d("reduceFilteredArrayIf", "Found blank at index: " + index + ". filteredArray = " + filteredArray[index].getStrainName() + ".");
 			} else {
-				reducedArray[index - subtractor] = filteredArray[index];
+				reducedArray[index - subtractor] = new FilteredArray(db.getStrainData(index - subtractor).getStrainId() + 0, "" + db.getStrainData(index - subtractor).getStrainName());
 				Log.d("reduceFilteredArrayEl", "index: " + (index - subtractor) + ". reducedArray " + reducedArray[index - subtractor] + ". filteredArray " + filteredArray[index]);
 			}
 			Log.d("subtractorMath", "index: " + index + ". subtractor: " + subtractor + ". difference: " + (index - subtractor));
