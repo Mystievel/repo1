@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import static com.example.tofer.emptyproject_helloworld.FindStrainsActivity.buffer_addToMyStrains;
 import static com.example.tofer.emptyproject_helloworld.FindStrainsActivity.finalArray;
+import static com.example.tofer.emptyproject_helloworld.ResultsActivity.addToMyStrainsBuffer;
 
 
 public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecyclerViewAdapter.ViewHolder> {
@@ -65,13 +68,14 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition();
-            // todo finish making the association between clicking the btn and adding to mystrain database
-
-			//my_strains_db.getStrainData(position).addToMyStrains(position, "" + finalArray[position].getStrainName());
-
-            Log.d("ResultsRecViewClick", "Item # Clicked: " + String.valueOf(position) + ". ID# Clicked: " + finalArray[position].getId() + ". StrainName: " + finalArray[position].getStrainName());
+            // Todo: CONTINUE HERE - finish making the association between clicking the btn and adding to mystrain database, see setFilter
+			//db.getStrainData(position).addToMyStrains(position, "" + finalArray[position].getStrainName());
+			addToMyStrainsBuffer(position);
+            Log.d("ResultsRecViewClick", "Buffer: " + buffer_addToMyStrains);
         }
     } //********************************************************************************************
+
+
 
 
     // Return the size of your itemsData (invoked by the layout manager)

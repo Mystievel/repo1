@@ -45,6 +45,7 @@ public class FindStrainsActivity extends MainActivity {
     private SeekBar searchIntensitySeekBar;
     static int finalArraySize;
     static FilteredArray[] finalArray;
+    static String buffer_addToMyStrains;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

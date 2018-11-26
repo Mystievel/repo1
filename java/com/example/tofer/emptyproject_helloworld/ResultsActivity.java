@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,22 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
-    private List resultsList = new ArrayList<>();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        // Clear the strains buffer
+		buffer_addToMyStrains = "";
+
         // 1. get a reference to recyclerView
         RecyclerView recyclerView = findViewById(R.id.resultsList);
-
-        // Display filtered results in the RecyclerView.
         ResultsItemData itemsData[] = new ResultsItemData[finalArraySize];	// Populate Array size of reduced number of results.
         for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
             itemsData[i] = new ResultsItemData("" + finalArray[i].getStrainName(), "Sativa/Indica/Hybrid");
         }
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
@@ -51,5 +51,13 @@ public class ResultsActivity extends FindStrainsActivity {
             }
         });
     }
+
+	public static void addToMyStrainsBuffer(int position) {
+		if (buffer_addToMyStrains == "") {
+			buffer_addToMyStrains = String.valueOf(finalArray[position].getId());
+		} else {
+			buffer_addToMyStrains = buffer_addToMyStrains + ":" + String.valueOf(finalArray[position].getId());
+		}
+	}
 }
 

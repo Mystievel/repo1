@@ -13,7 +13,6 @@ public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStr
 	// Local variables
 	private FindStrainsItemData[] itemsData;
 
-
 	//**********************************************************************************************
 	// Create Adapter
 	//**********************************************************************************************
