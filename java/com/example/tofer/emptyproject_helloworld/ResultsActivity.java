@@ -26,7 +26,7 @@ public class ResultsActivity extends FindStrainsActivity {
         RecyclerView recyclerView = findViewById(R.id.resultsList);
         ResultsItemData itemsData[] = new ResultsItemData[finalArraySize];	// Populate Array size of reduced number of results.
         for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
-            itemsData[i] = new ResultsItemData("" + finalArray[i].getStrainName(), "Sativa/Indica/Hybrid");
+            itemsData[i] = new ResultsItemData("" + db.getStrainData(finalArray[i].getId()).getStrainName(), "" + db.getStrainData(finalArray[i].getId()).getStrainType());
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -52,6 +52,7 @@ public class ResultsActivity extends FindStrainsActivity {
         });
     }
 
+    // Todo: turn this into add item to database directly, need to add another column in db called "MyStrains" and possibly "Favorites"
 	public static void addToMyStrainsBuffer(int position) {
 		if (buffer_addToMyStrains == "") {
 			buffer_addToMyStrains = String.valueOf(finalArray[position].getId());

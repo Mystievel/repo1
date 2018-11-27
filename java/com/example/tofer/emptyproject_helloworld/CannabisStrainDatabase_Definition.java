@@ -6,6 +6,9 @@ import android.util.Log;
 public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 	private int id;
 	private String StrainName;
+	private String StrainType;
+	private int MyStrains;
+	private int FavoriteStrains;
 	private double Relaxed;
 	private double Happy;
 	private double Hungry;
@@ -24,12 +27,40 @@ public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
 		this.id = id;
 	}
 
+
 	// Strain Name
 	public String getStrainName() {
 		return StrainName;
 	}
 	public void setStrainName(String strainName) {
 		this.StrainName = strainName;
+	}
+
+
+	// Strain Type
+	public String getStrainType() {
+		return StrainType;
+	}
+	public void setStrainType(String strainType) {
+		this.StrainType = strainType;
+	}
+
+
+	// My Strains
+	public int getMyStrains() {
+		return MyStrains;
+	}
+	public void setMyStrains(int myStrain) {
+		this.MyStrains = myStrain;
+	}
+
+
+	// Favorite Strains
+	public int getFavoriteStrains() {
+		return FavoriteStrains;
+	}
+	public void setFavoriteStrains(int favoriteStrain) {
+		this.FavoriteStrains = favoriteStrain;
 	}
 
 
