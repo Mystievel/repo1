@@ -1,7 +1,6 @@
 package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 // Todo: make each radiobutton a label "ignore" "min" "max" not just circle, show when selected
 
@@ -24,7 +18,7 @@ public class FindStrainsActivity extends MainActivity {
     int IGNORE = 0;
     int MIN = 1;
     int MAX = 2;
-    String BLANK_ENTRY = "";
+    int BLANK_ENTRY = -1;
 
     // Local variables
 	static int startingValue = 75;
@@ -44,7 +38,7 @@ public class FindStrainsActivity extends MainActivity {
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
     static int finalArraySize;
-    static FilteredArray[] finalArray;
+    static int[] finalArray;
     static String buffer_addToMyStrains;
 
     @Override
@@ -67,7 +61,7 @@ public class FindStrainsActivity extends MainActivity {
 		RecyclerView recyclerView = findViewById(R.id.searchList);
 		final FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
 		for (int i = 0; i < 3; i++) {
-            itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i+2));
+            itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i + 5));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -82,10 +76,10 @@ public class FindStrainsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 				// Start out with a list of all strains.
-				FilteredArray[] filteredArray = new FilteredArray[(int) db.getStrainDatabaseRows()];
-				filteredArray = getAllStrainNamesAndIDs(filteredArray);
-				Log.d("FObjName", "" + filteredArray[77].getStrainName());
-				Log.d("FObjID", "" + filteredArray[77].getId());
+				int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
+				filteredArray = getAllStrainIDs(filteredArray);
+				Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());
+				Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());
 
                 //String[] filteredArray = getAllStrainNames();
 
@@ -104,12 +98,12 @@ public class FindStrainsActivity extends MainActivity {
 
                 // Reduce the array to non-null values only.
                 finalArraySize = getFinalArraySize(filteredArray, db);
-                finalArray = new FilteredArray[finalArraySize];
+                finalArray = new int[finalArraySize];
                 finalArray = reduceFilteredArray(filteredArray, db);
                 Log.d("FinalArraySize", "" + finalArraySize);
-                Log.d("FinalArrayIndex 2", "" + finalArray[2].getStrainName());
-				Log.d("FinalArrayIndex 25", "" + finalArray[25].getStrainName());
-				Log.d("FinalArrayIndex 60", "" + finalArray[60].getId());
+                Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
+				Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
+				Log.d("FinalArrayIndex 60", "" + db.getStrainData(finalArray[60]).getStrainName());
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
@@ -158,11 +152,11 @@ public class FindStrainsActivity extends MainActivity {
 	// the searching routines too! This is not an easy task but is recommended for speed improvments.
 	// https://developer.android.com/training/articles/perf-tips
 	//**********************************************************************************************
-	public FilteredArray[] getAllStrainNamesAndIDs(FilteredArray[] filteredArray) {
+	public int[] getAllStrainIDs(int[] filteredArray) {
 		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
-			filteredArray[i] = new FilteredArray(db.getStrainData(i + 0).getStrainId() + 0, "" + db.getStrainData(i + 0).getStrainName());
+			filteredArray[i] = db.getStrainData(i + 0).getStrainId();
 		}
-		//Log.d("getAllStrainNames()", "Got all strains.");
+		Log.d("getAllStrainIDs", "Got all strains.");
 		return filteredArray;
 	}
 
@@ -174,55 +168,55 @@ public class FindStrainsActivity extends MainActivity {
 	// How to call: filteredArray = reduceDBArrayByColumnSearch(relaxedBtnSelected);
 	// Later we take out all "" (null) entries, so we know the array length = database entries.
 	//**********************************************************************************************
-	public FilteredArray[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, FilteredArray[] originalArray) {
+	public int[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, int[] originalArray) {
 		// Declare local variables
 		int databaseRows = (int) db.getStrainDatabaseRows();
-		int index;
+		int i;
 		double minLimit = (1.0 - (progressChangedValue/100.0));
 		double maxLimit = (progressChangedValue/100.0);
 		double effectResult = 0;
-		FilteredArray newArray[] = new FilteredArray[databaseRows];
+		int newArray[] = new int[databaseRows];
 
 		if (btnResult == MIN) {
-			for (index = 0; index < databaseRows; index++) {
-				effectResult = db.getStrainData(index + 0).getEffect(effect);
-				Log.d("minSelected", "Min is selected for effect #: " + effect + ". original name: " + originalArray[index].getStrainName() + ". original id: " + originalArray[index].getId() + ". data: " + effectResult + ". limit: " + minLimit);
+			for (i = 0; i < databaseRows; i++) {
+				effectResult = db.getStrainData(i + 0).getEffect(effect);
+				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original name: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". original id: " + db.getStrainData(originalArray[i] + 0).getStrainId() + ". data: " + effectResult + ". limit: " + minLimit);
 				if (effectResult < minLimit) {
-					if (originalArray[index].getStrainName() == BLANK_ENTRY) {
-						newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + BLANK_ENTRY);
-						Log.d("KeepMinFieldBlank", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + effectResult + ". limit: " + minLimit);
+					if (originalArray[i] == BLANK_ENTRY) {
+						newArray[i] = BLANK_ENTRY;
+						//Log.d("KeepMinFieldBlank", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + minLimit);
 					} else {
-						newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + db.getStrainData(index + 0).getStrainName());
-						Log.d("KeepMinField", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + effectResult + ". limit: " + minLimit);
+						newArray[i] = db.getStrainData(i + 0).getStrainId();
+						//Log.d("KeepMinField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + db.getStrainData(newArray[i] + 0).getStrainName() + ". data: " + effectResult + ". limit: " + minLimit);
 					}
 				} else {
-					newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + BLANK_ENTRY);
-					Log.d("ScrapMinField", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + effectResult + ". limit: " + minLimit);
+					newArray[i] = BLANK_ENTRY;
+					//Log.d("ScrapMinField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + minLimit);
 				}
-				Log.d("filterArrayByColumnMin", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + db.getStrainData(index + 0).getEffect(effect));
+				//Log.d("filterArrayByColumnMin", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + db.getStrainData(newArray[i] + 0).getStrainId() + ". data: " + db.getStrainData(i + 0).getEffect(effect));
 			}
 		} else if (btnResult == MAX) {
-			for (index = 0; index < databaseRows; index++) {
-				effectResult = db.getStrainData(index + 0).getEffect(effect);
-				Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original name: " + originalArray[index].getStrainName() + ". original id: " + originalArray[index].getId() + ". data: " + effectResult + ". limit: " + maxLimit);
+			for (i = 0; i < databaseRows; i++) {
+				effectResult = db.getStrainData(i + 0).getEffect(effect);
+				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original name: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". original id: " + db.getStrainData(originalArray[i] + 0).getStrainId() + ". data: " + effectResult + ". limit: " + maxLimit);
 				if (effectResult >= maxLimit) {
-					if (originalArray[index].getStrainName() == BLANK_ENTRY) {
-						newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + BLANK_ENTRY);
-						Log.d("KeepMaxFieldBlank", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + effectResult + ". limit: " + maxLimit);
+					if (originalArray[i] == BLANK_ENTRY) {
+						newArray[i] = BLANK_ENTRY;
+						//Log.d("KeepMaxFieldBlank", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + maxLimit);
 					} else {
-						newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + db.getStrainData(index + 0).getStrainName());
-						Log.d("KeepMaxField", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + effectResult + ". limit: " + maxLimit);
+						newArray[i] = db.getStrainData(i + 0).getStrainId();
+						//Log.d("KeepMaxField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + maxLimit);
 					}
 				} else {
-					newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + BLANK_ENTRY);
-					Log.d("ScrapMaxField", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + effectResult + ". limit: " + maxLimit);
+					newArray[i] = BLANK_ENTRY;
+					//Log.d("ScrapMaxField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + maxLimit);
 				}
-				Log.d("filterArrayByColumnMax", "original: " + originalArray[index].getStrainName() + ". new: " + newArray[index].getStrainName() + ". data: " + db.getStrainData(index + 0).getEffect(effect));
+				//Log.d("filterArrayByColumnMax", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + db.getStrainData(newArray[i] + 0).getStrainName() + ". data: " + db.getStrainData(i + 0).getEffect(effect));
 			}
 		} else {
-			Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect + ".");
-			for (index = 0; index < databaseRows; index++) {
-				newArray[index] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + db.getStrainData(index + 0).getStrainName());
+			//Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect + ".");
+			for (i = 0; i < databaseRows; i++) {
+				newArray[i] = db.getStrainData(i + 0).getStrainId();
 			}
 		}
 
@@ -236,7 +230,7 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	//                             Get Filtered Array Size
 	//**********************************************************************************************
-	public int getFinalArraySize(FilteredArray[] filteredArray, CannabisStrainDatabase_Helper db) {
+	public int getFinalArraySize(int[] filteredArray, CannabisStrainDatabase_Helper db) {
 		// Declare local variables
 		int databaseRows = (int) db.getStrainDatabaseRows();
 		int index;
@@ -244,7 +238,7 @@ public class FindStrainsActivity extends MainActivity {
 
 		// get the size that the new array will be
 		for (index = 0; index < databaseRows; index++) {
-			if (filteredArray[index].getStrainName() != BLANK_ENTRY) {
+			if (filteredArray[index] != BLANK_ENTRY) {
 				count++;
 			}
 		}
@@ -255,25 +249,25 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	//                             Reduce Filtered Array
 	//**********************************************************************************************
-	public FilteredArray[] reduceFilteredArray(FilteredArray[] filteredArray, CannabisStrainDatabase_Helper db) {
+	public int[] reduceFilteredArray(int[] filteredArray, CannabisStrainDatabase_Helper db) {
 		// Declare local variables
 		int databaseRows = (int) db.getStrainDatabaseRows();
-		int index;
+		int i;
 		int count = getFinalArraySize(filteredArray, db);
 		Log.d("reduceFilteredArrayCt", "Final array size: " + count);
 		int subtractor = 0;
-		FilteredArray reducedArray[] = new FilteredArray[databaseRows];
+		int reducedArray[] = new int[databaseRows];
 
 		// Now populate the reducedArray without the blank items from the original array.
-		for (index = 0; index < databaseRows; index++) {
-			if (filteredArray[index].getStrainName() == BLANK_ENTRY) {
+		for (i = 0; i < databaseRows; i++) {
+			if (filteredArray[i] == BLANK_ENTRY) {
 				subtractor++;
-				Log.d("reduceFilteredArrayIf", "Found blank at index: " + index + ". filteredArray = " + filteredArray[index].getStrainName() + ".");
+				//Log.d("reduceFilteredArrayIf", "Found blank at index: " + i + ". filteredArray = " + db.getStrainData(filteredArray[i] + 0).getStrainName() + ".");
 			} else {
-				reducedArray[index - subtractor] = new FilteredArray(db.getStrainData(index + 0).getStrainId() + 0, "" + db.getStrainData(index + 0).getStrainName());
-				Log.d("reduceFilteredArrayEl", "index: " + (index - subtractor) + ". reducedArray " + reducedArray[index - subtractor].getStrainName() + ". filteredArray " + filteredArray[index].getStrainName());
+				reducedArray[i - subtractor] = db.getStrainData(filteredArray[i]).getStrainId();
+				//Log.d("reduceFilteredArrayEl", "index: " + (i - subtractor) + ". reducedArray " + db.getStrainData(reducedArray[i - subtractor] + 0).getStrainName() + ". filteredArray " + db.getStrainData(filteredArray[i] + 0).getStrainName());
 			}
-			Log.d("subtractorMath", "index: " + index + ". subtractor: " + subtractor + ". difference: " + (index - subtractor));
+			Log.d("subtractorMath", "index: " + i + ". subtractor: " + subtractor + ". difference: " + (i - subtractor));
 		}
 
 		// Return the result
