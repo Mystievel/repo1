@@ -19,6 +19,7 @@ public class FindStrainsActivity extends MainActivity {
     int MIN = 1;
     int MAX = 2;
     int BLANK_ENTRY = -1;
+    int EFFECTS_COL_START_INDEX = 5;
 
     // Local variables
 	static int startingValue = 75;
@@ -33,7 +34,7 @@ public class FindStrainsActivity extends MainActivity {
 	final static int EUPHORIC = 7;
     final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
 
-    final CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
+    public CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
 
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
@@ -41,7 +42,9 @@ public class FindStrainsActivity extends MainActivity {
     static int[] finalArray;
     static String buffer_addToMyStrains;
 
-    @Override
+	FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findstrains);
@@ -56,12 +59,10 @@ public class FindStrainsActivity extends MainActivity {
         Button searchButton = findViewById(R.id.btnStartSearch);
         Button mainPageButton = findViewById(R.id.btnMainPage);
 
-
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
-		final FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
 		for (int i = 0; i < 3; i++) {
-            itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i + 5));
+            itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -75,35 +76,7 @@ public class FindStrainsActivity extends MainActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				// Start out with a list of all strains.
-				int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
-				filteredArray = getAllStrainIDs(filteredArray);
-				Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());
-				Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());
-
-                //String[] filteredArray = getAllStrainNames();
-
-                //Log.d("ItemLength", "" + itemsData.length);
-				//Log.d("FilteredArrayIndex 02", "" + filteredArray[2]);
-
-                // Loop through the buttons array and filter based on each buttons' selection.
-                for (int i = 0; i < itemsData.length; i++) {
-                    filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
-
-					Log.d("FilteredArraySize", "" + getFinalArraySize(filteredArray, db));
-					//Log.d("FilteredArrayIndex 2", "" + filteredArray[2]); // not working
-					//Log.d("FilteredArrayIndex 25", "" + filteredArray[25]); // not working
-					//Log.d("FilteredArrayIndex 60", "" + filteredArray[60]); // not working
-                }
-
-                // Reduce the array to non-null values only.
-                finalArraySize = getFinalArraySize(filteredArray, db);
-                finalArray = new int[finalArraySize];
-                finalArray = reduceFilteredArray(filteredArray, db);
-                Log.d("FinalArraySize", "" + finalArraySize);
-                Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
-				Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
-				Log.d("FinalArrayIndex 60", "" + db.getStrainData(finalArray[60]).getStrainName());
+				finalArray = collectAndFilterAllStrainData();
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
@@ -143,6 +116,37 @@ public class FindStrainsActivity extends MainActivity {
 
 
 	//**********************************************************************************************
+	//                        Collect and Filter All Strain Data
+	//**********************************************************************************************
+	public int[] collectAndFilterAllStrainData() {
+		// Start out with a list of all strains.
+		int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
+		filteredArray = getAllStrainIDs(filteredArray);
+		Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());
+		Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());
+		Log.d("ItemLength", "" + itemsData.length);
+
+		// Loop through the buttons array and filter based on each buttons' selection.
+		for (int i = 0; i < itemsData.length; i++) {
+			filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
+			//Log.d("FilteredArraySize", "" + getFinalArraySize(filteredArray, db));
+		}
+
+		// Reduce the array to non-null values only.
+		finalArraySize = getFinalArraySize(filteredArray, db);
+		finalArray = new int[finalArraySize];
+		finalArray = reduceFilteredArray(filteredArray, db);
+		Log.d("FinalArraySize", "" + finalArraySize);
+		Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
+		Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
+		Log.d("FinalArrayIndex 60", "" + db.getStrainData(finalArray[60]).getStrainName());
+
+		// Return
+		return finalArray;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
 	//                    Gets any single Column from the Strains Database
 	// todo: see todo below or move items into database rather than memory.
 	//https://stackoverflow.com/questions/24121589/how-to-iterate-through-very-large-string-arrays-in-android
@@ -151,6 +155,10 @@ public class FindStrainsActivity extends MainActivity {
 	// due to the recycler view loading, this will speed up the searching too (must also be applied to
 	// the searching routines too! This is not an easy task but is recommended for speed improvments.
 	// https://developer.android.com/training/articles/perf-tips
+	//
+	// todo: Besides those listed above, maybe pull all strain data from the database once and store locally
+	//		into an array, will this speed things up rather than pulling from the database objects as we need
+	//		values?
 	//**********************************************************************************************
 	public int[] getAllStrainIDs(int[] filteredArray) {
 		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
@@ -158,7 +166,7 @@ public class FindStrainsActivity extends MainActivity {
 		}
 		Log.d("getAllStrainIDs", "Got all strains.");
 		return filteredArray;
-	}
+	} //********************************************************************************************
 
 
 	//**********************************************************************************************

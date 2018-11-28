@@ -56,11 +56,11 @@ public class ResultsActivity extends FindStrainsActivity {
 
     // Todo: turn this into add item to database directly, need to add another column in db called "MyStrains" and possibly "Favorites"
 	public static void addToMyStrainsBuffer(int position) {
-		/*if (buffer_addToMyStrains == "") {
-			buffer_addToMyStrains = String.valueOf(finalArray[position].getId());
+		if (buffer_addToMyStrains == "") {
+			buffer_addToMyStrains = String.valueOf(finalArray[position]);
 		} else {
-			buffer_addToMyStrains = buffer_addToMyStrains + ":" + String.valueOf(finalArray[position].getId());
-		}*/
+			buffer_addToMyStrains = buffer_addToMyStrains + ":" + String.valueOf(finalArray[position]);
+		}
 	}
 }
 
