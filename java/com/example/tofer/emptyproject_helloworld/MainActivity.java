@@ -12,6 +12,26 @@ import android.widget.Toast;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
+    // Global Defines
+    int IGNORE = 0;
+    int MIN = 1;
+    int MAX = 2;
+    int BLANK_ENTRY = -1;
+    final static int RELAXED = 1;
+    final static int HAPPY = 2;
+    final static int HUNGRY = 3;
+    final static int SLEEPY = 4;
+    final static int CREATIVE = 5;
+    final static int ENERGETIC = 6;
+    final static int EUPHORIC = 7;
+
+    // Globals
+    static int finalArraySize;
+    static int[] finalArray;
+    static String buffer_addToMyStrains;
+
+    public CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

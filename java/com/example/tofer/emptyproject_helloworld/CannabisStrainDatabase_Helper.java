@@ -163,6 +163,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(ALL_STRAINS_TABLE_TITLE, null, null, null, null, null, null);
 		String column[] = cursor.getColumnNames();
+		cursor.close();
 		return column[i];
 	}
 }

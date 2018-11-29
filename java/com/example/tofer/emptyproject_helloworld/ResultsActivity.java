@@ -13,13 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
-
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        // Clear the strains buffer
+        // Clear the strains buffer on create
 		buffer_addToMyStrains = "";
 
         // 1. get a reference to recyclerView

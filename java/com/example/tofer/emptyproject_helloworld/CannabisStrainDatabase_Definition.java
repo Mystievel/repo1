@@ -3,7 +3,7 @@ package com.example.tofer.emptyproject_helloworld;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class CannabisStrainDatabase_Definition extends FindStrainsActivity{
+public class CannabisStrainDatabase_Definition extends MainActivity{
 	private int id;
 	private String StrainName;
 	private String StrainType;

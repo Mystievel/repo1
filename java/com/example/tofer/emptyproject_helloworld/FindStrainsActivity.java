@@ -15,34 +15,16 @@ import android.widget.TextView;
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
-    int IGNORE = 0;
-    int MIN = 1;
-    int MAX = 2;
-    int BLANK_ENTRY = -1;
-    int EFFECTS_COL_START_INDEX = 5;
+    private int EFFECTS_COL_START_INDEX = 5;
 
     // Local variables
-	static int startingValue = 75;
-	static int progressChangedValue = startingValue;
-
-	final static int RELAXED = 1;
-    final static int HAPPY = 2;
-    final static int HUNGRY = 3;
-    final static int SLEEPY = 4;
-    final static int CREATIVE = 5;
-	final static int ENERGETIC = 6;
-	final static int EUPHORIC = 7;
-    final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
-
-    public CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
-
+	private static int startingValue = 75;
+	private static int progressChangedValue = startingValue;
+    private final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
-    static int finalArraySize;
-    static int[] finalArray;
-    static String buffer_addToMyStrains;
 
-	FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
+	private FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
