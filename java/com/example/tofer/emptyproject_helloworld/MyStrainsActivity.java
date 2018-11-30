@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+// todo add buttons across all pages? Make main activity just a start screen then go to my strains
+// todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
+
 public class MyStrainsActivity extends MainActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +46,14 @@ public class MyStrainsActivity extends MainActivity {
             }
         }); //**************************************************************************************
 
-		// todo add buttons across all pages? Make main activity just a start screen then go to my strains
-		// todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
 		// todo: if no strains exist, make a note "You don't have any saved strains, click on "Find Strains" to begin or see the Cannabis Constructor (advanced)."
     }
 
 
-    // Todo CONTINUE HERE: Similar method to findstrainsactivity where we get a simplified array of indexes for the mystrains column.
-	// todo: Maybe we can expand the algorithm for any column or series of columns.
 	//**********************************************************************************************
 	//						Get Number of items in "My Strains" list
+	//
+	// todo: Expand the algorithm for any column or series of columns by changing getMyStrains() to an input argument.
 	//**********************************************************************************************
 	public int getNumberOfMyStrains() {
     	int count = 0;

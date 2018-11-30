@@ -76,9 +76,7 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
     } //********************************************************************************************
 
 
-
-
-    // Return the size of your itemsData (invoked by the layout manager)
+    // Return the size of your itemsData (Required - invoked by the layout manager)
     @Override
     public int getItemCount() {
         return itemsData.length;
