@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
+// todo Make background color scheme more earthy or psychadelic/mystical
+// todo Change overall font to same fontFamily
+
 public class MainActivity extends AppCompatActivity {
     // Global Defines
     int IGNORE = 0;
