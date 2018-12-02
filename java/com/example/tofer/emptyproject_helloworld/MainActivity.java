@@ -13,6 +13,9 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 // todo Make background color scheme more earthy or psychadelic/mystical
 // todo Change overall font to same fontFamily
+// todo add buttons across all pages? Make main activity just a start screen then go to my strains
+// todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
+
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines
@@ -31,49 +34,48 @@ public class MainActivity extends AppCompatActivity {
     // Globals
     static int finalArraySize;
     static int[] finalArray;
-    static String buffer_addToMyStrains;
+    public String buffer_addToMyStrains;
 
-    public CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
+    CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button findstrainsbutton = (Button)findViewById(R.id.btnFindStrains);
-        Button mystrainsbutton = (Button)findViewById(R.id.btnMyStrains);
-        Button constructorbutton = (Button)findViewById(R.id.btnConstructor);
-        Button supportbutton = (Button)findViewById(R.id.btnSupport);
+        Button findStrainsButton = findViewById(R.id.btnFindStrains);
+        Button myStrainsButton = findViewById(R.id.btnMyStrains);
+        Button constructorButton = findViewById(R.id.btnConstructor);
+        Button supportButton = findViewById(R.id.btnSupport);
 
 
-        findstrainsbutton.setOnClickListener(new View.OnClickListener() {
+        findStrainsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, FindStrainsActivity.class));
             }
         });
 
-        mystrainsbutton.setOnClickListener(new View.OnClickListener() {
+        myStrainsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, MyStrainsActivity.class));
             }
         });
 
-        constructorbutton.setOnClickListener(new View.OnClickListener() {
+        constructorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ConstructorActivity.class));
             }
         });
 
-        supportbutton.setOnClickListener(new View.OnClickListener() {
+        supportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SupportActivity.class));
             }
         });
-
    }
 
 

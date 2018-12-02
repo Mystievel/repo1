@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-// Todo: make each radiobutton a label "ignore" "min" "max" not just circle, show when selected
-
 public class FindStrainsActivity extends MainActivity {
     // Defines
     private int EFFECTS_COL_START_INDEX = 5;
@@ -109,6 +107,7 @@ public class FindStrainsActivity extends MainActivity {
 		Log.d("ItemLength", "" + itemsData.length);
 
 		// Loop through the buttons array and filter based on each buttons' selection.
+		// TODO: This piece of code still appears to take the longest.
 		for (int i = 0; i < itemsData.length; i++) {
 			filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
 			//Log.d("FilteredArraySize", "" + getFinalArraySize(filteredArray, db));
@@ -141,6 +140,9 @@ public class FindStrainsActivity extends MainActivity {
 	// todo: Besides those listed above, maybe pull all strain data from the database once and store locally
 	//		into an array, will this speed things up rather than pulling from the database objects as we need
 	//		values?
+	//
+	// NOTE: This part does take a bit of time, but it's the next routine(s) that take 10x longer...maybe it's not worth investigating the above
+	//		necessarilly for this routine, but for the others.
 	//**********************************************************************************************
 	public int[] getAllStrainIDs(int[] filteredArray) {
 		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {

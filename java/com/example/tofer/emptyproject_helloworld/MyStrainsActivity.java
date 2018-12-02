@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-// todo add buttons across all pages? Make main activity just a start screen then go to my strains
-// todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
 // todo Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 
 
