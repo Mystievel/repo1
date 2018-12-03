@@ -16,6 +16,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo click and hold feature on item titles or "?" button for more info
+
 public class ResultsActivity extends FindStrainsActivity {
 	ResultsItemData itemsData[] = new ResultsItemData[finalArraySize];	// Populate Array size of reduced number of results.
 
@@ -23,9 +25,6 @@ public class ResultsActivity extends FindStrainsActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-
-        // Clear the strains buffer on create
-		buffer_addToMyStrains = "";
 
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.resultsList);
@@ -43,7 +42,6 @@ public class ResultsActivity extends FindStrainsActivity {
         // Buttons
         Button btnMainPage = findViewById(R.id.btnMainPage);
         Button btnReviseSearch = findViewById(R.id.btnReviseSearch);
-		//Button btnAddToMyStrains = findViewById(R.id.btnAddToMyStrains);
 
 		btnMainPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,61 +56,54 @@ public class ResultsActivity extends FindStrainsActivity {
                 startActivity(new Intent(ResultsActivity.this, FindStrainsActivity.class));
             }
         });
-
-/*		// THIS WILL NOT WORK DO NOT WASTE MORE TIME ON THIS.
-		btnAddToMyStrains.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Log.d("clickheres", ".");
-			}
-		});*/
-
 	}
 
 
-
-	// TODO: Could loop through itemsData[position].setFilter(IGNORE); and determine which items ARE present
-	// then use notifyDataSetChanged() and determine which items are NOT present??? these are the added/removed items?
-
+	//**********************************************************************************************
+	//**********************************************************************************************
+	//**********************************************************************************************
+	//							Results: RecyclerView Adapter
+	//**********************************************************************************************
+	//**********************************************************************************************
+	//**********************************************************************************************
 	public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
 		public ResultsItemData[] itemsData;
 
-
-		//**********************************************************************************************
+		//******************************************************************************************
 		// Create Adapter
-		//**********************************************************************************************
+		//******************************************************************************************
 		public ResultsRecyclerViewAdapter(ResultsItemData[] itemsData) {
 			this.itemsData = itemsData;
-		} //********************************************************************************************
+		} //****************************************************************************************
 
 
-		//**********************************************************************************************
+		//******************************************************************************************
 		// Create new views (invoked by the layout manager)
-		//**********************************************************************************************
+		//******************************************************************************************
 		@Override
 		public ResultsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.results_item_layout, null);
 			ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 			return viewHolder;
-		} //********************************************************************************************
+		} //****************************************************************************************
 
 
-		//**********************************************************************************************
+		//******************************************************************************************
 		// Replace the contents of a view (invoked by the layout manager)
-		//**********************************************************************************************
+		//******************************************************************************************
 		@Override
 		public void onBindViewHolder(ViewHolder viewHolder, int position) {
 			// - get data from your itemsData at this position
 			// - replace the contents of the view with that itemsData
 			viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
 			viewHolder.txtViewDescription.setText(itemsData[position].getDescription());
-		} //********************************************************************************************
+		} //****************************************************************************************
 
 
-		//**********************************************************************************************
+		//******************************************************************************************
 		// View Holder: Inner class to hold a reference to each item of RecyclerView
-		//**********************************************************************************************
+		//******************************************************************************************
 		public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 			public TextView txtViewTitle;
 			public TextView txtViewDescription;
@@ -130,18 +121,22 @@ public class ResultsActivity extends FindStrainsActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
-				// Todo: CONTINUE HERE - https://stackoverflow.com/questions/17525886/listview-with-add-and-delete-buttons-in-each-row-in-android
-				Log.d("viewHolderPositionClick", "" + position);
+
+				logStrainInfo("viewHolderPre", db, position);
+				//db.getStrainData(finalArray[position]).setMyStrains(1);
+				//logStrainInfo("viewHolderGet", db, position);
+				db.updateMyStrain(db.getStrainData(finalArray[position]), finalArray[position]);
+				logStrainInfo("viewHolderUpdate", db, position);
 			}
-		} //********************************************************************************************
+		} //****************************************************************************************
 
 
+		//******************************************************************************************
 		// Return the size of your itemsData (Required - invoked by the layout manager)
+		//******************************************************************************************
 		@Override
 		public int getItemCount() {
 			return itemsData.length;
-		}
-	}
-
-}
-
+		} //****************************************************************************************
+	} //********************************************************************************************
+} //************************************************************************************************

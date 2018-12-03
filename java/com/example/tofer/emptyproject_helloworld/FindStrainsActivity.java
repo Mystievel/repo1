@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+//todo is there a bug in the sorting now? Investigate and fix if needed.
+
 public class FindStrainsActivity extends MainActivity {
     // Defines
     private int EFFECTS_COL_START_INDEX = 5;

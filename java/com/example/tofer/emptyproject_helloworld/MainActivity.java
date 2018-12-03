@@ -3,6 +3,7 @@ package com.example.tofer.emptyproject_helloworld;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     // Globals
     static int finalArraySize;
     static int[] finalArray;
-    public String buffer_addToMyStrains;
 
     CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
 
@@ -102,5 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void changePageSupport(View view) {
         setContentView(R.layout.activity_support);
+    }
+
+
+    public void logStrainInfo(String tag, CannabisStrainDatabase_Helper strainInfo, int id) {
+        Log.d("" + tag, "ID: " + strainInfo.getStrainData(id).getStrainId()
+                + ". Strain Name: " + strainInfo.getStrainData(id).getStrainName()
+                + ". MyStrain?: " + strainInfo.getStrainData(id).getMyStrains());
     }
 }

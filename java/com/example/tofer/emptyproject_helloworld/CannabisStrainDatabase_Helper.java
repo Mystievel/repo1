@@ -109,8 +109,8 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         strainInfo.setStrainId(Integer.parseInt(cursor.getString(0)));
         strainInfo.setStrainName(cursor.getString(1));
 		strainInfo.setStrainType(cursor.getString(2));
-		strainInfo.setMyStrains(cursor.getInt(3));
-		strainInfo.setFavoriteStrains(cursor.getInt(4));
+		strainInfo.setMyStrains(Integer.parseInt(cursor.getString(3)));
+		strainInfo.setFavoriteStrains(Integer.parseInt(cursor.getString(4)));
 		strainInfo.setEffectsRelaxed(cursor.getDouble(5));
         strainInfo.setEffectsHappy(cursor.getDouble(6));
         strainInfo.setEffectsHungry(cursor.getDouble(7));
@@ -126,8 +126,14 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
+        values.put(COLUMN_0, strainInfo.getStrainId());
         values.put(COLUMN_1, strainInfo.getStrainName());
-        values.put(COLUMN_2, strainInfo.getEffectsRelaxed());
+		values.put(COLUMN_2, strainInfo.getStrainType());
+		values.put(COLUMN_3, strainInfo.getMyStrains());
+		values.put(COLUMN_4, strainInfo.getFavoriteStrains());
+		values.put(COLUMN_5, strainInfo.getEffectsRelaxed());
+		values.put(COLUMN_6, strainInfo.getEffectsHappy());
+		values.put(COLUMN_7, strainInfo.getEffectsHungry());
 
         // 3. updating row
         int i = db.update(ALL_STRAINS_TABLE_TITLE, values,COLUMN_0 + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
@@ -136,6 +142,22 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         db.close();
         return i;
     }
+
+	public int updateMyStrain(CannabisStrainDatabase_Definition strainInfo, int ID) {
+		// 1. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		// 2. create ContentValues to add key "column"/value
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_3, 1);
+
+		// 3. updating row
+		int i = db.update(ALL_STRAINS_TABLE_TITLE, values,COLUMN_0 + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
+
+		// 4. close
+		db.close();
+		return i;
+	}
 
     // Delete a Strain.
     public int deleteStrain(CannabisStrainDatabase_Definition strainInfo) {
@@ -152,6 +174,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
     // Returns the number of rows in the Strain Database.
     public long getStrainDatabaseRows() {
+    	// Todo: Could be slow b/c we should pass in db instead of reading the database each time!?
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, ALL_STRAINS_TABLE_TITLE);
         db.close();
@@ -160,6 +183,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
     // Returns the titles of the Strain Database table.
 	public String getStrainDatabaseColumnTitles(int i) {
+		// Todo: Could be slow b/c we should pass in db instead of reading the database each time!?
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(ALL_STRAINS_TABLE_TITLE, null, null, null, null, null, null);
 		String column[] = cursor.getColumnNames();
