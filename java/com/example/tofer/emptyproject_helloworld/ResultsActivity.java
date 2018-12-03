@@ -31,8 +31,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
         	String strainName = db.getStrainData(finalArray[i] + 0).getStrainName();
         	String strainType = db.getStrainData(finalArray[i] + 0).getStrainType();
-        	int strainID = db.getStrainData(finalArray[i] + 0).getStrainId();
-            itemsData[i] = new ResultsItemData("" + strainName, "" + strainType, 0 + strainID);
+            itemsData[i] = new ResultsItemData("" + strainName, "" + strainType);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -121,11 +120,7 @@ public class ResultsActivity extends FindStrainsActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
-
-				logStrainInfo("viewHolderPre", db, position);
-				//db.getStrainData(finalArray[position]).setMyStrains(1);
-				//logStrainInfo("viewHolderGet", db, position);
-				db.updateMyStrain(db.getStrainData(finalArray[position]), finalArray[position]);
+				db.updateMyStrain(db.getStrainData(finalArray[position]), 1);
 				logStrainInfo("viewHolderUpdate", db, position);
 			}
 		} //****************************************************************************************

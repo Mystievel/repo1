@@ -4,10 +4,12 @@ package com.example.tofer.emptyproject_helloworld;
 public class MyStrainsItemData extends MainActivity {
 	private String strainName;
 	private String strainType;
+	private int strainID;
 
-	public MyStrainsItemData(String strainName, String strainType){
+	public MyStrainsItemData(String strainName, String strainType, int strainID){
 		this.strainName = strainName;
 		this.strainType = strainType;
+		this.strainID = strainID;
 	}
 
 	// getters & setters
@@ -23,5 +25,12 @@ public class MyStrainsItemData extends MainActivity {
 	}
 	public void setStrainType(String strainType) {
 		this.strainType = strainType;
+	}
+
+	public int getStrainID() {
+		return strainID;
+	}
+	public void setStrainID(int strainID) {
+		this.strainID = strainID;
 	}
 }
