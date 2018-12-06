@@ -29,19 +29,19 @@
 			android:layout_weight="1"
 			android:background="@drawable/ignore_btn" />
 		<RadioButton
-			android:id="@+id/effect_max"
-			android:button="@null"
-			android:layout_width="60sp"
-			android:layout_height="20sp"
-			android:layout_weight="1"
-			android:background="@drawable/max_button" />
-		<RadioButton
 			android:id="@+id/effect_min"
 			android:button="@null"
 			android:layout_width="60sp"
 			android:layout_height="20sp"
 			android:layout_weight="1"
 			android:background="@drawable/min_button" />
+		<RadioButton
+			android:id="@+id/effect_max"
+			android:button="@null"
+			android:layout_width="60sp"
+			android:layout_height="20sp"
+			android:layout_weight="1"
+			android:background="@drawable/max_button" />
 	</RadioGroup>
 
 

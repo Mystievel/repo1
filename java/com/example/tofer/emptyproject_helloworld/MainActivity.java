@@ -20,17 +20,17 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines
-    int IGNORE = 0;
-    int MIN = 1;
-    int MAX = 2;
-    int BLANK_ENTRY = -1;
-    final static int RELAXED = 1;
-    final static int HAPPY = 2;
-    final static int HUNGRY = 3;
-    final static int SLEEPY = 4;
-    final static int CREATIVE = 5;
-    final static int ENERGETIC = 6;
-    final static int EUPHORIC = 7;
+    int IGNORE = 0;						// #DEFINE
+    int MIN = 1;						// #DEFINE
+    int MAX = 2;						// #DEFINE
+    int BLANK_ENTRY = -1;				// #DEFINE
+    final static int RELAXED = 1;		// #DEFINE
+    final static int HAPPY = 2;			// #DEFINE
+    final static int HUNGRY = 3;		// #DEFINE
+    final static int SLEEPY = 4;		// #DEFINE
+    final static int CREATIVE = 5;		// #DEFINE
+    final static int ENERGETIC = 6;		// #DEFINE
+    final static int EUPHORIC = 7;		// #DEFINE
 
     // Globals
     static int finalArraySize;

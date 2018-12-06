@@ -6,8 +6,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -15,12 +18,12 @@ import android.widget.TextView;
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
-    private int EFFECTS_COL_START_INDEX = 5;
+    private int EFFECTS_COL_START_INDEX = 5;  // #DEFINE
 
     // Local variables
 	private static int startingValue = 75;
 	private static int progressChangedValue = startingValue;
-    private final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY, SLEEPY, CREATIVE, ENERGETIC, EUPHORIC};
+    private final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY};
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
 
@@ -104,15 +107,14 @@ public class FindStrainsActivity extends MainActivity {
 		// Start out with a list of all strains.
 		int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
 		filteredArray = getAllStrainIDs(filteredArray);
-		Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());
-		Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());
-		Log.d("ItemLength", "" + itemsData.length);
+		//Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());  // Banana OG
+		//Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());  // 77
+		//Log.d("ItemLength", "" + itemsData.length);  // 3
 
 		// Loop through the buttons array and filter based on each buttons' selection.
 		// TODO: This piece of code still appears to take the longest.
 		for (int i = 0; i < itemsData.length; i++) {
 			filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
-			//Log.d("FilteredArraySize", "" + getFinalArraySize(filteredArray, db));
 		}
 
 		// Reduce the array to non-null values only.
@@ -149,8 +151,9 @@ public class FindStrainsActivity extends MainActivity {
 	public int[] getAllStrainIDs(int[] filteredArray) {
 		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
 			filteredArray[i] = db.getStrainData(i + 0).getStrainId();
+			//Log.d("getAllStrainIDs", "filteredArray[i] = " + filteredArray[i]);
 		}
-		Log.d("getAllStrainIDs", "Got all strains.");
+		//Log.d("getAllStrainIDs", "Got all strains.");
 		return filteredArray;
 	} //********************************************************************************************
 
@@ -168,44 +171,44 @@ public class FindStrainsActivity extends MainActivity {
 		int i;
 		double minLimit = (1.0 - (progressChangedValue/100.0));
 		double maxLimit = (progressChangedValue/100.0);
-		double effectResult = 0;
+		double effectValue = 0;
 		int newArray[] = new int[databaseRows];
 
 		if (btnResult == MIN) {
 			for (i = 0; i < databaseRows; i++) {
-				effectResult = db.getStrainData(i + 0).getEffect(effect);
-				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original name: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". original id: " + db.getStrainData(originalArray[i] + 0).getStrainId() + ". data: " + effectResult + ". limit: " + minLimit);
-				if (effectResult < minLimit) {
+				effectValue = db.getStrainData(i + 0).getEffect(effect);
+				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
+				if (effectValue < minLimit) {
 					if (originalArray[i] == BLANK_ENTRY) {
 						newArray[i] = BLANK_ENTRY;
-						//Log.d("KeepMinFieldBlank", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + minLimit);
+						//Log.d("KeepMinFieldBlank", "new id: " + newArray[i] + ". original id: " + originalArray[i] + ". new = blank. value: " + effectValue + ". limit: " + minLimit);
 					} else {
 						newArray[i] = db.getStrainData(i + 0).getStrainId();
-						//Log.d("KeepMinField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + db.getStrainData(newArray[i] + 0).getStrainName() + ". data: " + effectResult + ". limit: " + minLimit);
+						//Log.d("KeepMinField", ". new id: " + newArray[i] + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 					}
 				} else {
 					newArray[i] = BLANK_ENTRY;
-					//Log.d("ScrapMinField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + minLimit);
+					//Log.d("ScrapMinField",". new id = blank. value: " + effectValue + ". limit: " + minLimit);
 				}
-				//Log.d("filterArrayByColumnMin", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + db.getStrainData(newArray[i] + 0).getStrainId() + ". data: " + db.getStrainData(i + 0).getEffect(effect));
+				//Log.d("filterArrayByColumnMin", "original id: " + originalArray[i] + ". new ID: " + newArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 			}
 		} else if (btnResult == MAX) {
 			for (i = 0; i < databaseRows; i++) {
-				effectResult = db.getStrainData(i + 0).getEffect(effect);
-				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original name: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". original id: " + db.getStrainData(originalArray[i] + 0).getStrainId() + ". data: " + effectResult + ". limit: " + maxLimit);
-				if (effectResult >= maxLimit) {
+				effectValue = db.getStrainData(i + 0).getEffect(effect);
+				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
+				if (effectValue >= maxLimit) {
 					if (originalArray[i] == BLANK_ENTRY) {
 						newArray[i] = BLANK_ENTRY;
-						//Log.d("KeepMaxFieldBlank", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + maxLimit);
+						//Log.d("KeepMaxFieldBlank", "new id: " + newArray[i] + ". original id: " + originalArray[i] + ". new = blank. value: " + effectValue + ". limit: " + minLimit);
 					} else {
 						newArray[i] = db.getStrainData(i + 0).getStrainId();
-						//Log.d("KeepMaxField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + maxLimit);
+						//Log.d("KeepMaxField", ". new id: " + newArray[i] + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 					}
 				} else {
 					newArray[i] = BLANK_ENTRY;
-					//Log.d("ScrapMaxField", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + newArray[i] + ". data: " + effectResult + ". limit: " + maxLimit);
+					//Log.d("ScrapMaxField",". new id = blank. value: " + effectValue + ". limit: " + minLimit);
 				}
-				//Log.d("filterArrayByColumnMax", "original: " + db.getStrainData(originalArray[i] + 0).getStrainName() + ". new: " + db.getStrainData(newArray[i] + 0).getStrainName() + ". data: " + db.getStrainData(i + 0).getEffect(effect));
+				//Log.d("filterArrayByColumnMax", "new ID: " + newArray[i] + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 			}
 		} else {
 			//Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect + ".");
@@ -248,7 +251,7 @@ public class FindStrainsActivity extends MainActivity {
 		int databaseRows = (int) db.getStrainDatabaseRows();
 		int i;
 		int count = getFinalArraySize(filteredArray, db);
-		Log.d("reduceFilteredArrayCt", "Final array size: " + count);
+		//Log.d("reduceFilteredArrayCt", "Final array size: " + count);
 		int subtractor = 0;
 		int reducedArray[] = new int[databaseRows];
 
@@ -261,11 +264,117 @@ public class FindStrainsActivity extends MainActivity {
 				reducedArray[i - subtractor] = db.getStrainData(filteredArray[i]).getStrainId();
 				//Log.d("reduceFilteredArrayEl", "index: " + (i - subtractor) + ". reducedArray " + db.getStrainData(reducedArray[i - subtractor] + 0).getStrainName() + ". filteredArray " + db.getStrainData(filteredArray[i] + 0).getStrainName());
 			}
-			Log.d("subtractorMath", "index: " + i + ". subtractor: " + subtractor + ". difference: " + (i - subtractor));
+			//Log.d("subtractorMath", "index: " + i + ". subtractor: " + subtractor + ". difference: " + (i - subtractor));
 		}
 
 		// Return the result
-		Log.d("reduceFilteredArrayEnd", "Blanks found: " + subtractor + " out of " + databaseRows + " items.");
+		//Log.d("reduceFilteredArrayEnd", "Blanks found: " + subtractor + " out of " + databaseRows + " items.");
 		return reducedArray;
 	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	//**********************************************************************************************
+	//**********************************************************************************************
+	//							Find Strains: RecyclerView Adapter
+	//**********************************************************************************************
+	//**********************************************************************************************
+	//**********************************************************************************************
+	public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStrainsRecyclerViewAdapter.ViewHolder> {
+		// Local variables
+		private FindStrainsItemData[] itemsData;
+
+		//******************************************************************************************
+		// Create Adapter
+		//******************************************************************************************
+		public FindStrainsRecyclerViewAdapter(FindStrainsItemData[] itemsData) {
+			this.itemsData = itemsData;
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		// Create new views (invoked by the layout manager)
+		//******************************************************************************************
+		@Override
+		public FindStrainsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_strains_item_layout, null);
+			ViewHolder viewHolder = new ViewHolder(itemLayoutView);
+			return viewHolder;
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		// Bind View Holder: Replace the contents of a view (invoked by the layout manager)
+		//******************************************************************************************
+		@Override
+		public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+			// - get data from your itemsData at this position
+			// - replace the contents of the view with that itemsData
+			viewHolder.effectLbl.setText(itemsData[position].getEffect());
+
+			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
+			viewHolder.effectsBtnGroup.check(position);
+			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(RadioGroup group, int checkedId) {
+					int IGNORE = 0;
+					int MIN = 1;
+					int MAX = 2;
+
+					switch (checkedId) {
+						case R.id.effect_ignore:
+							itemsData[position].setFilter(IGNORE);
+							//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
+							break;
+						case R.id.effect_min:
+							itemsData[position].setFilter(MIN);
+							//Log.d("RecyclerViewItemClicked", "min clicked at " + position);
+							break;
+						case R.id.effect_max:
+							itemsData[position].setFilter(MAX);
+							//Log.d("RecyclerViewItemClicked", "max clicked at " + position);
+							break;
+						default:
+							break;
+					}
+				}
+			});
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		// View Holder: Inner class to hold a reference to each item of RecyclerView
+		//******************************************************************************************
+		public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+			public TextView effectLbl;
+			public RadioGroup effectsBtnGroup;
+
+			public ViewHolder(View itemLayoutView) {
+				super(itemLayoutView);
+				effectLbl = itemLayoutView.findViewById(R.id.item_title);
+				effectsBtnGroup = itemLayoutView.findViewById(R.id.effect_group);
+				itemLayoutView.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+			}
+
+
+			// Use this method to determine which item in the recyclerView was clicked
+			@Override
+			public void onClick(View view) {
+				int position = getLayoutPosition();
+				// get ID of the item clicked on
+				// Add to TABLE "MY_STRAINS_TABLE"
+				Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
+			}
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		// Return the size of your itemsData (invoked by the layout manager)
+		//******************************************************************************************
+		@Override
+		public int getItemCount() {
+			return itemsData.length;
+		}
+	}
 }
+
