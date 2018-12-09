@@ -47,6 +47,8 @@ public class MyStrainsActivity extends MainActivity {
         	String strainType = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainType();
         	int strainID = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainId();
 			itemsDataArrayList.add(new MyStrainsItemData("" + strainName, "" + strainType, 0 + strainID));
+			//Log.d("itemAdded id: " + i, " id: " + itemsDataArrayList.get(i).getStrainID() + ". name: " + itemsDataArrayList.get(i).getStrainName() + ".  type: " + itemsDataArrayList.get(i).getStrainType());
+        	//Log.d("itemAdded", " id: " + strainID + ". name: " + strainName + ".  type: " + strainType);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         MyStrainsRecyclerViewAdapter mAdapter = new MyStrainsRecyclerViewAdapter(itemsDataArrayList);    // 3. create an adapter
@@ -180,17 +182,17 @@ public class MyStrainsActivity extends MainActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
-				Log.d("itemClicked", "" + position);
+				//Log.d("itemClicked", "" + position);
+
+				// Remove item from the Database - must be done before removing from view.
+				//Log.d("itemRemoved id: " + position, "" + itemsData.get(position).getStrainID());
+				db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 0);
 
 				// Remove item from the view
 				itemsData.remove(position);
 				notifyItemRemoved(position);
 				notifyItemRangeChanged(position, getItemCount());
 				//notifyDataSetChanged();
-
-				// Remove item from the Database
-				Log.d("dataFrom", "" + itemsData.get(position));
-				db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID()), 0);
 			}
 		} //****************************************************************************************
 
