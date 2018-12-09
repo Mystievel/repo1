@@ -27,12 +27,12 @@ public class FindStrainsActivity extends MainActivity {
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
 
-	private FindStrainsItemData itemsData[] = new FindStrainsItemData[3];
+	private FindStrainsListItemData itemsData[] = new FindStrainsListItemData[3];
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_findstrains);
+        setContentView(R.layout.findstrains_activity);
 
         // Initiate Views
         searchIntensitySeekBar = findViewById(R.id.seekBarSearchIntensity);
@@ -47,7 +47,7 @@ public class FindStrainsActivity extends MainActivity {
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < 3; i++) {
-            itemsData[i] = new FindStrainsItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
+            itemsData[i] = new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -273,21 +273,21 @@ public class FindStrainsActivity extends MainActivity {
 	} //********************************************************************************************
 
 
-	//**********************************************************************************************
-	//**********************************************************************************************
-	//**********************************************************************************************
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
 	//							Find Strains: RecyclerView Adapter
-	//**********************************************************************************************
-	//**********************************************************************************************
-	//**********************************************************************************************
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
 	public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStrainsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
-		private FindStrainsItemData[] itemsData;
+		private FindStrainsListItemData[] itemsData;
 
 		//******************************************************************************************
 		// Create Adapter
 		//******************************************************************************************
-		public FindStrainsRecyclerViewAdapter(FindStrainsItemData[] itemsData) {
+		public FindStrainsRecyclerViewAdapter(FindStrainsListItemData[] itemsData) {
 			this.itemsData = itemsData;
 		} //****************************************************************************************
 
@@ -297,7 +297,7 @@ public class FindStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		@Override
 		public FindStrainsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_strains_item_layout, null);
+			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.findstrains_itemlayout, null);
 			ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 			return viewHolder;
 		} //****************************************************************************************

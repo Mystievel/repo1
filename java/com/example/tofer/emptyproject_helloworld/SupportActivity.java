@@ -9,7 +9,7 @@ public class SupportActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_support);
+        setContentView(R.layout.support_activity);
 
         Button btnMainPage = (Button)findViewById(R.id.btnMainPage);
 

@@ -6,11 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 // todo Make background color scheme more earthy or psychadelic/mystical
 // todo Change overall font to same fontFamily
@@ -41,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         Button findStrainsButton = findViewById(R.id.btnFindStrains);
         Button myStrainsButton = findViewById(R.id.btnMyStrains);
@@ -81,27 +76,27 @@ public class MainActivity extends AppCompatActivity {
 
     // Page Change Events
     public void changePageMainActivity(View view) {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
     }
 
     public void changePageFindStrains(View view) {
-        //setContentView(R.layout.activity_findstrains);
+        //setContentView(R.layout.findstrains_activity);
     }
 
     public void changePageResults(View view) {
-        setContentView(R.layout.activity_results);
+        setContentView(R.layout.results_activity);
     }
 
     public void changePageMyStrains(View view) {
-        setContentView(R.layout.activity_mystrains);
+        setContentView(R.layout.mystrains_activity);
     }
 
     public void changePageConstructor(View view) {
-        setContentView(R.layout.activity_constructor);
+        setContentView(R.layout.constructor_activity);
     }
 
     public void changePageSupport(View view) {
-        setContentView(R.layout.activity_support);
+        setContentView(R.layout.support_activity);
     }
 
 

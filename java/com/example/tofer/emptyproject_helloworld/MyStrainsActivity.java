@@ -5,23 +5,27 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+
 // todo Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
+// todo: if no strains exist, make a note "You don't have any saved strains, click on "Find Strains" to begin or see the Cannabis Constructor (advanced)."
 
 
 public class MyStrainsActivity extends MainActivity {
 	MyStrainsItemData myItemsData[];
+	//List<MyStrainsItemData> myItemsData;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mystrains);
+        setContentView(R.layout.mystrains_activity);
 
 		int numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is NOT declared within onCreate we receive a "Null Pointer Exception".
 		int[] myStrainsIndexArray = collectAndFilterMyStrains();
@@ -51,9 +55,7 @@ public class MyStrainsActivity extends MainActivity {
                 startActivity(new Intent(MyStrainsActivity.this, MainActivity.class));
             }
         }); //**************************************************************************************
-
-		// todo: if no strains exist, make a note "You don't have any saved strains, click on "Find Strains" to begin or see the Cannabis Constructor (advanced)."
-    }
+	}
 
 
 	//**********************************************************************************************
@@ -105,21 +107,23 @@ public class MyStrainsActivity extends MainActivity {
 	} //********************************************************************************************
 
 
-	//**********************************************************************************************
-	//**********************************************************************************************
-	//**********************************************************************************************
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
 	//							MyStrains: RecyclerView Adapter
-	//**********************************************************************************************
-	//**********************************************************************************************
-	//**********************************************************************************************
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
 	public class MyStrainsRecyclerViewAdapter extends RecyclerView.Adapter<MyStrainsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
-		private MyStrainsItemData[] itemsData;
+		//private MyStrainsItemData[] itemsData;
+		private List<MyStrainsItemData> itemsData;
+
 
 		//******************************************************************************************
 		// Create Adapter
 		//******************************************************************************************
-		public MyStrainsRecyclerViewAdapter(MyStrainsItemData[] itemsData) {
+		public MyStrainsRecyclerViewAdapter(List<MyStrainsItemData> itemsData) {
 			this.itemsData = itemsData;
 		} //****************************************************************************************
 
@@ -129,7 +133,7 @@ public class MyStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		@Override
 		public MyStrainsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_strains_item_layout, null);
+			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.mystrains_itemlayout, null);
 			ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 			return viewHolder;
 		} //****************************************************************************************
@@ -142,8 +146,8 @@ public class MyStrainsActivity extends MainActivity {
 		public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
 			// - get data from your itemsData at this position
 			// - replace the contents of the view with that itemsData
-			viewHolder.strainNameLbl.setText(itemsData[position].getStrainName());
-			viewHolder.strainTypeLbl.setText(itemsData[position].getStrainType());
+			viewHolder.strainNameLbl.setText(itemsData.get(position).getStrainName());
+			viewHolder.strainTypeLbl.setText(itemsData.get(position).getStrainType());
 		} //****************************************************************************************
 
 
@@ -172,7 +176,11 @@ public class MyStrainsActivity extends MainActivity {
 				db.updateMyStrain(db.getStrainData(myItemsData[position].getStrainID()), 0);
 
 				// Remove item from view
-
+				// todo, need to move to onbindlistener and append use with btn click?
+				itemsData.remove(position);
+				notifyItemRemoved(position);
+				notifyItemRangeChanged(position, getItemCount());
+				//notifyDataSetChanged();
 			}
 		} //****************************************************************************************
 
@@ -182,7 +190,7 @@ public class MyStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		@Override
 		public int getItemCount() {
-			return itemsData.length;
+			return itemsData.size();
 		} //****************************************************************************************
 	} //********************************************************************************************
 } //************************************************************************************************

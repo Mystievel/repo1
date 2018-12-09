@@ -9,7 +9,7 @@ public class ConstructorActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_constructor);
+        setContentView(R.layout.constructor_activity);
 
         Button btnMainPage = (Button)findViewById(R.id.btnMainPage);
 

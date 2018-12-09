@@ -1,37 +1,32 @@
 package com.example.tofer.emptyproject_helloworld;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //todo click and hold feature on item titles or "?" button for more info
 
 public class ResultsActivity extends FindStrainsActivity {
-	ResultsItemData itemsData[] = new ResultsItemData[finalArraySize];	// Populate Array size of reduced number of results.
+	ResultsListItemData itemsData[] = new ResultsListItemData[finalArraySize];	// Populate Array size of reduced number of results.
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
+        setContentView(R.layout.results_activity);
 
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.resultsList);
 		for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
         	String strainName = db.getStrainData(finalArray[i] + 0).getStrainName();
         	String strainType = db.getStrainData(finalArray[i] + 0).getStrainType();
-            itemsData[i] = new ResultsItemData("" + strainName, "" + strainType);
+            itemsData[i] = new ResultsListItemData("" + strainName, "" + strainType);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -67,12 +62,12 @@ public class ResultsActivity extends FindStrainsActivity {
 	//**********************************************************************************************
 	public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
-		public ResultsItemData[] itemsData;
+		public ResultsListItemData[] itemsData;
 
 		//******************************************************************************************
 		// Create Adapter
 		//******************************************************************************************
-		public ResultsRecyclerViewAdapter(ResultsItemData[] itemsData) {
+		public ResultsRecyclerViewAdapter(ResultsListItemData[] itemsData) {
 			this.itemsData = itemsData;
 		} //****************************************************************************************
 
@@ -82,7 +77,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		//******************************************************************************************
 		@Override
 		public ResultsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.results_item_layout, null);
+			View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.results_itemlayout, null);
 			ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 			return viewHolder;
 		} //****************************************************************************************
