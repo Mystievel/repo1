@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,9 +21,14 @@ import java.util.List;
 
 
 public class MyStrainsActivity extends MainActivity {
-	MyStrainsItemData myItemsData[];
-	//List<MyStrainsItemData> myItemsData;
+	//MyStrainsItemData myItemsData;
+	// 1. get a reference for the recyclerView's rows (item data)
+	ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
 
+
+	//**********************************************************************************************
+	// On Create
+	//**********************************************************************************************
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,18 +36,20 @@ public class MyStrainsActivity extends MainActivity {
 
 		int numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is NOT declared within onCreate we receive a "Null Pointer Exception".
 		int[] myStrainsIndexArray = collectAndFilterMyStrains();
-		myItemsData = new MyStrainsItemData[numberOfMyStrains]; // Cannot be moved from here.
+		//myItemsData = new MyStrainsItemData[numberOfMyStrains]; // Cannot be moved from here.
 
 		// 1. get a reference to recyclerView
+		ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
+
         RecyclerView recyclerView = findViewById(R.id.myStrainsList);
         for (int i = 0; i < numberOfMyStrains; i++) {
         	String strainName = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainName();
         	String strainType = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainType();
         	int strainID = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainId();
-			myItemsData[i] = new MyStrainsItemData("" + strainName, "" + strainType, 0 + strainID);
+			itemsDataArrayList.add(new MyStrainsItemData("" + strainName, "" + strainType, 0 + strainID));
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
-        MyStrainsRecyclerViewAdapter mAdapter = new MyStrainsRecyclerViewAdapter(myItemsData);    // 3. create an adapter
+        MyStrainsRecyclerViewAdapter mAdapter = new MyStrainsRecyclerViewAdapter(itemsDataArrayList);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
@@ -55,7 +64,7 @@ public class MyStrainsActivity extends MainActivity {
                 startActivity(new Intent(MyStrainsActivity.this, MainActivity.class));
             }
         }); //**************************************************************************************
-	}
+	} //********************************************************************************************
 
 
 	//**********************************************************************************************
@@ -171,16 +180,17 @@ public class MyStrainsActivity extends MainActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
+				Log.d("itemClicked", "" + position);
 
-				// Remove item from Database
-				db.updateMyStrain(db.getStrainData(myItemsData[position].getStrainID()), 0);
-
-				// Remove item from view
-				// todo, need to move to onbindlistener and append use with btn click?
+				// Remove item from the view
 				itemsData.remove(position);
 				notifyItemRemoved(position);
 				notifyItemRangeChanged(position, getItemCount());
 				//notifyDataSetChanged();
+
+				// Remove item from the Database
+				Log.d("dataFrom", "" + itemsData.get(position));
+				db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID()), 0);
 			}
 		} //****************************************************************************************
 
