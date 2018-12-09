@@ -167,9 +167,12 @@ public class MyStrainsActivity extends MainActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
+
+				// Remove item from Database
 				db.updateMyStrain(db.getStrainData(myItemsData[position].getStrainID()), 0);
-				// todo add notifydatasetchanged()
-				logStrainInfo("viewHolderUpdate", db, position);
+
+				// Remove item from view
+
 			}
 		} //****************************************************************************************
 
