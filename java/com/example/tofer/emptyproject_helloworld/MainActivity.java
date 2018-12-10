@@ -15,17 +15,21 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines
-    int IGNORE = 0;						// #DEFINE
-    int MIN = 1;						// #DEFINE
-    int MAX = 2;						// #DEFINE
-    int BLANK_ENTRY = -1;				// #DEFINE
-    final static int RELAXED = 1;		// #DEFINE
-    final static int HAPPY = 2;			// #DEFINE
-    final static int HUNGRY = 3;		// #DEFINE
-    final static int SLEEPY = 4;		// #DEFINE
-    final static int CREATIVE = 5;		// #DEFINE
-    final static int ENERGETIC = 6;		// #DEFINE
-    final static int EUPHORIC = 7;		// #DEFINE
+    int IGNORE = 0;						    // #DEFINE
+    int MIN = 1;						    // #DEFINE
+    int MAX = 2;						    // #DEFINE
+    int BLANK_ENTRY = -1;				    // #DEFINE
+    final static int DEHYDRATION = 1;       // #DEFINE
+    final static int ENERGY = 2;		    // #DEFINE
+    final static int EUPHORIA = 3;		    // #DEFINE
+    final static int FOCUS = 4;		        // #DEFINE
+    final static int HAPPINESS = 5;		    // #DEFINE
+    final static int HUNGER = 6;		    // #DEFINE
+    final static int PAIN_RELIEF = 7;	    // #DEFINE
+    final static int RELAXATION = 8;	    // #DEFINE
+    final static int SICKNESS_RELIEF = 9;	// #DEFINE
+    final static int SLEEPINESS = 10;	 	// #DEFINE
+
 
     // Globals
     static int finalArraySize;

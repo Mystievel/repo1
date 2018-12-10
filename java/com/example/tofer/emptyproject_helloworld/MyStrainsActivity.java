@@ -21,7 +21,6 @@ import java.util.List;
 
 
 public class MyStrainsActivity extends MainActivity {
-	//MyStrainsItemData myItemsData;
 	// 1. get a reference for the recyclerView's rows (item data)
 	ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
 
@@ -36,7 +35,6 @@ public class MyStrainsActivity extends MainActivity {
 
 		int numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is NOT declared within onCreate we receive a "Null Pointer Exception".
 		int[] myStrainsIndexArray = collectAndFilterMyStrains();
-		//myItemsData = new MyStrainsItemData[numberOfMyStrains]; // Cannot be moved from here.
 
 		// 1. get a reference to recyclerView
 		ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
@@ -127,7 +125,6 @@ public class MyStrainsActivity extends MainActivity {
 	//--------------------------------------------------------------------------------------------------------------------------
 	public class MyStrainsRecyclerViewAdapter extends RecyclerView.Adapter<MyStrainsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
-		//private MyStrainsItemData[] itemsData;
 		private List<MyStrainsItemData> itemsData;
 
 
@@ -155,8 +152,6 @@ public class MyStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		@Override
 		public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-			// - get data from your itemsData at this position
-			// - replace the contents of the view with that itemsData
 			viewHolder.strainNameLbl.setText(itemsData.get(position).getStrainName());
 			viewHolder.strainTypeLbl.setText(itemsData.get(position).getStrainType());
 		} //****************************************************************************************
@@ -190,9 +185,9 @@ public class MyStrainsActivity extends MainActivity {
 
 				// Remove item from the view
 				itemsData.remove(position);
-				notifyItemRemoved(position);
-				notifyItemRangeChanged(position, getItemCount());
-				//notifyDataSetChanged();
+				//notifyItemRemoved(position);
+				//notifyItemRangeChanged(position, getItemCount());
+				notifyDataSetChanged();
 			}
 		} //****************************************************************************************
 

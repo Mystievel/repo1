@@ -28,12 +28,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Strains"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416"
-    />
+        app:layout_constraintVertical_bias="0.416" />
 
     <!-- Cannabis Compound Constructor-->
     <Button
@@ -41,13 +41,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Compound Composition"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.556"
-    />
+        app:layout_constraintVertical_bias="0.556" />
 
     <!-- Support/Feedback-->
     <Button
@@ -55,11 +55,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Support/Feedback"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685"
-    />
+        app:layout_constraintVertical_bias="0.685" />
 </android.support.constraint.ConstraintLayout>

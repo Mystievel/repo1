@@ -14,20 +14,33 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-//todo is there a bug in the sorting now? Investigate and fix if needed.
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
     private int EFFECTS_COL_START_INDEX = 5;  // #DEFINE
 
+
+	final static int DEHYDRATION = 1;       // #DEFINE
+	final static int ENERGY = 2;		    // #DEFINE
+	final static int EUPHORIA = 3;		    // #DEFINE
+	final static int FOCUS = 4;		        // #DEFINE
+	final static int HAPPINESS = 5;		    // #DEFINE
+	final static int HUNGER = 6;		    // #DEFINE
+	final static int PAIN_RELIEF = 7;	    // #DEFINE
+	final static int RELAXATION = 8;	    // #DEFINE
+	final static int SICKNESS_RELIEF = 9;	// #DEFINE
+	final static int SLEEPINESS = 10;	 	// #DEFINE
+
+
     // Local variables
 	private static int startingValue = 75;
 	private static int progressChangedValue = startingValue;
-    private final static int[] effectsArray = new int[]{RELAXED, HAPPY, HUNGRY};
+    private final static int[] effectsArray = new int[]{DEHYDRATION, ENERGY, EUPHORIA, FOCUS, HAPPINESS, HUNGER, PAIN_RELIEF, RELAXATION, SICKNESS_RELIEF, SLEEPINESS};
+    private int itemDataSize = effectsArray.length;
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
 
-	private FindStrainsListItemData itemsData[] = new FindStrainsListItemData[3];
+	private FindStrainsListItemData itemsData[] = new FindStrainsListItemData[itemDataSize];
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,8 @@ public class FindStrainsActivity extends MainActivity {
 
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < itemDataSize; i++) {
+			Log.d("populateArrayList", "i=" + i + ". arraySize: " + itemDataSize + ". string: " + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
             itemsData[i] = new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
