@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+
+// todo: set default clicks on radio buttons, and save fields when return to this page in a single opened session
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
@@ -120,6 +123,8 @@ public class FindStrainsActivity extends MainActivity {
 	public int[] collectAndFilterAllStrainData() {
 		// Start out with a list of all strains.
 		int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
+		//Log.d("collectAndFilter...", "" + db.getStrainDatabaseRows());
+
 		filteredArray = getAllStrainIDs(filteredArray);
 		//Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());  // Banana OG
 		//Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());  // 77
@@ -127,7 +132,7 @@ public class FindStrainsActivity extends MainActivity {
 
 		// Loop through the buttons array and filter based on each buttons' selection.
 		// TODO: This piece of code still appears to take the longest.
-		for (int i = 0; i < itemsData.length; i++) {
+		for (int i = 0; i < itemDataSize; i++) {
 			filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
 		}
 
@@ -135,10 +140,10 @@ public class FindStrainsActivity extends MainActivity {
 		finalArraySize = getFinalArraySize(filteredArray, db);
 		finalArray = new int[finalArraySize];
 		finalArray = reduceFilteredArray(filteredArray, db);
-		Log.d("FinalArraySize", "" + finalArraySize);
-		Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
-		Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
-		Log.d("FinalArrayIndex 60", "" + db.getStrainData(finalArray[60]).getStrainName());
+		//Log.d("FinalArraySize", "" + finalArraySize);
+		//Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
+		//Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
+		//Log.d("FinalArrayIndex 60", "" + db.getStrainData(finalArray[60]).getStrainName());
 
 		// Return
 		return finalArray;
@@ -163,7 +168,11 @@ public class FindStrainsActivity extends MainActivity {
 	//		necessarilly for this routine, but for the others.
 	//**********************************************************************************************
 	public int[] getAllStrainIDs(int[] filteredArray) {
-		for (int i = 0; i < db.getStrainDatabaseRows(); i++) {
+		int dbRows = (int) db.getStrainDatabaseRows();
+		//Log.d("getAllStrainIDs", "dbRows = " + dbRows);
+
+		for (int i = 0; i < dbRows; i++) {
+			//Log.d("getAllStrainIDs", "i="+i);
 			filteredArray[i] = db.getStrainData(i + 0).getStrainId();
 			//Log.d("getAllStrainIDs", "filteredArray[i] = " + filteredArray[i]);
 		}
@@ -287,13 +296,15 @@ public class FindStrainsActivity extends MainActivity {
 	} //********************************************************************************************
 
 
-	//--------------------------------------------------------------------------------------------------------------------------
-	//--------------------------------------------------------------------------------------------------------------------------
-	//--------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//							Find Strains: RecyclerView Adapter
-	//--------------------------------------------------------------------------------------------------------------------------
-	//--------------------------------------------------------------------------------------------------------------------------
-	//--------------------------------------------------------------------------------------------------------------------------
+	//
+	// todo: while scrolling in recyclerview, preserve radiobutton selection
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStrainsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
 		private FindStrainsListItemData[] itemsData;
@@ -327,7 +338,7 @@ public class FindStrainsActivity extends MainActivity {
 			viewHolder.effectLbl.setText(itemsData[position].getEffect());
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
-			viewHolder.effectsBtnGroup.check(position);
+			//viewHolder.effectsBtnGroup.check(position);
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -349,6 +360,8 @@ public class FindStrainsActivity extends MainActivity {
 							//Log.d("RecyclerViewItemClicked", "max clicked at " + position);
 							break;
 						default:
+							itemsData[position].setFilter(IGNORE);
+							//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
 							break;
 					}
 				}
@@ -362,11 +375,18 @@ public class FindStrainsActivity extends MainActivity {
 		public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 			public TextView effectLbl;
 			public RadioGroup effectsBtnGroup;
+			public RadioButton ignoreBtn;
 
 			public ViewHolder(View itemLayoutView) {
 				super(itemLayoutView);
 				effectLbl = itemLayoutView.findViewById(R.id.item_title);
 				effectsBtnGroup = itemLayoutView.findViewById(R.id.effect_group);
+				ignoreBtn = itemLayoutView.findViewById(R.id.effect_ignore);
+				ignoreBtn.isSelected();
+				//effectsBtnGroup.check(0); // doesn't work
+				//effectsBtnGroup.check(getItemId(ignoreBtn)); // doesn't work
+				//effectsBtnGroup.check(effectsBtnGroup.getChildAt(1).getId()); // doesnt work w/ 0 or 1
+				//ViewHolder.effectsBtnGroup.check(0); doesn't work
 				itemLayoutView.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
 			}
 
@@ -377,7 +397,7 @@ public class FindStrainsActivity extends MainActivity {
 				int position = getLayoutPosition();
 				// get ID of the item clicked on
 				// Add to TABLE "MY_STRAINS_TABLE"
-				Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
+				//Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
 			}
 		} //****************************************************************************************
 

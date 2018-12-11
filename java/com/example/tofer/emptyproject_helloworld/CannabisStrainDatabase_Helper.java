@@ -43,7 +43,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     //------------------------------------------------------------------------------------------------------------------------------------------
 
     // Database table name
-    private static final String ALL_STRAINS_TABLE_TITLE = "CannabisStrainTable";
+    private static final String CANNABIS_STRAIN_TABLE = "CannabisStrainTable";
 
     // Strain Database (Table) Columns names
     // These values MUST match the Strings in the db definition file.
@@ -78,7 +78,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		values.put(COLUMN_3, strainInfo.getMyStrain()); 	// get strain name
 
         // 3. insert
-        long id = db.insert(ALL_STRAINS_TABLE_TITLE,null, values);
+        long id = db.insert(CANNABIS_STRAIN_TABLE,null, values);
         db.close();     // 4. close
         return id;      // Return newly inserted row id.
     } //********************************************************************************************
@@ -89,7 +89,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. delete
-        int i = db.delete(ALL_STRAINS_TABLE_TITLE,COLUMN_0 + " = ?", new String[] { String.valueOf(strainInfo.getStrainId()) });
+        int i = db.delete(CANNABIS_STRAIN_TABLE,COLUMN_0 + " = ?", new String[] { String.valueOf(strainInfo.getStrainId()) });
 
         // 3. close
         db.close();
@@ -105,7 +105,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
-        Cursor cursor = db.query(ALL_STRAINS_TABLE_TITLE,		// a. table
+        Cursor cursor = db.query(CANNABIS_STRAIN_TABLE,		// a. table
 				ALL_COLUMNS,									// b. column names
                         " id = ?",						// c. selections
                         new String[] {String.valueOf(id)},     	// d. selections args
@@ -137,7 +137,8 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		strainInfo.setEffectsSleepiness(cursor.getDouble(13));
 
         // 5. return strain information
-        return strainInfo;
+		db.close();
+		return strainInfo;
     } //********************************************************************************************
 
 
@@ -153,9 +154,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		values.put(COLUMN_3, value);
 
 		// 3. updating row
-		int i = db.update(ALL_STRAINS_TABLE_TITLE, values,COLUMN_0 + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
+		int i = db.update(CANNABIS_STRAIN_TABLE, values,COLUMN_0 + " = ?", new String[] {String.valueOf(strainInfo.getStrainId())});
 
-		// 4. close
+		// 4. close and return
 		db.close();
 		return i;
 	} //********************************************************************************************
@@ -167,7 +168,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	public long getStrainDatabaseRows() {
     	// Todo: Could be slow b/c we should pass in db instead of reading the database each time!?
         SQLiteDatabase db = this.getReadableDatabase();
-        long count = DatabaseUtils.queryNumEntries(db, ALL_STRAINS_TABLE_TITLE);
+        long count = DatabaseUtils.queryNumEntries(db, CANNABIS_STRAIN_TABLE);
         db.close();
         return count;
     } //********************************************************************************************
@@ -179,7 +180,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	public String getStrainDatabaseColumnTitles(int i) {
 		// Todo: Could be slow b/c we should pass in db instead of reading the database each time!?
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.query(ALL_STRAINS_TABLE_TITLE, null, null, null, null, null, null);
+		Cursor cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null);
 		String column[] = cursor.getColumnNames();
 		cursor.close();
 		return column[i];
