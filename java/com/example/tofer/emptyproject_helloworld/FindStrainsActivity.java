@@ -15,6 +15,9 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 // todo: set default clicks on radio buttons, and save fields when return to this page in a single opened session
 // todo: still don't seem totally accurate and still need to set default button selections to 'omit'.
@@ -23,16 +26,6 @@ import android.widget.TextView;
 public class FindStrainsActivity extends MainActivity {
     // Defines
     private int EFFECTS_COL_START_INDEX = 5;	// #DEFINE
-	final static int DEHYDRATION = 1;       	// #DEFINE
-	final static int ENERGY = 2;				// #DEFINE
-	final static int EUPHORIA = 3;		    	// #DEFINE
-	final static int FOCUS = 4;		       		// #DEFINE
-	final static int HAPPINESS = 5;		   	 	// #DEFINE
-	final static int HUNGER = 6;		   	 	// #DEFINE
-	final static int PAIN_RELIEF = 7;	    	// #DEFINE
-	final static int RELAXATION = 8;	    	// #DEFINE
-	final static int SICKNESS_RELIEF = 9;		// #DEFINE
-	final static int SLEEPINESS = 10;	 		// #DEFINE
 
     // Local variables
 	private static int startingValue = 75;
@@ -41,7 +34,7 @@ public class FindStrainsActivity extends MainActivity {
     private int itemDataSize = effectsArray.length;
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
-	private FindStrainsListItemData itemsData[] = new FindStrainsListItemData[itemDataSize];
+    ArrayList<FindStrainsListItemData> itemsData = new ArrayList<>();
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -69,7 +62,7 @@ public class FindStrainsActivity extends MainActivity {
 		RecyclerView recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < itemDataSize; i++) {
 			Log.d("populateArrayList", "i=" + i + ". arraySize: " + itemDataSize + ". string: " + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
-            itemsData[i] = new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
+            itemsData.add(new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX)));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -138,7 +131,7 @@ public class FindStrainsActivity extends MainActivity {
 		// Loop through the buttons array and filter based on each buttons' selection.
 		// TODO: This piece of code still appears to take the longest.
 		for (int i = 0; i < itemDataSize; i++) {
-			filteredArray = filterArrayByColumn(itemsData[i].getFilter(), db, effectsArray[i], filteredArray);
+			filteredArray = filterArrayByColumn(itemsData.get(i).getFilter(), db, effectsArray[i], filteredArray);
 		}
 
 		// Reduce the array to non-null values only.
@@ -203,6 +196,7 @@ public class FindStrainsActivity extends MainActivity {
 		int newArray[] = new int[databaseRows];
 
 		if (btnResult == MIN) {
+			Log.d("minSelected", "Min is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
 				effectValue = db.getStrainData(i + 0).getEffect(effect);
 				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
@@ -221,6 +215,7 @@ public class FindStrainsActivity extends MainActivity {
 				//Log.d("filterArrayByColumnMin", "original id: " + originalArray[i] + ". new ID: " + newArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 			}
 		} else if (btnResult == MAX) {
+			Log.d("maxSelected", "Max is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
 				effectValue = db.getStrainData(i + 0).getEffect(effect);
 				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
@@ -239,7 +234,7 @@ public class FindStrainsActivity extends MainActivity {
 				//Log.d("filterArrayByColumnMax", "new ID: " + newArray[i] + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 			}
 		} else {
-			//Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect + ".");
+			Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
 				newArray[i] = db.getStrainData(i + 0).getStrainId();
 			}
@@ -310,12 +305,12 @@ public class FindStrainsActivity extends MainActivity {
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public class FindStrainsRecyclerViewAdapter extends RecyclerView.Adapter<FindStrainsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
-		private FindStrainsListItemData[] itemsData;
+		private List<FindStrainsListItemData> itemsData;
 
 		//******************************************************************************************
 		// Create Adapter
 		//******************************************************************************************
-		public FindStrainsRecyclerViewAdapter(FindStrainsListItemData[] itemsData) {
+		public FindStrainsRecyclerViewAdapter(List<FindStrainsListItemData> itemsData) {
 			this.itemsData = itemsData;
 		} //****************************************************************************************
 
@@ -338,7 +333,7 @@ public class FindStrainsActivity extends MainActivity {
 		public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
 			// - get data from your itemsData at this position
 			// - replace the contents of the view with that itemsData
-			viewHolder.effectLbl.setText(itemsData[position].getEffect());
+			viewHolder.effectLbl.setText(itemsData.get(position).getEffect());
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			//viewHolder.effectsBtnGroup.check(position);
@@ -352,37 +347,37 @@ public class FindStrainsActivity extends MainActivity {
 					int ignoreID = R.id.effect_ignore;
 					int minID = R.id.effect_min;
 					int maxID = R.id.effect_max;
-					Log.d("RecyclerViewItemClicked", "all btn ids: ignore: " + ignoreID + ". min: " + minID + ". max: " + maxID);
+					//Log.d("RecyclerViewItemClicked", "all btn ids: ignore: " + ignoreID + ". min: " + minID + ". max: " + maxID);
 
 					// Sets the value of the filter clicked at the given position in the list to the itemsData object.
-					Log.d("RecyclerViewItemClicked", "btn id: " + checkedId);
+					//Log.d("RecyclerViewItemClicked", "btn id: " + checkedId);
 					if (checkedId == ignoreID) {
-						itemsData[position].setFilter(IGNORE);
-						Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
+						itemsData.get(position).setFilter(IGNORE);
+						//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
 					} else if (checkedId == minID) {
-						itemsData[position].setFilter(MIN);
-						Log.d("RecyclerViewItemClicked", "min clicked at " + position);
+						itemsData.get(position).setFilter(MIN);
+						//Log.d("RecyclerViewItemClicked", "min clicked at " + position);
 					} else if (checkedId == maxID) {
-						itemsData[position].setFilter(MAX);
-						Log.d("RecyclerViewItemClicked", "max clicked at " + position);
+						itemsData.get(position).setFilter(MAX);
+						//Log.d("RecyclerViewItemClicked", "max clicked at " + position);
 					} else {
-						Log.d("RecyclerViewItemClicked", "empty clicked at " + position);
+						//Log.d("RecyclerViewItemClicked", "empty clicked at " + position);
 					}
 
 					// Print all itemsData clicked results in order.
-					logAllItemsClicked(itemsData.length, itemsData);
+					logAllItemsClicked(getItemCount(), itemsData);
 				}
 			});
 		} //****************************************************************************************
 
 
-		public void logAllItemsClicked(int itemsSize, FindStrainsListItemData[] itemsData) {
+		public void logAllItemsClicked(int itemsSize, List<FindStrainsListItemData> itemsData) {
 			// Stylistic printing (box)
 			Log.d("RecyclerViewItemClicked", "-----------------------------------------");
 
 			// Log which radio button is clicked for all items in the list.
 			for(int i = 0; i < itemsSize; i++) {
-				Log.d("RecyclerViewItemClicked", itemsData[i].getFilter() + " at " + i);
+				Log.d("RecyclerViewItemClicked", itemsData.get(i).getFilter() + " at " + i);
 			}
 
 			// Stylistic printing (box)
@@ -440,7 +435,7 @@ public class FindStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		@Override
 		public int getItemCount() {
-			return itemsData.length;
+			return itemsData.size();
 		}
 	}
 }

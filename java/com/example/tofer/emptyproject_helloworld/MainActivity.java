@@ -1,5 +1,6 @@
 package com.example.tofer.emptyproject_helloworld;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     final static int RELAXATION = 8;	    // #DEFINE
     final static int SICKNESS_RELIEF = 9;	// #DEFINE
     final static int SLEEPINESS = 10;	 	// #DEFINE
-
 
     // Globals
     static int finalArraySize;
@@ -76,32 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
    }
-
-
-    // Page Change Events
-    public void changePageMainActivity(View view) {
-        setContentView(R.layout.main_activity);
-    }
-
-    public void changePageFindStrains(View view) {
-        //setContentView(R.layout.findstrains_activity);
-    }
-
-    public void changePageResults(View view) {
-        setContentView(R.layout.results_activity);
-    }
-
-    public void changePageMyStrains(View view) {
-        setContentView(R.layout.mystrains_activity);
-    }
-
-    public void changePageConstructor(View view) {
-        setContentView(R.layout.constructor_activity);
-    }
-
-    public void changePageSupport(View view) {
-        setContentView(R.layout.support_activity);
-    }
 
 
     public void logStrainInfo(String tag, CannabisStrainDatabase_Helper strainInfo, int id) {
