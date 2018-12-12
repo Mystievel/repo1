@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 
 // todo: set default clicks on radio buttons, and save fields when return to this page in a single opened session
+// todo: still don't seem totally accurate and still need to set default button selections to 'omit'.
+
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
