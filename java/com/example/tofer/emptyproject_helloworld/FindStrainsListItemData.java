@@ -26,10 +26,8 @@ public class FindStrainsListItemData extends FindStrainsActivity{
 			this.checkedBtnType = IGNORE;
 		} else if (checkedBtn == MIN) {
 			this.checkedBtnType = MIN;
-
 		} else if (checkedBtn == MAX) {
 			this.checkedBtnType = MAX;
-
 		} else {
 			checkedBtnType = -1;
 		}

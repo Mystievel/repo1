@@ -340,66 +340,96 @@ public class FindStrainsActivity extends MainActivity {
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			//viewHolder.effectsBtnGroup.check(position);
+
+			// todo: it appears this isn't listening correctly, why?
+
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
-					int IGNORE = 0;
-					int MIN = 1;
-					int MAX = 2;
+					RadioButton checkedBtn = findViewById(checkedId);
+					int ignoreID = R.id.effect_ignore;
+					int minID = R.id.effect_min;
+					int maxID = R.id.effect_max;
+					Log.d("RecyclerViewItemClicked", "all btn ids: ignore: " + ignoreID + ". min: " + minID + ". max: " + maxID);
 
-					switch (checkedId) {
-						case R.id.effect_ignore:
-							itemsData[position].setFilter(IGNORE);
-							//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
-							break;
-						case R.id.effect_min:
-							itemsData[position].setFilter(MIN);
-							//Log.d("RecyclerViewItemClicked", "min clicked at " + position);
-							break;
-						case R.id.effect_max:
-							itemsData[position].setFilter(MAX);
-							//Log.d("RecyclerViewItemClicked", "max clicked at " + position);
-							break;
-						default:
-							itemsData[position].setFilter(IGNORE);
-							//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
-							break;
+					// Sets the value of the filter clicked at the given position in the list to the itemsData object.
+					Log.d("RecyclerViewItemClicked", "btn id: " + checkedId);
+					if (checkedId == ignoreID) {
+						itemsData[position].setFilter(IGNORE);
+						Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
+					} else if (checkedId == minID) {
+						itemsData[position].setFilter(MIN);
+						Log.d("RecyclerViewItemClicked", "min clicked at " + position);
+					} else if (checkedId == maxID) {
+						itemsData[position].setFilter(MAX);
+						Log.d("RecyclerViewItemClicked", "max clicked at " + position);
+					} else {
+						Log.d("RecyclerViewItemClicked", "empty clicked at " + position);
 					}
+
+					// Print all itemsData clicked results in order.
+					logAllItemsClicked(itemsData.length, itemsData);
 				}
 			});
 		} //****************************************************************************************
 
 
+		public void logAllItemsClicked(int itemsSize, FindStrainsListItemData[] itemsData) {
+			// Stylistic printing (box)
+			Log.d("RecyclerViewItemClicked", "-----------------------------------------");
+
+			// Log which radio button is clicked for all items in the list.
+			for(int i = 0; i < itemsSize; i++) {
+				Log.d("RecyclerViewItemClicked", itemsData[i].getFilter() + " at " + i);
+			}
+
+			// Stylistic printing (box)
+			Log.d("RecyclerViewItemClicked", "-----------------------------------------");
+		}
+
+
 		//******************************************************************************************
 		// View Holder: Inner class to hold a reference to each item of RecyclerView
 		//******************************************************************************************
-		public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+		public class ViewHolder extends RecyclerView.ViewHolder {//implements View.OnClickListener {
 			public TextView effectLbl;
 			public RadioGroup effectsBtnGroup;
-			public RadioButton ignoreBtn;
 
+			// These must be defined?
+			public RadioButton ignoreBtn;
+			public RadioButton minBtn;
+			public RadioButton maxBtn;
+
+			// Define all items in here that we want to listen for on click?
 			public ViewHolder(View itemLayoutView) {
 				super(itemLayoutView);
 				effectLbl = itemLayoutView.findViewById(R.id.item_title);
 				effectsBtnGroup = itemLayoutView.findViewById(R.id.effect_group);
+				// These must be defined?
 				ignoreBtn = itemLayoutView.findViewById(R.id.effect_ignore);
-				ignoreBtn.isSelected();
+				minBtn = itemLayoutView.findViewById(R.id.effect_min);
+				maxBtn = itemLayoutView.findViewById(R.id.effect_max);
+
+				//ignoreBtn = itemLayoutView.findViewById(R.id.effect_ignore);
+				//ignoreBtn.isSelected();
+				//ignoreBtn.setChecked(true);
+				// todo: This isn;t working, need to look up how to use recyclerview with radiogroups.
 				//effectsBtnGroup.check(0); // doesn't work
 				//effectsBtnGroup.check(getItemId(ignoreBtn)); // doesn't work
 				//effectsBtnGroup.check(effectsBtnGroup.getChildAt(1).getId()); // doesnt work w/ 0 or 1
 				//ViewHolder.effectsBtnGroup.check(0); doesn't work
-				itemLayoutView.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+				//itemLayoutView.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
 			}
 
 
 			// Use this method to determine which item in the recyclerView was clicked
-			@Override
+			/*@Override
 			public void onClick(View view) {
 				int position = getLayoutPosition();
 				// get ID of the item clicked on
 				// Add to TABLE "MY_STRAINS_TABLE"
 				//Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
-			}
+			}*/
 		} //****************************************************************************************
 
 
