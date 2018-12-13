@@ -121,12 +121,12 @@ public class FindStrainsActivity extends MainActivity {
 	public int[] collectAndFilterAllStrainData() {
 		// Start out with a list of all strains.
 		int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
-		//Log.d("collectAndFilter...", "" + db.getStrainDatabaseRows());
+		Log.d("collectAndFilter...", "" + db.getStrainDatabaseRows());
 
 		filteredArray = getAllStrainIDs(filteredArray);
-		//Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());  // Banana OG
-		//Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());  // 77
-		//Log.d("ItemLength", "" + itemsData.length);  // 3
+		Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());  // Banana OG
+		Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());  // 77
+		Log.d("ItemLength", "" + itemsData.size());  // 10
 
 		// Loop through the buttons array and filter based on each buttons' selection.
 		// TODO: This piece of code still appears to take the longest.
@@ -167,14 +167,14 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] getAllStrainIDs(int[] filteredArray) {
 		int dbRows = (int) db.getStrainDatabaseRows();
-		//Log.d("getAllStrainIDs", "dbRows = " + dbRows);
+		Log.d("getAllStrainIDs", "dbRows = " + dbRows);
 
 		for (int i = 0; i < dbRows; i++) {
-			//Log.d("getAllStrainIDs", "i="+i);
+			Log.d("getAllStrainIDs", "i="+i);
 			filteredArray[i] = db.getStrainData(i + 0).getStrainId();
-			//Log.d("getAllStrainIDs", "filteredArray[i] = " + filteredArray[i]);
+			Log.d("getAllStrainIDs", "filteredArray[i] = " + filteredArray[i]);
 		}
-		//Log.d("getAllStrainIDs", "Got all strains.");
+		Log.d("getAllStrainIDs", "Got all strains.");
 		return filteredArray;
 	} //********************************************************************************************
 
@@ -196,7 +196,7 @@ public class FindStrainsActivity extends MainActivity {
 		int newArray[] = new int[databaseRows];
 
 		if (btnResult == MIN) {
-			Log.d("minSelected", "Min is selected for effect #: " + effect);
+			//Log.d("minSelected", "Min is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
 				effectValue = db.getStrainData(i + 0).getEffect(effect);
 				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
@@ -236,13 +236,19 @@ public class FindStrainsActivity extends MainActivity {
 		} else {
 			Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
-				newArray[i] = db.getStrainData(i + 0).getStrainId();
+				// todo continue here!!!!!!!!!!!!!!!!!!!!!!!!!!! should use originalArray to populate newArray?!?!?!
+				if (originalArray[i] == BLANK_ENTRY) {
+					newArray[i] = BLANK_ENTRY;
+				} else {
+					newArray[i] = originalArray[i];
+				}
+				Log.d("ignoreSelected", "original = " + originalArray[i] + ". newArray = " + newArray[i]);
 			}
 		}
 
 		// Return the reduced array
-		//Log.d("filterArrayByColumn()", "Filter " + effect + " complete.");
-		//Log.d("arraysize", "" + getFinalArraySize(newArray, db));
+		Log.d("filterArrayByColumn()", "Filter " + effect + " complete.");
+		Log.d("arraysize", "" + getFinalArraySize(newArray, db));
 		return newArray;
 	} //********************************************************************************************
 
