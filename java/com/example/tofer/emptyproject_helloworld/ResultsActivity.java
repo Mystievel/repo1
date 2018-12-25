@@ -11,16 +11,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-//todo click and hold feature on item titles or "?" button for more info
+import org.w3c.dom.Text;
+
+// todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
 // todo: remove items when added to mystrainslist or change icon to "-" (Remove)?
-// TODO: create graphic for "Hybrid" Indica" sativa" text
-// todo: Different colord list item backgrounds color coded for Sativa/Indica/Hybrid
+// todo: create graphic for "Hybrid" Indica" sativa" text
+// todo: Different colored list item backgrounds color coded for Sativa/Indica/Hybrid
+// todo: create filter option: sort results list by strain type, name, highest/lowest of some value.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
 	ResultsListItemData itemsData[] = new ResultsListItemData[finalArraySize];	// Populate Array size of reduced number of results.
 
-	
+
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -43,6 +46,14 @@ public class ResultsActivity extends FindStrainsActivity {
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
+
+		// Let the user know if there were no results.
+		TextView noResults = findViewById(R.id.lblNoResults);
+		if (finalArraySize == 0) {
+			noResults.setVisibility(View.VISIBLE);
+		} else {
+			noResults.setVisibility(View.INVISIBLE);
+		}
 
         // Buttons
         Button btnMainPage = findViewById(R.id.btnMainPage);

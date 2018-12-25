@@ -20,6 +20,7 @@ import java.util.List;
 
 
 // todo: save fields when return to this page in a single opened session
+// todo: active search - show "Search will produce: x results." while moving the slider and selecting radio buttons
 
 
 public class FindStrainsActivity extends MainActivity {

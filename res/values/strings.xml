@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EmptyProject_HelloWorld</string>
+    <string name="noSavedStrains">You dont have any saved strains.\nSearch for strains using the Find Strains page.</string>
 </resources>

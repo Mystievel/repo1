@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// todo Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
-// todo: if no strains exist, make a note "You don't have any saved strains, click on "Find Strains" to begin or see the Cannabis Constructor (advanced)."
-
+// todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
+// todo: figure out what is making this page take a long time to load
 
 public class MyStrainsActivity extends MainActivity {
 	// Globals
@@ -57,6 +56,14 @@ public class MyStrainsActivity extends MainActivity {
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
+		// todo: this needs to listen if all items are removed from the list and appear in real time.
+		// Let the user know if no strains exist.
+		TextView noStrains = findViewById(R.id.lblNoStrains);
+		if (numberOfMyStrains == 0) {
+			noStrains.setVisibility(View.VISIBLE);
+		} else {
+			noStrains.setVisibility(View.INVISIBLE);
+		}
 
 		//******************************************************************************************
 		// Main Page Clicked
