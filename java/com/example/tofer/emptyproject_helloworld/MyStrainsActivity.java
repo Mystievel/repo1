@@ -22,7 +22,7 @@ public class MyStrainsActivity extends MainActivity {
 	// Globals
 	// 1. get a reference for the recyclerView's rows (item data)
 	ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
-
+	int numberOfMyStrains;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ public class MyStrainsActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mystrains_activity);
 
-		int numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is NOT declared within onCreate we receive a "Null Pointer Exception".
+		numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is populated anywhere but within this onCreate method, we receive a "Null Pointer Exception".
 		int[] myStrainsIndexArray = collectAndFilterMyStrains();
 
 		// 1. get a reference to recyclerView
@@ -204,7 +204,8 @@ public class MyStrainsActivity extends MainActivity {
 				//notifyItemRangeChanged(position, getItemCount());
 				notifyDataSetChanged();
 				// todo: rather than using the getNumberOfMyStrains() routine which takes a long time, use a constant = constant - 1 or something like that...
-				setNoStrainsLabel(getNumberOfMyStrains());
+				numberOfMyStrains--;
+				setNoStrainsLabel(numberOfMyStrains);
 			}
 		} //****************************************************************************************
 
