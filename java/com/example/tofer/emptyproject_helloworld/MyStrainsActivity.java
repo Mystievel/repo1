@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 // todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
-// todo: figure out what is making this page take a long time to load
 
 public class MyStrainsActivity extends MainActivity {
 	// Globals
@@ -56,14 +55,8 @@ public class MyStrainsActivity extends MainActivity {
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
-		// todo: this needs to listen if all items are removed from the list and appear in real time.
 		// Let the user know if no strains exist.
-		TextView noStrains = findViewById(R.id.lblNoStrains);
-		if (numberOfMyStrains == 0) {
-			noStrains.setVisibility(View.VISIBLE);
-		} else {
-			noStrains.setVisibility(View.INVISIBLE);
-		}
+		setNoStrainsLabel(numberOfMyStrains);
 
 		//******************************************************************************************
 		// Main Page Clicked
@@ -78,9 +71,20 @@ public class MyStrainsActivity extends MainActivity {
 	} //********************************************************************************************
 
 
+	public void setNoStrainsLabel(int numberOfMyStrains) {
+		TextView noStrains = findViewById(R.id.lblNoStrains);
+		if (numberOfMyStrains == 0) {
+			noStrains.setVisibility(View.VISIBLE);
+		} else {
+			noStrains.setVisibility(View.INVISIBLE);
+		}
+	}
+
+
 	//**********************************************************************************************
 	//						Get Number of items in "My Strains" list
 	// todo: Expand the algorithm for any column or series of columns by changing getMyStrains() to an input argument.
+	// todo: this routine is taking a long time, find a way to make this faster
 	//**********************************************************************************************
 	public int getNumberOfMyStrains() {
     	int count = 0;
@@ -199,6 +203,8 @@ public class MyStrainsActivity extends MainActivity {
 				//notifyItemRemoved(position);
 				//notifyItemRangeChanged(position, getItemCount());
 				notifyDataSetChanged();
+				// todo: rather than using the getNumberOfMyStrains() routine which takes a long time, use a constant = constant - 1 or something like that...
+				setNoStrainsLabel(getNumberOfMyStrains());
 			}
 		} //****************************************************************************************
 

@@ -138,7 +138,7 @@ public class ResultsActivity extends FindStrainsActivity {
 			public void onClick(View view) {
 				int position = getAdapterPosition();
 				db.updateMyStrain(db.getStrainData(finalArray[position]), 1);
-				logStrainInfo("viewHolderUpdate", db, position);
+				//logStrainInfo("viewHolderUpdate", db, position);
 			}
 		} //****************************************************************************************
 
