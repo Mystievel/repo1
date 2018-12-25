@@ -12,14 +12,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //todo click and hold feature on item titles or "?" button for more info
+// todo: remove items when added to mystrainslist or change icon to "-" (Remove)?
 // TODO: create graphic for "Hybrid" Indica" sativa" text
-// todo: remove items when added to mystrainslist yes?
+// todo: Different colord list item backgrounds color coded for Sativa/Indica/Hybrid
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
 	ResultsListItemData itemsData[] = new ResultsListItemData[finalArraySize];	// Populate Array size of reduced number of results.
 
-
+	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

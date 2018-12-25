@@ -20,7 +20,6 @@ import java.util.List;
 
 
 // todo: save fields when return to this page in a single opened session
-// todo: set default button selections to 'omit'.
 
 
 public class FindStrainsActivity extends MainActivity {
@@ -61,7 +60,7 @@ public class FindStrainsActivity extends MainActivity {
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < itemDataSize; i++) {
-			Log.d("populateArrayList", "i=" + i + ". arraySize: " + itemDataSize + ". string: " + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
+			//Log.d("populateArrayList", "i=" + i + ". arraySize: " + itemDataSize + ". string: " + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
             itemsData.add(new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX)));
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
@@ -340,11 +339,10 @@ public class FindStrainsActivity extends MainActivity {
 			// - replace the contents of the view with that itemsData
 			viewHolder.effectLbl.setText(itemsData.get(position).getEffect());
 
+			// Set the default selection to "omit"
+			viewHolder.ignoreBtn.setChecked(true);
+
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
-			//viewHolder.effectsBtnGroup.check(position);
-
-			// todo: it appears this isn't listening correctly, why?
-
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -393,7 +391,7 @@ public class FindStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		// View Holder: Inner class to hold a reference to each item of RecyclerView
 		//******************************************************************************************
-		public class ViewHolder extends RecyclerView.ViewHolder {//implements View.OnClickListener {
+		public class ViewHolder extends RecyclerView.ViewHolder {
 			public TextView effectLbl;
 			public RadioGroup effectsBtnGroup;
 
@@ -411,27 +409,7 @@ public class FindStrainsActivity extends MainActivity {
 				ignoreBtn = itemLayoutView.findViewById(R.id.effect_ignore);
 				minBtn = itemLayoutView.findViewById(R.id.effect_min);
 				maxBtn = itemLayoutView.findViewById(R.id.effect_max);
-
-				//ignoreBtn = itemLayoutView.findViewById(R.id.effect_ignore);
-				//ignoreBtn.isSelected();
-				//ignoreBtn.setChecked(true);
-				// todo: This isn;t working, need to look up how to use recyclerview with radiogroups.
-				//effectsBtnGroup.check(0); // doesn't work
-				//effectsBtnGroup.check(getItemId(ignoreBtn)); // doesn't work
-				//effectsBtnGroup.check(effectsBtnGroup.getChildAt(1).getId()); // doesnt work w/ 0 or 1
-				//ViewHolder.effectsBtnGroup.check(0); doesn't work
-				//itemLayoutView.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
 			}
-
-
-			// Use this method to determine which item in the recyclerView was clicked
-			/*@Override
-			public void onClick(View view) {
-				int position = getLayoutPosition();
-				// get ID of the item clicked on
-				// Add to TABLE "MY_STRAINS_TABLE"
-				//Log.d("SearchRecViewClick", "Item # Clicked: " + String.valueOf(position) + ".");
-			}*/
 		} //****************************************************************************************
 
 
