@@ -30,7 +30,7 @@ public class FindStrainsActivity extends MainActivity {
     // Local variables
 	private static int startingValue = 75;
 	private static int progressChangedValue = startingValue;
-    private final static int[] effectsArray = new int[]{DEHYDRATION, ENERGY, EUPHORIA, FOCUS, HAPPINESS, HUNGER, PAIN_RELIEF, RELAXATION, SICKNESS_RELIEF, SLEEPINESS};
+    private final static int[] effectsArray = new int[]{HAPPINESS, EUPHORIA, FOCUS, ENERGY, RELAXATION, SLEEPINESS, SICKNESS_RELIEF, PAIN_RELIEF, HUNGER, DEHYDRATION, ANXIETY};
     private int itemDataSize = effectsArray.length;
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;

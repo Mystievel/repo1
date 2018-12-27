@@ -9,16 +9,17 @@ public class CannabisStrainDatabase_Definition extends MainActivity{
 	private String StrainType;
 	private int MyStrains;
 	private int FavoriteStrains;
-	private double Dehydration;
-	private double Energy;
+	private double Happiness;
 	private double Euphoria;
 	private double Focus;
-	private double Happiness;
-	private double Hunger;
-	private double Pain_Relief;
+	private double Energy;
 	private double Relaxation;
-	private double Sickness_Relief;
 	private double Sleepiness;
+	private double Sickness_Relief;
+	private double Pain_Relief;
+	private double Hunger;
+	private double Dehydration;
+	private double Anxiety;
 
 	public CannabisStrainDatabase_Definition(){}
 
@@ -102,6 +103,9 @@ public class CannabisStrainDatabase_Definition extends MainActivity{
 			case SLEEPINESS:
 				getEffect = getEffectsSleepiness();
 				break;
+			case ANXIETY:
+				getEffect = getEffectsAnxiety();
+				break;
 			default:
 				getEffect = -1;
 				break;
@@ -140,6 +144,9 @@ public class CannabisStrainDatabase_Definition extends MainActivity{
 				break;
 			case SLEEPINESS:
 				setEffectsSleepiness(data);
+				break;
+			case ANXIETY:
+				setEffectsAnxiety(data);
 				break;
 			default:
 				break;
@@ -245,4 +252,14 @@ public class CannabisStrainDatabase_Definition extends MainActivity{
 	public void setEffectsSickness_Relief(double data) {
 		this.Sickness_Relief= data;
 	}
+
+	// Anxiety/Paranoia/Dizziness
+	public double getEffectsAnxiety() {
+		return Anxiety;
+	}
+
+	public void setEffectsAnxiety(double data) {
+		this.Anxiety= data;
+	}
+
 }

@@ -48,21 +48,23 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // Strain Database (Table) Columns names
     // These values MUST match the Strings in the db definition file.
     private static final String COLUMN_0 = "id";
-    private static final String COLUMN_1 = "StrainName"; //Blue Dreams/GSC/Cookies
-    private static final String COLUMN_2 = "StrainType"; // Hybrid/sativa/indica
-	private static final String COLUMN_3 = "MyStrains"; //Blue Dreams/GSC/Cookies
-	private static final String COLUMN_4 = "FavoriteStrains"; //Blue Dreams/GSC/Cookies
-	private static final String COLUMN_5 = "Dehydration";
-    private static final String COLUMN_6 = "Energy";
-    private static final String COLUMN_7 = "Euphoria";
-	private static final String COLUMN_8 = "Focus";
-	private static final String COLUMN_9 = "Happiness";
-	private static final String COLUMN_10 = "Pain_Relief";
-	private static final String COLUMN_11 = "Relaxation";
-	private static final String COLUMN_12 = "Sickness_Relief";
-	private static final String COLUMN_13 = "Sleepiness";
+    private static final String COLUMN_1 = "StrainName";
+    private static final String COLUMN_2 = "StrainType";
+	private static final String COLUMN_3 = "MyStrains";
+	private static final String COLUMN_4 = "FavoriteStrains";
+	private static final String COLUMN_5 = "Happiness";
+	private static final String COLUMN_6 = "Euphoria";
+	private static final String COLUMN_7 = "Focus";
+	private static final String COLUMN_8 = "Energy";
+	private static final String COLUMN_9 = "Relaxation";
+	private static final String COLUMN_10 = "Sleepiness";
+	private static final String COLUMN_11 = "Sickness_Relief";
+	private static final String COLUMN_12 = "Pain_Relief";
+	private static final String COLUMN_13 = "Hunger";
+	private static final String COLUMN_14 = "Dehydration";
+	private static final String COLUMN_15 = "Anxiety";
 
-	private static final String[] ALL_COLUMNS = {COLUMN_0, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, COLUMN_6, COLUMN_7, COLUMN_8, COLUMN_9, COLUMN_10, COLUMN_11, COLUMN_12, COLUMN_13};
+	private static final String[] ALL_COLUMNS = {COLUMN_0, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, COLUMN_6, COLUMN_7, COLUMN_8, COLUMN_9, COLUMN_10, COLUMN_11, COLUMN_12, COLUMN_13, COLUMN_14, COLUMN_15};
 
 
 /*    //**********************************************************************************************
@@ -126,15 +128,17 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		strainInfo.setStrainType(cursor.getString(2));
 		strainInfo.setMyStrains(Integer.parseInt(cursor.getString(3)));
 		strainInfo.setFavoriteStrains(Integer.parseInt(cursor.getString(4)));
-		strainInfo.setEffectsDehydration(cursor.getDouble(5));
-        strainInfo.setEffectsEnergy(cursor.getDouble(6));
-        strainInfo.setEffectsEuphoria(cursor.getDouble(7));
-		strainInfo.setEffectsFocus(cursor.getDouble(8));
-		strainInfo.setEffectsHappiness(cursor.getDouble(9));
-		strainInfo.setEffectsPain_Relief(cursor.getDouble(10));
-		strainInfo.setEffectsRelaxation(cursor.getDouble(11));
-		strainInfo.setEffectsSickness_Relief(cursor.getDouble(12));
-		strainInfo.setEffectsSleepiness(cursor.getDouble(13));
+		strainInfo.setEffectsHappiness(cursor.getDouble(5));
+		strainInfo.setEffectsEuphoria(cursor.getDouble(6));
+		strainInfo.setEffectsFocus(cursor.getDouble(7));
+		strainInfo.setEffectsEnergy(cursor.getDouble(8));
+		strainInfo.setEffectsRelaxation(cursor.getDouble(9));
+		strainInfo.setEffectsSleepiness(cursor.getDouble(10));
+		strainInfo.setEffectsSickness_Relief(cursor.getDouble(11));
+		strainInfo.setEffectsPain_Relief(cursor.getDouble(12));
+		strainInfo.setEffectsHunger(cursor.getDouble(13));
+		strainInfo.setEffectsDehydration(cursor.getDouble(14));
+		strainInfo.setEffectsAnxiety(cursor.getDouble(15));
 
         // 5. return strain information
 		db.close();

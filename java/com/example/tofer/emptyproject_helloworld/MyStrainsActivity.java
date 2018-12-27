@@ -203,7 +203,6 @@ public class MyStrainsActivity extends MainActivity {
 				//notifyItemRemoved(position);
 				//notifyItemRangeChanged(position, getItemCount());
 				notifyDataSetChanged();
-				// todo: rather than using the getNumberOfMyStrains() routine which takes a long time, use a constant = constant - 1 or something like that...
 				numberOfMyStrains--;
 				setNoStrainsLabel(numberOfMyStrains);
 			}

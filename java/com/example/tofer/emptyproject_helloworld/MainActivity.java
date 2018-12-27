@@ -13,6 +13,8 @@ import android.widget.Button;
 // todo add buttons across all pages? Make main activity just a start screen then go to my strains
 // todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
 
+// todo: copy database to memory on init
+
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines
@@ -20,16 +22,17 @@ public class MainActivity extends AppCompatActivity {
     int MIN = 1;						    // #DEFINE
     int MAX = 2;						    // #DEFINE
     int BLANK_ENTRY = -1;				    // #DEFINE
-    final static int DEHYDRATION = 1;       // #DEFINE
-    final static int ENERGY = 2;		    // #DEFINE
-    final static int EUPHORIA = 3;		    // #DEFINE
-    final static int FOCUS = 4;		        // #DEFINE
-    final static int HAPPINESS = 5;		    // #DEFINE
-    final static int HUNGER = 6;		    // #DEFINE
-    final static int PAIN_RELIEF = 7;	    // #DEFINE
-    final static int RELAXATION = 8;	    // #DEFINE
-    final static int SICKNESS_RELIEF = 9;	// #DEFINE
-    final static int SLEEPINESS = 10;	 	// #DEFINE
+	final static int HAPPINESS = 1;		    // #DEFINE
+	final static int EUPHORIA = 2;		    // #DEFINE
+	final static int FOCUS = 3;		        // #DEFINE
+	final static int ENERGY = 4;		    // #DEFINE
+	final static int RELAXATION = 5;	    // #DEFINE
+	final static int SLEEPINESS = 6;	 	// #DEFINE
+	final static int SICKNESS_RELIEF = 7;	// #DEFINE
+	final static int PAIN_RELIEF = 8;	    // #DEFINE
+	final static int HUNGER = 9;		    // #DEFINE
+	final static int DEHYDRATION = 10;       // #DEFINE
+	final static int ANXIETY = 11;      	 // #DEFINE
 
     // Globals
     static int finalArraySize;
