@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,15 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
 // todo: remove items when added to mystrainslist or change icon to "-" (Remove)?
-// todo: create graphic for "Hybrid" Indica" sativa" text
-// todo: Different colored list item backgrounds color coded for Sativa/Indica/Hybrid
 // todo: create filter option: sort results list by strain type, name, highest/lowest of some value.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
-	ResultsListItemData itemsData[] = new ResultsListItemData[finalArraySize];	// Populate Array size of reduced number of results.
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,14 +37,17 @@ public class ResultsActivity extends FindStrainsActivity {
         setContentView(R.layout.results_activity);
 
 		// 1. get a reference to recyclerView
+		ArrayList<ResultsListItemData> itemsDataArrayList = new ArrayList<>();
+
 		RecyclerView recyclerView = findViewById(R.id.resultsList);
 		for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
+			int strainID = db.getStrainData(finalArray[i] + 0).getStrainId();
         	String strainName = db.getStrainData(finalArray[i] + 0).getStrainName();
         	String strainType = db.getStrainData(finalArray[i] + 0).getStrainType();
-            itemsData[i] = new ResultsListItemData("" + strainName, "" + strainType);
+            itemsDataArrayList.add(new ResultsListItemData(0 + strainID, "" + strainName, "" + strainType));
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
-        ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsData);    // 3. create an adapter
+        ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsDataArrayList);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
@@ -84,12 +88,12 @@ public class ResultsActivity extends FindStrainsActivity {
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecyclerViewAdapter.ViewHolder> {
 		// Local variables
-		public ResultsListItemData[] itemsData;
+		public List<ResultsListItemData> itemsData;
 
 		//******************************************************************************************
 		// Create Adapter
 		//******************************************************************************************
-		public ResultsRecyclerViewAdapter(ResultsListItemData[] itemsData) {
+		public ResultsRecyclerViewAdapter(List<ResultsListItemData> itemsData) {
 			this.itemsData = itemsData;
 		} //****************************************************************************************
 
@@ -112,8 +116,8 @@ public class ResultsActivity extends FindStrainsActivity {
 		public void onBindViewHolder(ViewHolder viewHolder, int position) {
 			// - get data from your itemsData at this position
 			// - replace the contents of the view with that itemsData
-			viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
-			viewHolder.txtViewDescription.setText(itemsData[position].getDescription());
+			viewHolder.txtViewTitle.setText(itemsData.get(position).getTitle());
+			viewHolder.txtViewDescription.setText(itemsData.get(position).getDescription());
 		} //****************************************************************************************
 
 
@@ -137,8 +141,18 @@ public class ResultsActivity extends FindStrainsActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
-				db.updateMyStrain(db.getStrainData(finalArray[position]), 1);
-				//logStrainInfo("viewHolderUpdate", db, position);
+				//Log.d("itemClicked", "" + position);
+
+				// Remove item from the Database - must be done before removing from view.
+				db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 1);
+				//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
+
+				// Remove item from the view
+				itemsData.remove(position);
+				//notifyItemRemoved(position);
+				//notifyItemRangeChanged(position, getItemCount());
+				notifyDataSetChanged();
+				//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
 			}
 		} //****************************************************************************************
 
@@ -148,7 +162,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		//******************************************************************************************
 		@Override
 		public int getItemCount() {
-			return itemsData.length;
+			return itemsData.size();
 		} //****************************************************************************************
 	} //********************************************************************************************
 } //************************************************************************************************

@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// todo: custom banner graphic for strain types: Sativa, indica, hybrid
 // todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
+// todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
 
 public class MyStrainsActivity extends MainActivity {
 	// Globals
-	// 1. get a reference for the recyclerView's rows (item data)
-	ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
 	int numberOfMyStrains;
+
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -84,7 +85,7 @@ public class MyStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	//						Get Number of items in "My Strains" list
 	// todo: Expand the algorithm for any column or series of columns by changing getMyStrains() to an input argument.
-	// todo: this routine is taking a long time, find a way to make this faster
+	// todo: this routine is taking a long time, find a way to make this faster, copy into array on startup?
 	//**********************************************************************************************
 	public int getNumberOfMyStrains() {
     	int count = 0;

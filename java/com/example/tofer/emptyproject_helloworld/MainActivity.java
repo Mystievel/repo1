@@ -13,7 +13,7 @@ import android.widget.Button;
 // todo add buttons across all pages? Make main activity just a start screen then go to my strains
 // todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
 
-// todo: copy database to memory on init
+// todo: copy database to memory on init?
 
 
 public class MainActivity extends AppCompatActivity {
