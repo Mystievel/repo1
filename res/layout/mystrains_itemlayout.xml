@@ -9,7 +9,7 @@
 		android:id="@+id/strainNameLbl"
 		android:layout_width="312dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
+		android:layout_marginStart="16dp"
 		android:layout_marginTop="2dp"
 		android:layout_marginEnd="8dp"
 		android:textColor="@android:color/black"
@@ -20,9 +20,9 @@
 
 	<TextView
 		android:id="@+id/strainTypeLbl"
-		android:layout_width="319dp"
+		android:layout_width="0dp"
 		android:layout_height="32dp"
-		android:layout_marginStart="8dp"
+		android:layout_marginStart="32dp"
 		android:layout_marginTop="4dp"
 		android:layout_marginEnd="8dp"
 		android:textColor="@android:color/black"

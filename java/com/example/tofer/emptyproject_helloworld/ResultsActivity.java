@@ -1,6 +1,7 @@
 package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -152,6 +153,27 @@ public class ResultsActivity extends FindStrainsActivity {
 				//notifyItemRangeChanged(position, getItemCount());
 				notifyDataSetChanged();
 				//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
+			}
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		//							Set Item Background by Strain Type
+		//
+		// Changes the list item background color based on the strainType (Hybrid, Sativa, Indica)
+		// To compare two strings, use string.equals. use trim() to remove white space and ignore case to ignore capitalizations.
+		// Note: The above adds some overhead, remove if time becomes sensitive here to just strainType.equals("String");
+		//******************************************************************************************
+		public void setItemBackgroundByStrainType(String strainType, ViewHolder viewHolder) {
+			if (strainType.trim().equalsIgnoreCase("" + STR_INDICA)) {
+				//Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#8924f4"));
+			} else if (strainType.trim().equalsIgnoreCase("" + STR_SATIVA)) {
+				//Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#efa328"));
+			} else { // strainType == "Hybrid"
+				//Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#68f442"));
 			}
 		} //****************************************************************************************
 

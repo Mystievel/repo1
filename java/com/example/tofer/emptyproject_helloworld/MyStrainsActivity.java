@@ -174,20 +174,8 @@ public class MyStrainsActivity extends MainActivity {
 			viewHolder.strainNameLbl.setText(strainName);
 			viewHolder.strainTypeLbl.setText(strainType);
 
-			// todo: custom banner graphic for strain types: Sativa, indica, hybrid
-			// todo: finalize, not working, place into common routine and place routine call into resultsACtivity as well
-			// Change the list item background color based on the strain type (Hybrid, Sativa, Indica)
-			// To compare two strings, use string.equals.
-			if (strainType.trim().equalsIgnoreCase("Indica")) {
-				Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundColor(Color.parseColor("#8924f4"));
-			} else if (strainType.trim().equalsIgnoreCase("Sativa")) {
-				Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundColor(Color.parseColor("#efa328"));
-			} else { // strainType == "Hybrid"
-				Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundColor(Color.parseColor("#68f442"));
-			}
+			// Change the list item background color based on the strainType (Hybrid, Sativa, Indica)
+			setItemBackgroundByStrainType(strainType, viewHolder);
 		} //****************************************************************************************
 
 
@@ -224,6 +212,27 @@ public class MyStrainsActivity extends MainActivity {
 				notifyDataSetChanged();
 				numberOfMyStrains--;
 				setNoStrainsLabel(numberOfMyStrains);
+			}
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		//							Set Item Background by Strain Type
+		//
+		// Changes the list item background color based on the strainType (Hybrid, Sativa, Indica)
+		// To compare two strings, use string.equals. use trim() to remove white space and ignore case to ignore capitalizations.
+		// Note: The above adds some overhead, remove if time becomes sensitive here to just strainType.equals("String");
+		//******************************************************************************************
+		public void setItemBackgroundByStrainType(String strainType, ViewHolder viewHolder) {
+			if (strainType.trim().equalsIgnoreCase("" + STR_INDICA)) {
+				//Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#8924f4"));
+			} else if (strainType.trim().equalsIgnoreCase("" + STR_SATIVA)) {
+				//Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#efa328"));
+			} else { // strainType == "Hybrid"
+				//Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#68f442"));
 			}
 		} //****************************************************************************************
 

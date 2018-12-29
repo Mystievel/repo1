@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 	final static int HUNGER = 9;		    // #DEFINE
 	final static int DEHYDRATION = 10;       // #DEFINE
 	final static int ANXIETY = 11;      	 // #DEFINE
+    final String STR_SATIVA= "Sativa";
+    final String STR_INDICA = "Indica";
+    final String STR_HYBRID = "Hybrid";
 
     // Globals
     static int finalArraySize;
