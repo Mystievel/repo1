@@ -111,13 +111,19 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		//******************************************************************************************
 		// Replace the contents of a view (invoked by the layout manager)
+		// - get data from your itemsData at this position
+		// - replace the contents of the view with that itemsData
 		//******************************************************************************************
 		@Override
 		public void onBindViewHolder(ViewHolder viewHolder, int position) {
-			// - get data from your itemsData at this position
-			// - replace the contents of the view with that itemsData
-			viewHolder.txtViewTitle.setText(itemsData.get(position).getTitle());
-			viewHolder.txtViewDescription.setText(itemsData.get(position).getDescription());
+			String strainName = itemsData.get(position).getTitle();
+			String strainType = itemsData.get(position).getDescription();
+
+			viewHolder.txtViewTitle.setText(strainName);
+			viewHolder.txtViewDescription.setText(strainType);
+
+			// Change the list item background color based on the strainType (Hybrid, Sativa, Indica)
+			setItemBackgroundByStrainType(strainType, viewHolder);
 		} //****************************************************************************************
 
 

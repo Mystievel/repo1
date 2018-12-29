@@ -12,6 +12,8 @@ import android.widget.Button;
 // todo Change overall font to same fontFamily
 // todo add buttons across all pages? Make main activity just a start screen then go to my strains
 // todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
+// todo add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
+// todo admob advertisement banner?
 
 // todo: copy database to memory on init?
 
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+
+        // THIS IS ALL OLD CODE
         Button findStrainsButton = findViewById(R.id.btnFindStrains);
         Button myStrainsButton = findViewById(R.id.btnMyStrains);
         Button constructorButton = findViewById(R.id.btnConstructor);
@@ -82,11 +86,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
    }
-
-
-    public void logStrainInfo(String tag, CannabisStrainDatabase_Helper strainInfo, int id) {
-        Log.d("" + tag, "ID: " + strainInfo.getStrainData(id).getStrainId()
-                + ". Strain Name: " + strainInfo.getStrainData(id).getStrainName()
-                + ". MyStrain?: " + strainInfo.getStrainData(id).getMyStrains());
-    }
 }
