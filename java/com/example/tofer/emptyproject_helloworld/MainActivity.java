@@ -1,10 +1,8 @@
 package com.example.tofer.emptyproject_helloworld;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -51,39 +49,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
 
-        // THIS IS ALL OLD CODE
-        Button findStrainsButton = findViewById(R.id.btnFindStrains);
-        Button myStrainsButton = findViewById(R.id.btnMyStrains);
-        Button constructorButton = findViewById(R.id.btnConstructor);
-        Button supportButton = findViewById(R.id.btnSupport);
+		// TODO summarize the code block below into a routine **********************************************************************
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnFindStrainsPage = findViewById(R.id.btnFindStrainsPage);
+		btnFindStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, FindStrainsActivity.class));
+			}
+		}); //**************************************************************************************
 
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
+		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, ConstructorActivity.class));
+			}
+		}); //**************************************************************************************
 
-        findStrainsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, FindStrainsActivity.class));
-            }
-        });
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnSupportPage = findViewById(R.id.btnSupportPage);
+		btnSupportPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, SupportActivity.class));
+			}
+		}); //**************************************************************************************
 
-        myStrainsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, MyStrainsActivity.class));
-            }
-        });
-
-        constructorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ConstructorActivity.class));
-            }
-        });
-
-        supportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SupportActivity.class));
-            }
-        });
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
+		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, MyStrainsActivity.class));
+			}
+		}); //**************************************************************************************
+		// TODO summarize the code block above into a routine **********************************************************************
    }
 }

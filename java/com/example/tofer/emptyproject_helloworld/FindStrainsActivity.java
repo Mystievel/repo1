@@ -54,10 +54,6 @@ public class FindStrainsActivity extends MainActivity {
         searchIntensityValue = findViewById(R.id.lblSearchIntensity);
         searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress() + "%");
 
-        // Setup Button variables
-        Button searchButton = findViewById(R.id.btnStartSearch);
-        Button mainPageButton = findViewById(R.id.btnMainPage);
-
 		// 1. get a reference to recyclerView
 		RecyclerView recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < itemDataSize; i++) {
@@ -69,11 +65,11 @@ public class FindStrainsActivity extends MainActivity {
 		recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
 		recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
-
         //******************************************************************************************
-        // Start Search Clicked
-        //******************************************************************************************
-        searchButton.setOnClickListener(new View.OnClickListener() {
+		// Start Search Clicked
+		//******************************************************************************************
+		Button searchButton = findViewById(R.id.btnStartSearch);
+		searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 				finalArray = collectAndFilterAllStrainData();
@@ -82,15 +78,54 @@ public class FindStrainsActivity extends MainActivity {
         }); //**************************************************************************************
 
 
+
+		// TODO summarize the code block below into a routine **********************************************************************
+		//******************************************************************************************
+        // Find Strains Page Clicked
         //******************************************************************************************
-        // Main Page Clicked
-        //******************************************************************************************
-        mainPageButton.setOnClickListener(new View.OnClickListener() {
+		Button btnFindStrainsPage = findViewById(R.id.btnFindStrainsPage);
+		btnFindStrainsPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(FindStrainsActivity.this, MainActivity.class));
+                startActivity(new Intent(FindStrainsActivity.this, FindStrainsActivity.class));
             }
         }); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
+		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(FindStrainsActivity.this, ConstructorActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnSupportPage = findViewById(R.id.btnSupportPage);
+		btnSupportPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(FindStrainsActivity.this, SupportActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
+		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(FindStrainsActivity.this, MyStrainsActivity.class));
+			}
+		}); //**************************************************************************************
+		// TODO summarize the code block above into a routine **********************************************************************
+
+
 
 
 		//******************************************************************************************

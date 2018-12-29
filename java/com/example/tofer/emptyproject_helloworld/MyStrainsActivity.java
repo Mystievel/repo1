@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
@@ -59,16 +57,55 @@ public class MyStrainsActivity extends MainActivity {
 		// Let the user know if no strains exist.
 		setNoStrainsLabel(numberOfMyStrains);
 
+
+
+		// TODO summarize the code block below into a routine **********************************************************************
 		//******************************************************************************************
-		// Main Page Clicked
+		// Find Strains Page Clicked
 		//******************************************************************************************
-		Button mainpagebutton = findViewById(R.id.btnMainPage);
-        mainpagebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MyStrainsActivity.this, MainActivity.class));
-            }
-        }); //**************************************************************************************
+		Button btnFindStrainsPage = findViewById(R.id.btnFindStrainsPage);
+		btnFindStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MyStrainsActivity.this, FindStrainsActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
+		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MyStrainsActivity.this, ConstructorActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnSupportPage = findViewById(R.id.btnSupportPage);
+		btnSupportPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MyStrainsActivity.this, SupportActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
+		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MyStrainsActivity.this, MyStrainsActivity.class));
+			}
+		}); //**************************************************************************************
+		// TODO summarize the code block above into a routine **********************************************************************
+
+
 	} //********************************************************************************************
 
 

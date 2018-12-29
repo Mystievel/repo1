@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		}
 
         // Buttons
-        Button btnMainPage = findViewById(R.id.btnMainPage);
+        Button btnMainPage = findViewById(R.id.btnFindStrainsPage);
         Button btnReviseSearch = findViewById(R.id.btnReviseSearch);
 
 		btnMainPage.setOnClickListener(new View.OnClickListener() {

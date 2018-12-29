@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">EmptyProject_HelloWorld</string>
     <string name="noSavedStrains">You dont have any saved strains.\nSearch for strains using the Find Strains page.</string>
+    <string name="narrowSearch">Step 2: Narrow your search.\n(Large intensity will reduce the number of results.)</string>
 </resources>
