@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// todo: save fields when return to this page in a single opened session
 // todo: active search - show "Search will produce: x results." while moving the slider and selecting radio buttons
+// todo: bug - click an item and scroll down, other item appears to have same value, its because we're not "recycling the View view"
 
 
 public class FindStrainsActivity extends MainActivity {
@@ -340,8 +340,16 @@ public class FindStrainsActivity extends MainActivity {
 			// - replace the contents of the view with that itemsData
 			viewHolder.effectLbl.setText(itemsData.get(position).getEffect());
 
-			// Set the default selection to "omit"
-			viewHolder.ignoreBtn.setChecked(true);
+			// Set the default selection to "omit", save previous selection otherwise.
+			// todo: save fields when return to this page in a single opened session
+			// todo: get back to this later, not completely working
+			if (itemsData.get(position).getFilter() == MIN) {
+				viewHolder.minBtn.setChecked(true);
+			} else if (itemsData.get(position).getFilter() == MAX) {
+				viewHolder.maxBtn.setChecked(true);
+			} else {
+				viewHolder.ignoreBtn.setChecked(true);
+			}
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -355,17 +363,15 @@ public class FindStrainsActivity extends MainActivity {
 
 					// Sets the value of the filter clicked at the given position in the list to the itemsData object.
 					//Log.d("RecyclerViewItemClicked", "btn id: " + checkedId);
-					if (checkedId == ignoreID) {
-						itemsData.get(position).setFilter(IGNORE);
-						//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
-					} else if (checkedId == minID) {
+					if (checkedId == minID) {
 						itemsData.get(position).setFilter(MIN);
 						//Log.d("RecyclerViewItemClicked", "min clicked at " + position);
 					} else if (checkedId == maxID) {
 						itemsData.get(position).setFilter(MAX);
 						//Log.d("RecyclerViewItemClicked", "max clicked at " + position);
 					} else {
-						//Log.d("RecyclerViewItemClicked", "empty clicked at " + position);
+						itemsData.get(position).setFilter(IGNORE);
+						//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
 					}
 
 					// Print all itemsData clicked results in order.

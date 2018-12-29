@@ -1,6 +1,7 @@
 package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// todo: custom banner graphic for strain types: Sativa, indica, hybrid
 // todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 // todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
 
@@ -168,8 +168,26 @@ public class MyStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		@Override
 		public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-			viewHolder.strainNameLbl.setText(itemsData.get(position).getStrainName());
-			viewHolder.strainTypeLbl.setText(itemsData.get(position).getStrainType());
+			String strainName = itemsData.get(position).getStrainName();
+			String strainType = itemsData.get(position).getStrainType();
+
+			viewHolder.strainNameLbl.setText(strainName);
+			viewHolder.strainTypeLbl.setText(strainType);
+
+			// todo: custom banner graphic for strain types: Sativa, indica, hybrid
+			// todo: finalize, not working, place into common routine and place routine call into resultsACtivity as well
+			// Change the list item background color based on the strain type (Hybrid, Sativa, Indica)
+			// To compare two strings, use string.equals.
+			if (strainType.trim().equalsIgnoreCase("Indica")) {
+				Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#8924f4"));
+			} else if (strainType.trim().equalsIgnoreCase("Sativa")) {
+				Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#efa328"));
+			} else { // strainType == "Hybrid"
+				Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
+				viewHolder.itemView.setBackgroundColor(Color.parseColor("#68f442"));
+			}
 		} //****************************************************************************************
 
 

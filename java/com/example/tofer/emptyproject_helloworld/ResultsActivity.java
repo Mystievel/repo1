@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
-// todo: remove items when added to mystrainslist or change icon to "-" (Remove)?
 // todo: create filter option: sort results list by strain type, name, highest/lowest of some value.
 
 public class ResultsActivity extends FindStrainsActivity {

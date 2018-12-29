@@ -9,7 +9,6 @@ public class FindStrainsListItemData extends FindStrainsActivity{
 
 	public FindStrainsListItemData(String effect){
 		this.effect = effect;
-		this.checkedBtnType = -1;
 	}
 
 	// getters & setters
@@ -22,14 +21,12 @@ public class FindStrainsListItemData extends FindStrainsActivity{
 	}
 
 	public void setFilter(int checkedBtn) {
-		if (checkedBtn == IGNORE) {
-			this.checkedBtnType = IGNORE;
-		} else if (checkedBtn == MIN) {
+		if (checkedBtn == MIN) {
 			this.checkedBtnType = MIN;
 		} else if (checkedBtn == MAX) {
 			this.checkedBtnType = MAX;
 		} else {
-			checkedBtnType = -1;
+			checkedBtnType = IGNORE;
 		}
 	}
 }
