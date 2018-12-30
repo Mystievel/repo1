@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo: 12/29/18 Currently working on drawing custom silver+leafy subtle background
+
 // todo Make background color scheme more earthy or psychadelic/mystical
 // todo Change overall font to same fontFamily
 // todo add buttons across all pages? Make main activity just a start screen then go to my strains
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 	final static int HUNGER = 9;		    // #DEFINE
 	final static int DEHYDRATION = 10;       // #DEFINE
 	final static int ANXIETY = 11;      	 // #DEFINE
-    final String STR_SATIVA= "Sativa";
+    final String STR_SATIVA = "Sativa";
     final String STR_INDICA = "Indica";
     final String STR_HYBRID = "Hybrid";
 
