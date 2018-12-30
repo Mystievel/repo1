@@ -129,15 +129,19 @@ public class MyStrainsActivity extends MainActivity {
 	//						Get Number of items in "My Strains" list
 	// todo: Expand the algorithm for any column or series of columns by changing getMyStrains() to an input argument.
 	// todo: this routine is taking a long time, find a way to make this faster, copy into array on startup?
+	// longest time is between 2-3.
 	//**********************************************************************************************
 	public int getNumberOfMyStrains() {
     	int count = 0;
+    	Log.d("timer2", "1");
 		int numberOfRows = (int) db.getStrainDatabaseRows();
+		Log.d("timer2", "2");
 		for (int i = 0; i < numberOfRows; i++) {
 			if (db.getStrainData(i).getMyStrains() == 1) {
 				count++;
 			}
 		}
+		Log.d("timer2", "3");
 		return count;
 	} //********************************************************************************************
 
@@ -166,7 +170,7 @@ public class MyStrainsActivity extends MainActivity {
 			if (filteredArray[i] == BLANK_ENTRY) {
 				subtractor++;
 			} else {
-				finalArray[i - subtractor] = db.getStrainData(i + 0).getStrainId();
+				finalArray[i - subtractor] = db.getStrainData(i).getStrainId();
 			}
 		}
 

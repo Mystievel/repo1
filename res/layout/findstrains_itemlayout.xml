@@ -10,52 +10,54 @@
 		android:id="@+id/effect_group"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="4dp"
-		android:layout_marginEnd="16dp"
-		android:layout_marginBottom="13dp"
+		android:layout_marginEnd="8dp"
+		android:layout_marginBottom="20dp"
 		android:orientation="horizontal"
 		android:visibility="visible"
 		app:layout_constraintBottom_toTopOf="@+id/divider2"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="0.977"
-		app:layout_constraintStart_toEndOf="@+id/item_title"
 		app:layout_constraintTop_toTopOf="@+id/item_title"
 		app:layout_constraintVertical_bias="1.0">
+
 		<RadioButton
 			android:id="@+id/effect_ignore"
-			android:button="@null"
 			android:layout_width="60sp"
 			android:layout_height="20sp"
 			android:layout_weight="1"
-			android:background="@drawable/ignore_btn" />
+			android:background="@drawable/ignore_btn"
+			android:button="@null" />
+
 		<RadioButton
 			android:id="@+id/effect_min"
-			android:button="@null"
 			android:layout_width="60sp"
 			android:layout_height="20sp"
 			android:layout_weight="1"
-			android:background="@drawable/min_button" />
+			android:background="@drawable/min_button"
+			android:button="@null" />
+
 		<RadioButton
 			android:id="@+id/effect_max"
-			android:button="@null"
 			android:layout_width="60sp"
 			android:layout_height="20sp"
 			android:layout_weight="1"
-			android:background="@drawable/max_button" />
+			android:background="@drawable/max_button"
+			android:button="@null" />
 	</RadioGroup>
 
 
 	<TextView
 		android:id="@+id/item_title"
-		android:layout_width="151dp"
+		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:layout_marginStart="16dp"
+		android:layout_marginStart="8dp"
 		android:layout_marginTop="4dp"
+		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="4dp"
 		android:maxLines="3"
 		android:textColor="@android:color/darker_gray"
 		android:textSize="18sp"
 		app:layout_constraintBottom_toTopOf="@+id/divider2"
+		app:layout_constraintEnd_toStartOf="@+id/effect_group"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintVertical_bias="0.0" />
@@ -65,9 +67,9 @@
 		android:id="@+id/divider2"
 		android:layout_width="0dp"
 		android:layout_height="3dp"
-		android:layout_marginStart="16dp"
-		android:layout_marginTop="44dp"
-		android:layout_marginEnd="16dp"
+		android:layout_marginStart="4dp"
+		android:layout_marginTop="60dp"
+		android:layout_marginEnd="4dp"
 		android:background="?android:attr/listDivider"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.0"

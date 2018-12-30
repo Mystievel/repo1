@@ -14,6 +14,7 @@
 		android:layout_marginStart="4dp"
 		android:layout_marginBottom="4dp"
 		android:text="Find\nStrains"
+		android:textColor="@android:color/black"
 		android:textSize="10sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
@@ -25,6 +26,7 @@
 		android:layout_marginStart="8dp"
 		android:layout_marginBottom="4dp"
 		android:text="My\nStrains"
+		android:textColor="@android:color/black"
 		android:textSize="10sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage" />
@@ -36,6 +38,7 @@
 		android:layout_marginStart="8dp"
 		android:layout_marginBottom="4dp"
 		android:text="Constructor"
+		android:textColor="@android:color/black"
 		android:textSize="10sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/btnMyStrainsPage" />
@@ -48,6 +51,7 @@
 		android:layout_marginEnd="4dp"
 		android:layout_marginBottom="4dp"
 		android:text="Support"
+		android:textColor="@android:color/black"
 		android:textSize="10sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -58,16 +62,16 @@
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
+		android:layout_marginTop="2dp"
 		android:layout_marginEnd="8dp"
-		android:layout_marginBottom="8dp"
+		android:layout_marginBottom="2dp"
 		android:background="#ebf1d8"
 		android:scrollbars="vertical"
 		app:layout_constraintBottom_toTopOf="@+id/lblStep2"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="1.0"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/lblStep1" />
+		app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
 
 	<Button
 		android:id="@+id/btnStartSearch"
@@ -75,6 +79,7 @@
 		android:layout_height="50dp"
 		android:layout_marginBottom="16dp"
 		android:text="Start Search"
+		android:textColor="@android:color/black"
 		app:layout_constraintBottom_toTopOf="@+id/btnFindStrainsPage"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
@@ -86,30 +91,34 @@
 		android:layout_marginStart="24dp"
 		android:layout_marginTop="8dp"
 		android:text="Step 1: Select desired effects."
+		android:textColor="@android:color/black"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/lblFindStrains" />
 
 	<TextView
 		android:id="@+id/lblStep2"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="47dp"
-		android:layout_marginEnd="293dp"
-		android:layout_marginBottom="8dp"
+		android:layout_marginStart="24dp"
+		android:layout_marginEnd="24dp"
+		android:layout_marginBottom="16dp"
 		android:text="@string/narrowSearch"
-		app:layout_constraintBottom_toTopOf="@+id/lblSearchIntensity"
+		android:textColor="@android:color/black"
+		app:layout_constraintBottom_toTopOf="@+id/seekBarSearchIntensity"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.147"
 		app:layout_constraintStart_toStartOf="parent" />
 
 	<TextView
 		android:id="@+id/lblFindStrains"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="8dp"
 		android:layout_marginTop="4dp"
-		android:layout_marginEnd="136dp"
+		android:layout_marginEnd="8dp"
 		android:text="Find Strains"
+		android:textAlignment="center"
+		android:textColor="@android:color/black"
 		android:textSize="24sp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="1.0"
@@ -118,27 +127,30 @@
 
 	<SeekBar
 		android:id="@+id/seekBarSearchIntensity"
-		android:layout_width="337dp"
-		android:layout_height="25dp"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
 		android:layout_marginStart="24dp"
-		android:layout_marginEnd="23dp"
-		android:layout_marginBottom="8dp"
+		android:layout_marginEnd="24dp"
+		android:layout_marginBottom="16dp"
+		android:progress="75"
 		app:layout_constraintBottom_toTopOf="@+id/btnStartSearch"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent" />
 
-	<TextView
-		android:id="@+id/lblSearchIntensity"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="140dp"
-		android:layout_marginEnd="141dp"
-		android:layout_marginBottom="8dp"
-		android:text="Search Intensity:"
-		app:layout_constraintBottom_toTopOf="@+id/seekBarSearchIntensity"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toStartOf="parent" />
+	<Button
+		android:id="@+id/infoBtn"
+		android:layout_width="40sp"
+		android:layout_height="40sp"
+		android:layout_marginStart="8dp"
+		android:text="\?"
+		android:textAlignment="center"
+		android:textColor="@android:color/black"
+		android:textSize="14sp"
+		app:layout_constrainedHeight="false"
+		app:layout_constrainedWidth="false"
+		app:layout_constraintBottom_toBottomOf="@+id/lblStep1"
+		app:layout_constraintStart_toEndOf="@+id/lblStep1"
+		app:layout_constraintTop_toTopOf="@+id/lblStep1" />
 
 </android.support.constraint.ConstraintLayout>

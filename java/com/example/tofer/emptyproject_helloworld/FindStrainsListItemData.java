@@ -3,7 +3,9 @@ package com.example.tofer.emptyproject_helloworld;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-public class FindStrainsListItemData extends FindStrainsActivity{
+// todo: add "?" graphic with click to see popup info.
+
+public class FindStrainsListItemData extends FindStrainsActivity {
 	private String effect;
 	private int checkedBtnType;
 

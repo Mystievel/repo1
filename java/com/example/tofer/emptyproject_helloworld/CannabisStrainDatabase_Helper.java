@@ -170,7 +170,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	// Returns the number of rows in the Strain Database.
 	//**********************************************************************************************
 	public long getStrainDatabaseRows() {
-    	// Todo: Could be slow b/c we should pass in db instead of reading the database each time!?
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, CANNABIS_STRAIN_TABLE);
         db.close();

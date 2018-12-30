@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo add "?" to provide more info, last feature before moving to apple, speed should be tested with an actual device
+
 // todo Change overall font to same fontFamily
 // todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
 // just use general app behavior and text labels to achieve this.
