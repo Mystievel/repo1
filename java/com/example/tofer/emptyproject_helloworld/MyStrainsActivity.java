@@ -266,13 +266,13 @@ public class MyStrainsActivity extends MainActivity {
 		public void setItemBackgroundByStrainType(String strainType, ViewHolder viewHolder) {
 			if (strainType.trim().equalsIgnoreCase("" + STR_INDICA)) {
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundResource(R.drawable.bkgd_purple);
+				viewHolder.itemView.setBackgroundResource(R.drawable.background_purple);
 			} else if (strainType.trim().equalsIgnoreCase("" + STR_SATIVA)) {
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundResource(R.drawable.bkgd_orange);
+				viewHolder.itemView.setBackgroundResource(R.drawable.background_orange);
 			} else { // strainType == "Hybrid"
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundResource(R.drawable.bkgd_green);
+				viewHolder.itemView.setBackgroundResource(R.drawable.background_green);
 			}
 		} //****************************************************************************************
 
