@@ -101,10 +101,10 @@
 		android:layout_height="wrap_content"
 		android:layout_marginStart="24dp"
 		android:layout_marginEnd="24dp"
-		android:layout_marginBottom="16dp"
+		android:layout_marginBottom="8dp"
 		android:text="@string/narrowSearch"
 		android:textColor="@android:color/black"
-		app:layout_constraintBottom_toTopOf="@+id/seekBarSearchIntensity"
+		app:layout_constraintBottom_toTopOf="@+id/lblSearchIntensity"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.147"
 		app:layout_constraintStart_toStartOf="parent" />
@@ -152,5 +152,19 @@
 		app:layout_constraintBottom_toBottomOf="@+id/lblStep1"
 		app:layout_constraintStart_toEndOf="@+id/lblStep1"
 		app:layout_constraintTop_toTopOf="@+id/lblStep1" />
+
+	<TextView
+		android:id="@+id/lblSearchIntensity"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="48dp"
+		android:layout_marginEnd="48dp"
+		android:layout_marginBottom="8dp"
+		android:text="Search Intensity: 75"
+		android:textAlignment="center"
+		android:textColor="@android:color/darker_gray"
+		app:layout_constraintBottom_toTopOf="@+id/seekBarSearchIntensity"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
