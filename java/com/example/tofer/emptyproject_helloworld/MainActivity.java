@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 		// TODO summarize the code block below into a routine **********************************************************************
+		// Todo - this is done by creating a fragment
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
