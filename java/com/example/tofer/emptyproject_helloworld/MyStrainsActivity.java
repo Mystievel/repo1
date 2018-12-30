@@ -1,11 +1,11 @@
 package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+// todo: 12/29/18 It's time to do a time study on this one and make it faster!!!
 
 // todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 // todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
@@ -34,17 +36,21 @@ public class MyStrainsActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mystrains_activity);
 
+        // todo: Continue here, longest time is from 1-2 and 2-3
+        Log.d("timer1", "1");
 		numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is populated anywhere but within this onCreate method, we receive a "Null Pointer Exception".
+		Log.d("timer1", "2");
 		int[] myStrainsIndexArray = collectAndFilterMyStrains();
+		Log.d("timer1", "3");
 
 		// 1. get a reference to recyclerView
 		ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
 
-        RecyclerView recyclerView = findViewById(R.id.myStrainsList);
+		RecyclerView recyclerView = findViewById(R.id.myStrainsList);
         for (int i = 0; i < numberOfMyStrains; i++) {
         	String strainName = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainName();
-        	String strainType = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainType();
-        	int strainID = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainId();
+			String strainType = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainType();
+			int strainID = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainId();
 			itemsDataArrayList.add(new MyStrainsItemData("" + strainName, "" + strainType, 0 + strainID));
 			//Log.d("itemAdded id: " + i, " id: " + itemsDataArrayList.get(i).getStrainID() + ". name: " + itemsDataArrayList.get(i).getStrainName() + ".  type: " + itemsDataArrayList.get(i).getStrainType());
         	//Log.d("itemAdded", " id: " + strainID + ". name: " + strainName + ".  type: " + strainType);
@@ -56,7 +62,6 @@ public class MyStrainsActivity extends MainActivity {
 
 		// Let the user know if no strains exist.
 		setNoStrainsLabel(numberOfMyStrains);
-
 
 
 		// TODO summarize the code block below into a routine **********************************************************************
@@ -266,13 +271,13 @@ public class MyStrainsActivity extends MainActivity {
 		public void setItemBackgroundByStrainType(String strainType, ViewHolder viewHolder) {
 			if (strainType.trim().equalsIgnoreCase("" + STR_INDICA)) {
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundResource(R.drawable.background_purple);
+				viewHolder.itemView.setBackgroundResource(R.drawable.gradient_radial_purple1);
 			} else if (strainType.trim().equalsIgnoreCase("" + STR_SATIVA)) {
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundResource(R.drawable.background_orange);
+				viewHolder.itemView.setBackgroundResource(R.drawable.gradient_radial_orange1);
 			} else { // strainType == "Hybrid"
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundResource(R.drawable.background_green);
+				viewHolder.itemView.setBackgroundResource(R.drawable.gradient_radial_green1);
 			}
 		} //****************************************************************************************
 

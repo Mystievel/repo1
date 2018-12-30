@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-// todo: 12/29/18 Currently working on drawing custom silver+leafy subtle background
-
-// todo Make background color scheme more earthy or psychadelic/mystical
 // todo Change overall font to same fontFamily
-// todo add buttons across all pages? Make main activity just a start screen then go to my strains
 // todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
+// just use general app behavior and text labels to achieve this.
 // todo add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
 // todo admob advertisement banner?
 
