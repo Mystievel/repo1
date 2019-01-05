@@ -8,7 +8,7 @@
     tools:context=".ResultsActivity">
 
     <Button
-        android:id="@+id/btnFindStrainsPage2"
+        android:id="@+id/btnFindStrainsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnMyStrainsPage2"
+        android:id="@+id/btnMyStrainsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -27,10 +27,10 @@
         android:text="My\nStrains"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage2" />
+        app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage" />
 
     <Button
-        android:id="@+id/btnConstructorPage2"
+        android:id="@+id/btnConstructorPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -38,10 +38,10 @@
         android:text="Constructor"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnMyStrainsPage2" />
+        app:layout_constraintStart_toEndOf="@+id/btnMyStrainsPage" />
 
     <Button
-        android:id="@+id/btnSupportPage2"
+        android:id="@+id/btnSupportPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,7 +51,7 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnConstructorPage2" />
+        app:layout_constraintStart_toEndOf="@+id/btnConstructorPage" />
 
     <TextView
         android:id="@+id/lblTip"
@@ -76,7 +76,7 @@
         android:layout_marginBottom="16dp"
         android:background="#ebf1d8"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnMyStrainsPage2"
+        app:layout_constraintBottom_toTopOf="@+id/btnMyStrainsPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
