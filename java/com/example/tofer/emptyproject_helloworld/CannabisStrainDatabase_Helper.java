@@ -154,6 +154,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		strainInfo.setEffectsAnxiety(cursor.getDouble(15));
 
         // 5. return strain information
+		cursor.close();
 		db.close();
 		return strainInfo;
     } //********************************************************************************************
@@ -202,8 +203,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		// Replace underscores with space characters
 		column[i] = column[i].replace("_", " ");
 
-		// clsoe & return
+		// close & return
 		cursor.close();
+		db.close();
 		return column[i];
 	} //********************************************************************************************
 } //************************************************************************************************
