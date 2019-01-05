@@ -65,7 +65,7 @@
 		android:layout_marginTop="2dp"
 		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="2dp"
-		android:background="#ebf1d8"
+		android:background="#fbfbfb"
 		android:scrollbars="vertical"
 		app:layout_constraintBottom_toTopOf="@+id/lblStep2"
 		app:layout_constraintEnd_toEndOf="parent"
