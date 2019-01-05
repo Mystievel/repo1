@@ -56,23 +56,53 @@ public class ResultsActivity extends FindStrainsActivity {
 			noResults.setVisibility(View.INVISIBLE);
 		}
 
-        // Buttons
-        Button btnMainPage = findViewById(R.id.btnFindStrainsPage);
-        Button btnReviseSearch = findViewById(R.id.btnReviseSearch);
 
-		btnMainPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ResultsActivity.this, MainActivity.class));
-            }
-        });
+		// TODO summarize the code block below into a routine **********************************************************************
+		// Todo - this is done by creating a fragment
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnFindStrainsPage = findViewById(R.id.btnFindStrainsPage);
+		btnFindStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(ResultsActivity.this, FindStrainsActivity.class));
+			}
+		}); //**************************************************************************************
 
-        btnReviseSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ResultsActivity.this, FindStrainsActivity.class));
-            }
-        });
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
+		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(ResultsActivity.this, ConstructorActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnSupportPage = findViewById(R.id.btnSupportPage);
+		btnSupportPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(ResultsActivity.this, SupportActivity.class));
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		// Find Strains Page Clicked
+		//******************************************************************************************
+		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
+		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(ResultsActivity.this, MyStrainsActivity.class));
+			}
+		}); //**************************************************************************************
+		// TODO summarize the code block above into a routine **********************************************************************
 	}
 
 
@@ -170,13 +200,13 @@ public class ResultsActivity extends FindStrainsActivity {
 		public void setItemBackgroundByStrainType(String strainType, ViewHolder viewHolder) {
 			if (strainType.trim().equalsIgnoreCase("" + STR_INDICA)) {
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Purple. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundColor(Color.parseColor("#8924f4"));
+				viewHolder.itemView.setBackgroundResource(R.drawable.gradient_radial_purple1);
 			} else if (strainType.trim().equalsIgnoreCase("" + STR_SATIVA)) {
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Orange. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundColor(Color.parseColor("#efa328"));
+				viewHolder.itemView.setBackgroundResource(R.drawable.gradient_radial_orange1);
 			} else { // strainType == "Hybrid"
 				//Log.d("SetItemColor", "Position: " + position + ". Color: Green. Strain Name: " + strainName + ". Strain Type: " + strainType + ".");
-				viewHolder.itemView.setBackgroundColor(Color.parseColor("#68f442"));
+				viewHolder.itemView.setBackgroundResource(R.drawable.gradient_radial_green1);
 			}
 		} //****************************************************************************************
 

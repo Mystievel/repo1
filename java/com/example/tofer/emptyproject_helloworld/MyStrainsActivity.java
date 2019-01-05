@@ -265,12 +265,10 @@ public class MyStrainsActivity extends MainActivity {
 
 		//******************************************************************************************
 		//							Set Item Background by Strain Type
-		// todo update graphics from plain color to drawable bkgd image
 		//
 		// Changes the list item background color based on the strainType (Hybrid, Sativa, Indica)
 		// To compare two strings, use string.equals. use trim() to remove white space and ignore case to ignore capitalizations.
 		// Note: The above adds some overhead, remove if time becomes sensitive here to just strainType.equals("String");
-		// Note: The image size MUST be small, 3000x1000 is too large for bitmaps...
 		//******************************************************************************************
 		public void setItemBackgroundByStrainType(String strainType, ViewHolder viewHolder) {
 			if (strainType.trim().equalsIgnoreCase("" + STR_INDICA)) {
