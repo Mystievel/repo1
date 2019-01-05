@@ -20,10 +20,23 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // SQL statement to create book table
-        String CREATE_DATABASE_TABLE = "CREATE TABLE " + DATABASE_NAME + "( " +
+        String CREATE_DATABASE_TABLE = "CREATE TABLE " + DATABASE_NAME + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "strainName TEXT, "+
-                "effectsRelaxed DOUBLE)";
+                "StrainName TEXT, " +
+				"StrainType TEXT, " +
+				"MyStrains INTEGER, " +
+				"FavoriteStrains INTEGER, " +
+				"Happiness DOUBLE, " +
+				"Euphoria DOUBLE, " +
+				"Focus DOUBLE, " +
+				"Energy DOUBLE, " +
+				"Relaxation DOUBLE, " +
+				"Sleepiness DOUBLE, " +
+				"Sickness_Relief DOUBLE, " +
+				"Pain_Relief DOUBLE, " +
+				"Hunger DOUBLE, " +
+				"Dehydration DOUBLE, " +
+				"Anxiety DOUBLE)";
 
         // create books table
         db.execSQL(CREATE_DATABASE_TABLE);

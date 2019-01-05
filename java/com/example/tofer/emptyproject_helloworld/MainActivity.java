@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-
 		// TODO summarize the code block below into a routine **********************************************************************
 		// Todo - this is done by creating a fragment
 		//******************************************************************************************
