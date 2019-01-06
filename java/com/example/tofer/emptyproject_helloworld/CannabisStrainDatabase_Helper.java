@@ -243,7 +243,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		// Start out with a list of all strains.
 		int subtractor = 0;
 		int numberOfRows = getStrainDatabaseRows();
-		int[] filteredArray = new int[numberOfRows];
 		int[] finalArray = new int[numberOfRows];
 
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -256,28 +255,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 				int value = cursor.getInt(cursor.getColumnIndex("" + COLUMN_3));
 				int cursorPosition = cursor.getPosition();
 				if (value == 1) {
-					filteredArray[cursorPosition] = getStrainData(cursorPosition).getStrainId();
-				} else {
-					filteredArray[cursorPosition] = -1;
-				}
-			}
-		}
-
-		// Reinstantiate the call to the database in order to reset the cursor.
-		//cursor.close();
-		//db.close();
-		db = this.getReadableDatabase();
-		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
-
-
-		// Now populate the reducedArray without the blank items from the original array.
-		if (cursor != null) {
-			while (cursor.moveToNext()) {
-				int cursorPosition = cursor.getPosition();
-				if (filteredArray[cursorPosition] == -1) {
-					subtractor++;
-				} else {
 					finalArray[cursorPosition - subtractor] = getStrainData(cursorPosition).getStrainId();
+				} else {
+					subtractor++;
 				}
 			}
 		}
