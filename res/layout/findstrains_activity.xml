@@ -154,7 +154,7 @@
 		app:layout_constraintBottom_toBottomOf="@+id/searchList"
 		app:layout_constraintEnd_toEndOf="@+id/searchList"
 		app:layout_constraintStart_toStartOf="@+id/searchList"
-		app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
+		app:layout_constraintTop_toBottomOf="@+id/searchList" />
 
 	<Button
 		android:id="@+id/infoBtn"

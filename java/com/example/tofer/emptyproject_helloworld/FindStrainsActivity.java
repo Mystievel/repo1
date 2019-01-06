@@ -84,10 +84,13 @@ public class FindStrainsActivity extends MainActivity {
         //******************************************************************************************
 		// Start Search Clicked
 		//******************************************************************************************
-		Button searchButton = findViewById(R.id.btnStartSearch);
+		final Button searchButton = findViewById(R.id.btnStartSearch);
 		searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            	// todo, not working... search term: "android onclick set button text"
+				// https://stackoverflow.com/questions/6297159/change-button-text-and-action-android-development
+            	searchButton.setText("Processing...");
 				finalArray = collectAndFilterAllStrainData();
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
@@ -200,7 +203,7 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] collectAndFilterAllStrainData() {
 		// Start out with a list of all strains.
-		int[] filteredArray = new int[(int) db.getStrainDatabaseRows()];
+		int[] filteredArray = new int[db.getStrainDatabaseRows()];
 		//Log.d("collectAndFilter...", "" + db.getStrainDatabaseRows());
 
 		filteredArray = getAllStrainIDs(filteredArray);
@@ -246,7 +249,7 @@ public class FindStrainsActivity extends MainActivity {
 	//		necessarilly for this routine, but for the others.
 	//**********************************************************************************************
 	public int[] getAllStrainIDs(int[] filteredArray) {
-		int dbRows = (int) db.getStrainDatabaseRows();
+		int dbRows = db.getStrainDatabaseRows();
 		//Log.d("getAllStrainIDs", "dbRows = " + dbRows);
 
 		for (int i = 0; i < dbRows; i++) {
@@ -268,7 +271,7 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, int[] originalArray) {
 		// Declare local variables
-		int databaseRows = (int) db.getStrainDatabaseRows();
+		int databaseRows = db.getStrainDatabaseRows();
 		int i;
 		double minLimit = (1.0 - (progressChangedValue/100.0));
 		double maxLimit = (progressChangedValue/100.0);
@@ -337,7 +340,7 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int getFinalArraySize(int[] filteredArray, CannabisStrainDatabase_Helper db) {
 		// Declare local variables
-		int databaseRows = (int) db.getStrainDatabaseRows();
+		int databaseRows = db.getStrainDatabaseRows();
 		int index;
 		int count = 0;
 
@@ -356,7 +359,7 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] reduceFilteredArray(int[] filteredArray, CannabisStrainDatabase_Helper db) {
 		// Declare local variables
-		int databaseRows = (int) db.getStrainDatabaseRows();
+		int databaseRows = db.getStrainDatabaseRows();
 		int i;
 		int count = getFinalArraySize(filteredArray, db);
 		//Log.d("reduceFilteredArrayCt", "Final array size: " + count);

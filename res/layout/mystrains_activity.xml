@@ -118,4 +118,32 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="@+id/myStrainsList" />
+
+	<TextView
+		android:id="@+id/lblInfoBox"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="#ffffff"
+		android:fadeScrollbars="false"
+		android:scrollbars="vertical"
+		android:text="@string/findStrainsTip1"
+		android:textAlignment="textStart"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/myStrainsList"
+		app:layout_constraintEnd_toEndOf="@+id/myStrainsList"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="@+id/myStrainsList"
+		app:layout_constraintTop_toTopOf="@+id/myStrainsList"
+		app:layout_constraintVertical_bias="0.0" />
+
+	<Button
+		android:id="@+id/cancelBtn"
+		android:layout_width="40sp"
+		android:layout_height="40sp"
+		android:text="x"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
+		app:layout_constraintTop_toTopOf="@+id/lblInfoBox" />
 </android.support.constraint.ConstraintLayout>

@@ -13,6 +13,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CannabisStrainDatabase";
 
+
     public CannabisStrainDatabase_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -183,9 +184,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//**********************************************************************************************
 	// Returns the number of rows in the Strain Database.
 	//**********************************************************************************************
-	public long getStrainDatabaseRows() {
+	public int getStrainDatabaseRows() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long count = DatabaseUtils.queryNumEntries(db, CANNABIS_STRAIN_TABLE);
+        int count = (int) DatabaseUtils.queryNumEntries(db, CANNABIS_STRAIN_TABLE);
         db.close();
         return count;
     } //********************************************************************************************
@@ -195,7 +196,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	// Returns the titles of the Strain Database table.
 	//**********************************************************************************************
 	public String getStrainDatabaseColumnTitles(int i) {
-		// Todo: Could be slow b/c we should pass in db instead of reading the database each time!?
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null);
 		String column[] = cursor.getColumnNames();
@@ -207,5 +207,84 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		cursor.close();
 		db.close();
 		return column[i];
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	// Gets number of elements in the database from the MyStrains column: stores the # of "1"s found.
+	//**********************************************************************************************
+	public int getNumberOfMyStrains() {
+		int i = 0;
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				int value = cursor.getInt(cursor.getColumnIndex("" + COLUMN_3));
+				if (value == 1) {
+					i++;
+				}
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return i;
+	} //********************************************************************************************
+
+
+
+	//**********************************************************************************************
+	//                        Collect and Filter My Strains List
+	//**********************************************************************************************
+	public int[] collectAndFilterMyStrains() {
+		// Start out with a list of all strains.
+		int subtractor = 0;
+		int numberOfRows = getStrainDatabaseRows();
+		int[] filteredArray = new int[numberOfRows];
+		int[] finalArray = new int[numberOfRows];
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor;
+
+		// Remove all entries not == 1.
+		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				int value = cursor.getInt(cursor.getColumnIndex("" + COLUMN_3));
+				int cursorPosition = cursor.getPosition();
+				if (value == 1) {
+					filteredArray[cursorPosition] = getStrainData(cursorPosition).getStrainId();
+				} else {
+					filteredArray[cursorPosition] = -1;
+				}
+			}
+		}
+
+		// Reinstantiate the call to the database in order to reset the cursor.
+		//cursor.close();
+		//db.close();
+		db = this.getReadableDatabase();
+		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+
+
+		// Now populate the reducedArray without the blank items from the original array.
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				int cursorPosition = cursor.getPosition();
+				if (filteredArray[cursorPosition] == -1) {
+					subtractor++;
+				} else {
+					finalArray[cursorPosition - subtractor] = getStrainData(cursorPosition).getStrainId();
+				}
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return finalArray;
 	} //********************************************************************************************
 } //************************************************************************************************

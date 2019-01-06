@@ -23,7 +23,9 @@ import java.util.List;
 public class MyStrainsActivity extends MainActivity {
 	// Globals
 	int numberOfMyStrains;
-
+	TextView lblInfoBox;
+	Button btnCancel;
+	RecyclerView recyclerView;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,17 +38,17 @@ public class MyStrainsActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mystrains_activity);
 
-        // todo: Continue here, longest time is from 1-2 and 2-3
+        // todo: Continue here, longest time is from 2-3
         Log.d("timer1", "1");
-		numberOfMyStrains = getNumberOfMyStrains();	// For some reason, if this variable is populated anywhere but within this onCreate method, we receive a "Null Pointer Exception".
+		numberOfMyStrains = db.getNumberOfMyStrains();	// For some reason, if this variable is populated anywhere but within this onCreate method, we receive a "Null Pointer Exception".
 		Log.d("timer1", "2");
-		int[] myStrainsIndexArray = collectAndFilterMyStrains();
+		int[] myStrainsIndexArray = db.collectAndFilterMyStrains();
 		Log.d("timer1", "3");
 
 		// 1. get a reference to recyclerView
 		ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
 
-		RecyclerView recyclerView = findViewById(R.id.myStrainsList);
+		recyclerView = findViewById(R.id.myStrainsList);
         for (int i = 0; i < numberOfMyStrains; i++) {
         	String strainName = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainName();
 			String strainType = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainType();
@@ -62,6 +64,23 @@ public class MyStrainsActivity extends MainActivity {
 
 		// Let the user know if no strains exist.
 		setNoStrainsLabel(numberOfMyStrains);
+
+
+		//******************************************************************************************
+		// Info Object - Button Clicked
+		//******************************************************************************************
+		btnCancel = findViewById(R.id.cancelBtn);
+		lblInfoBox = findViewById(R.id.lblInfoBox);
+		btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Show the list to prevent accidental button clicks.
+				recyclerView.setVisibility(View.VISIBLE);
+				// Hide the'x' btn and details.
+				lblInfoBox.setVisibility(View.INVISIBLE);
+				btnCancel.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
 
 
 		// TODO summarize the code block below into a routine **********************************************************************
@@ -110,8 +129,6 @@ public class MyStrainsActivity extends MainActivity {
 			}
 		}); //**************************************************************************************
 		// TODO summarize the code block above into a routine **********************************************************************
-
-
 	} //********************************************************************************************
 
 
@@ -125,36 +142,15 @@ public class MyStrainsActivity extends MainActivity {
 	}
 
 
-	//**********************************************************************************************
-	//						Get Number of items in "My Strains" list
-	// todo: Expand the algorithm for any column or series of columns by changing getMyStrains() to an input argument.
-	// todo: this routine is taking a long time, find a way to make this faster, copy into array on startup?
-	// longest time is between 2-3.
-	//**********************************************************************************************
-	public int getNumberOfMyStrains() {
-    	int count = 0;
-    	Log.d("timer2", "1");
-		int numberOfRows = (int) db.getStrainDatabaseRows();
-		Log.d("timer2", "2");
-		for (int i = 0; i < numberOfRows; i++) {
-			if (db.getStrainData(i).getMyStrains() == 1) {
-				count++;
-			}
-		}
-		Log.d("timer2", "3");
-		return count;
-	} //********************************************************************************************
-
-
-	//**********************************************************************************************
+/*	//**********************************************************************************************
 	//                        Collect and Filter My Strains List
 	//**********************************************************************************************
-	public int[] collectAndFilterMyStrains() {
+	public int[] collectAndFilterMyStrains(int numberOfMyStrains) {
 		// Start out with a list of all strains.
 		int subtractor = 0;
-		int numberOfRows = (int) db.getStrainDatabaseRows();
+		int numberOfRows = db.getStrainDatabaseRows();
 		int[] filteredArray = new int[numberOfRows];
-		int[] finalArray = new int[getNumberOfMyStrains()];
+		int[] finalArray = new int[numberOfMyStrains];
 
 		// Remove all entries not == 1.
 		for (int i = 0; i < numberOfRows; i++) {
@@ -176,7 +172,7 @@ public class MyStrainsActivity extends MainActivity {
 
 		// Return
 		return finalArray;
-	} //********************************************************************************************
+	} //*********************************************************************************************/
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -239,7 +235,8 @@ public class MyStrainsActivity extends MainActivity {
 				strainNameLbl = itemLayoutView.findViewById(R.id.strainNameLbl);
 				strainTypeLbl = itemLayoutView.findViewById(R.id.strainTypeLbl);
 				btnRemoveMyStrain = itemLayoutView.findViewById(R.id.btnRemoveMyStrain);
-				btnRemoveMyStrain.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+				//btnRemoveMyStrain.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+				itemLayoutView.setOnClickListener(this);
 			}
 
 			// Use this method to determine which item in the recyclerView was clicked
@@ -247,20 +244,40 @@ public class MyStrainsActivity extends MainActivity {
 			public void onClick(View view) {
 				int position = getAdapterPosition();
 				//Log.d("itemClicked", "" + position);
+				// Determine which item was clicked and act accordingly.
+		/*		if (view == btnRemoveMyStrain) {
+					// Remove item from the Database - must be done before removing from view.
+					//Log.d("itemRemoved id: " + position, "" + itemsData.get(position).getStrainID());
+					db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 0);
 
-				// Remove item from the Database - must be done before removing from view.
-				//Log.d("itemRemoved id: " + position, "" + itemsData.get(position).getStrainID());
-				db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 0);
+					// Remove item from the view
+					itemsData.remove(position);
+					//notifyItemRemoved(position);
+					//notifyItemRangeChanged(position, getItemCount());
+					notifyDataSetChanged();
+					numberOfMyStrains--;
+					setNoStrainsLabel(numberOfMyStrains);
 
-				// Remove item from the view
-				itemsData.remove(position);
-				//notifyItemRemoved(position);
-				//notifyItemRangeChanged(position, getItemCount());
-				notifyDataSetChanged();
-				numberOfMyStrains--;
-				setNoStrainsLabel(numberOfMyStrains);
+				// default action (item clicked)
+				} else {*/
+					// Set text based on the item clicked
+					lblInfoBox.setText(getMyStrainsInfoPacket(position, db));
+					// Show the 'x' btn and details.
+					lblInfoBox.setVisibility(View.VISIBLE);
+					btnCancel.setVisibility(View.VISIBLE);
+					// Hide the list to prevent accidental button clicks.
+					recyclerView.setVisibility(View.INVISIBLE);
+				//}
 			}
 		} //****************************************************************************************
+
+
+		public String getMyStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {
+			// todo: Continue populating how the text info packet is formatted based on the MyStrains data. Pull & display values from database for each effect.
+			// try and use this same routine in the resultsactivity...
+			//db.getStrainData(itemsData.get(position).getStrainID());
+			return "test";
+		}
 
 
 		//******************************************************************************************
