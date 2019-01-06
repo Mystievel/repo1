@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -55,7 +57,7 @@ public class FindStrainsActivity extends MainActivity {
         searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress() + "%");
 
 		// 1. get a reference to recyclerView
-		RecyclerView recyclerView = findViewById(R.id.searchList);
+		final RecyclerView recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < itemDataSize; i++) {
 			//Log.d("populateArrayList", "i=" + i + ". arraySize: " + itemDataSize + ". string: " + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
             itemsData.add(new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX)));
@@ -77,6 +79,34 @@ public class FindStrainsActivity extends MainActivity {
             }
         }); //**************************************************************************************
 
+
+		//******************************************************************************************
+		// Info Object - Button Clicked
+		//******************************************************************************************
+		final Button btnInfo = findViewById(R.id.infoBtn);
+		final TextView lblInfoBox = findViewById(R.id.lblInfoBox);
+		lblInfoBox.setMovementMethod(new ScrollingMovementMethod()); // allow scrolling through text within textview
+		final Button btnCancel = findViewById(R.id.cancelBtn);
+		btnInfo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Show the 'x' btn and details.
+				lblInfoBox.setVisibility(View.VISIBLE);
+				btnCancel.setVisibility(View.VISIBLE);
+				// Hide the list to prevent accidental button clicks.
+				recyclerView.setVisibility(View.INVISIBLE);
+			}
+		});
+		btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Show the list to prevent accidental button clicks.
+				recyclerView.setVisibility(View.VISIBLE);
+				// Hide the'x' btn and details.
+				lblInfoBox.setVisibility(View.INVISIBLE);
+				btnCancel.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
 
 
 		// TODO summarize the code block below into a routine **********************************************************************

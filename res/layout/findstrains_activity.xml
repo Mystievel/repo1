@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 	android:background="@drawable/gradient_radial_silvergreen1"
+	android:animateLayoutChanges="true"
     tools:context=".FindStrainsActivity">
+
 
 	<Button
 		android:id="@+id/btnFindStrainsPage"
@@ -138,6 +140,20 @@
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent" />
 
+	<TextView
+		android:id="@+id/lblInfoBox"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="#ffffff"
+		android:scrollbars="vertical"
+		android:text="@string/findStrainsTip1"
+		android:textAlignment="textStart"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/searchList"
+		app:layout_constraintEnd_toEndOf="@+id/searchList"
+		app:layout_constraintStart_toStartOf="@+id/searchList"
+		app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
+
 	<Button
 		android:id="@+id/infoBtn"
 		android:layout_width="40sp"
@@ -146,12 +162,23 @@
 		android:text="\?"
 		android:textAlignment="center"
 		android:textColor="@android:color/black"
-		android:textSize="14sp"
+		android:textSize="18sp"
 		app:layout_constrainedHeight="false"
 		app:layout_constrainedWidth="false"
 		app:layout_constraintBottom_toBottomOf="@+id/lblStep1"
 		app:layout_constraintStart_toEndOf="@+id/lblStep1"
 		app:layout_constraintTop_toTopOf="@+id/lblStep1" />
+
+	<Button
+		android:id="@+id/cancelBtn"
+		android:layout_width="40sp"
+		android:layout_height="40sp"
+		android:text="x"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
+		app:layout_constraintTop_toTopOf="@+id/lblInfoBox" />
 
 	<TextView
 		android:id="@+id/lblSearchIntensity"

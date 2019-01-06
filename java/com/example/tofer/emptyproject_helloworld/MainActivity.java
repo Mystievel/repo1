@@ -8,6 +8,7 @@ import android.widget.Button;
 
 // todo add "?" to provide more info, last feature before moving to apple, speed should be tested with an actual device
 
+// todo add scroll bars across lists
 // todo Change overall font to same fontFamily
 // todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
 // just use general app behavior and text labels to achieve this.
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
 		// TODO summarize the code block below into a routine **********************************************************************
-		// Todo - this is done by creating a fragment
+		// Todo - this is done by creating a fragment, or put in as a list.
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
