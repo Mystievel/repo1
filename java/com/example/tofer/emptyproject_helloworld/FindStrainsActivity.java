@@ -2,6 +2,7 @@ package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,11 @@ public class FindStrainsActivity extends MainActivity {
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
     ArrayList<FindStrainsListItemData> itemsData = new ArrayList<>();
+    String[] infoList = new String[itemDataSize];
+	Button btnInfo;
+    TextView lblInfoBox;
+    Button btnCancel;
+    RecyclerView recyclerView;
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -56,11 +62,19 @@ public class FindStrainsActivity extends MainActivity {
         searchIntensityValue = findViewById(R.id.lblSearchIntensity);
         searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress() + "%");
 
+
 		// 1. get a reference to recyclerView
-		final RecyclerView recyclerView = findViewById(R.id.searchList);
+		recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < itemDataSize; i++) {
 			//Log.d("populateArrayList", "i=" + i + ". arraySize: " + itemDataSize + ". string: " + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX));
             itemsData.add(new FindStrainsListItemData("" + db.getStrainDatabaseColumnTitles(i + EFFECTS_COL_START_INDEX)));
+
+			// Populate information tip text.  For now, all results are the same string when the user clicks on an item for more info
+			try {
+				infoList[i] = getString(R.string.findStrainsTip1);
+			} catch (Exception e){
+				infoList[i] = String.format("Failed to load string data for item #%d.", i);
+			}
 		}
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
 		FindStrainsRecyclerViewAdapter mAdapter = new FindStrainsRecyclerViewAdapter(itemsData);    // 3. create an adapter
@@ -83,10 +97,10 @@ public class FindStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		// Info Object - Button Clicked
 		//******************************************************************************************
-		final Button btnInfo = findViewById(R.id.infoBtn);
-		final TextView lblInfoBox = findViewById(R.id.lblInfoBox);
+		btnInfo = findViewById(R.id.infoBtn);
+		lblInfoBox = findViewById(R.id.lblInfoBox);
+		btnCancel = findViewById(R.id.cancelBtn);
 		lblInfoBox.setMovementMethod(new ScrollingMovementMethod()); // allow scrolling through text within textview
-		final Button btnCancel = findViewById(R.id.cancelBtn);
 		btnInfo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -417,6 +431,7 @@ public class FindStrainsActivity extends MainActivity {
 				viewHolder.ignoreBtn.setChecked(true);
 			}
 
+
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 				@Override
@@ -464,7 +479,7 @@ public class FindStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		// View Holder: Inner class to hold a reference to each item of RecyclerView
 		//******************************************************************************************
-		public class ViewHolder extends RecyclerView.ViewHolder {
+		public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 			public TextView effectLbl;
 			public RadioGroup effectsBtnGroup;
 
@@ -482,6 +497,22 @@ public class FindStrainsActivity extends MainActivity {
 				ignoreBtn = itemLayoutView.findViewById(R.id.effect_ignore);
 				minBtn = itemLayoutView.findViewById(R.id.effect_min);
 				maxBtn = itemLayoutView.findViewById(R.id.effect_max);
+
+				// onClick listener for item clicked
+				itemLayoutView.setOnClickListener(this);
+			}
+
+			@Override
+			public void onClick(View view) {
+				int position = getAdapterPosition();
+
+				// Set text based on the item clicked
+				lblInfoBox.setText(infoList[position]);
+				// Show the 'x' btn and details.
+				lblInfoBox.setVisibility(View.VISIBLE);
+				btnCancel.setVisibility(View.VISIBLE);
+				// Hide the list to prevent accidental button clicks.
+				recyclerView.setVisibility(View.INVISIBLE);
 			}
 		} //****************************************************************************************
 

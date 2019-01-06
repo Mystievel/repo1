@@ -94,6 +94,7 @@
         android:layout_marginBottom="16dp"
         android:background="#fbfbfb"
         android:scrollbars="vertical"
+		android:fadeScrollbars="false"
         app:layout_constraintBottom_toTopOf="@+id/btnMyStrainsPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
