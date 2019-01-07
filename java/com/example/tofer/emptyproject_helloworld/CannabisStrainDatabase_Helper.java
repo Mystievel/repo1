@@ -338,4 +338,62 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		db.close();
 		return finalArray;
 	} //********************************************************************************************
+
+/*
+	//**********************************************************************************************
+	//			Get Index of item in database based on position (row) of item in database.
+	//**********************************************************************************************
+	public int getDatabaseIntByID(String columnName, int index) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor;
+
+		// Remove all entries not == 1.
+		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				int value = cursor.getInt(cursor.getColumnIndex("" + columnName));
+				int cursorPosition = cursor.getPosition();
+				if (cursorPosition == index) {
+					// close & return
+					cursor.close();
+					db.close();
+					return value;
+				}
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return -1;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	//			Get Index of item in database based on position (row) of item in database.
+	//**********************************************************************************************
+	public String getDatabaseStringByID(String columnName, int index) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor;
+
+		// Remove all entries not == 1.
+		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				String value = cursor.getString(cursor.getColumnIndex("" + columnName));
+				int cursorPosition = cursor.getPosition();
+				if (cursorPosition == index) {
+					// close & return
+					cursor.close();
+					db.close();
+					return value;
+				}
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return "";
+	} //*********************************************************************************************/
 } //************************************************************************************************

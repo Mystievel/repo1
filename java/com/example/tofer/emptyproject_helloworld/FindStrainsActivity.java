@@ -212,15 +212,17 @@ public class FindStrainsActivity extends MainActivity {
 		//Log.d("ItemLength", "" + itemsData.size());  // 10
 
 		// Loop through the buttons array and filter based on each buttons' selection.
-		// TODO: This piece of code still appears to take the longest.
+		// TODO: This piece of code still takes quite a bit of time. (1400 ms).
 		for (int i = 0; i < itemDataSize; i++) {
 			filteredArray = filterArrayByColumn(itemsData.get(i).getFilter(), db, effectsArray[i], filteredArray);
 		}
 		Log.d("timerF", "4");
 
 		// Reduce the array to non-null values only.
-		finalArraySize = getFinalArraySize(filteredArray, db);
+		finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
+		Log.d("timerF", "4.1");
 		finalArray = new int[finalArraySize];
+		Log.d("timerF", "4.2");
 		finalArray = reduceFilteredArray(filteredArray, db);
 		Log.d("timerF", "5");
 		//Log.d("FinalArraySize", "" + finalArraySize);
@@ -342,9 +344,8 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	//                             Get Filtered Array Size
 	//**********************************************************************************************
-	public int getFinalArraySize(int[] filteredArray, CannabisStrainDatabase_Helper db) {
+	public int getFinalArraySize(int[] filteredArray, CannabisStrainDatabase_Helper db, int databaseRows) {
 		// Declare local variables
-		int databaseRows = db.getStrainDatabaseRows();
 		int index;
 		int count = 0;
 
@@ -365,10 +366,11 @@ public class FindStrainsActivity extends MainActivity {
 		// Declare local variables
 		int databaseRows = db.getStrainDatabaseRows();
 		int i;
-		int count = getFinalArraySize(filteredArray, db);
+		int count = getFinalArraySize(filteredArray, db, databaseRows);
 		//Log.d("reduceFilteredArrayCt", "Final array size: " + count);
 		int subtractor = 0;
 		int reducedArray[] = new int[databaseRows];
+		int[] IDArray = db.getDatabaseValuesFromColumn_intArray("id", databaseRows);
 
 		// Now populate the reducedArray without the blank items from the original array.
 		for (i = 0; i < databaseRows; i++) {
@@ -376,7 +378,7 @@ public class FindStrainsActivity extends MainActivity {
 				subtractor++;
 				//Log.d("reduceFilteredArrayIf", "Found blank at index: " + i + ". filteredArray = " + db.getStrainData(filteredArray[i] + 0).getStrainName() + ".");
 			} else {
-				reducedArray[i - subtractor] = db.getStrainData(filteredArray[i]).getStrainId();
+				reducedArray[i - subtractor] = IDArray[filteredArray[i]];
 				//Log.d("reduceFilteredArrayEl", "index: " + (i - subtractor) + ". reducedArray " + db.getStrainData(reducedArray[i - subtractor] + 0).getStrainName() + ". filteredArray " + db.getStrainData(filteredArray[i] + 0).getStrainName());
 			}
 			//Log.d("subtractorMath", "index: " + i + ". subtractor: " + subtractor + ". difference: " + (i - subtractor));
