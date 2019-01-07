@@ -38,11 +38,11 @@ public class MyStrainsActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mystrains_activity);
 
-        // todo: Continue here, longest time is from 2-3
+        // todo: Routine takes 4 seconds: 1-2 = 200ms, 2-3 = 1200ms, 3-4 = 2400ms, 4-5 = 0ms.
         Log.d("timer1", "1");
 		numberOfMyStrains = db.getNumberOfMyStrains();	// For some reason, if this variable is populated anywhere but within this onCreate method, we receive a "Null Pointer Exception".
 		Log.d("timer1", "2");
-		int[] myStrainsIndexArray = db.collectAndFilterMyStrains();
+		int[] myStrainsIndexArray = db.collectAndFilterMyStrains(numberOfMyStrains);
 		Log.d("timer1", "3");
 
 		// 1. get a reference to recyclerView
@@ -61,9 +61,11 @@ public class MyStrainsActivity extends MainActivity {
         MyStrainsRecyclerViewAdapter mAdapter = new MyStrainsRecyclerViewAdapter(itemsDataArrayList);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
+		Log.d("timer1", "4");
 
 		// Let the user know if no strains exist.
 		setNoStrainsLabel(numberOfMyStrains);
+		Log.d("timer1", "5");
 
 
 		//******************************************************************************************
@@ -140,39 +142,6 @@ public class MyStrainsActivity extends MainActivity {
 			noStrains.setVisibility(View.INVISIBLE);
 		}
 	}
-
-
-/*	//**********************************************************************************************
-	//                        Collect and Filter My Strains List
-	//**********************************************************************************************
-	public int[] collectAndFilterMyStrains(int numberOfMyStrains) {
-		// Start out with a list of all strains.
-		int subtractor = 0;
-		int numberOfRows = db.getStrainDatabaseRows();
-		int[] filteredArray = new int[numberOfRows];
-		int[] finalArray = new int[numberOfMyStrains];
-
-		// Remove all entries not == 1.
-		for (int i = 0; i < numberOfRows; i++) {
-			if (db.getStrainData(i).getMyStrains() == 1) {
-				filteredArray[i] = db.getStrainData(i).getStrainId();
-			} else {
-				filteredArray[i] = BLANK_ENTRY;
-			}
-		}
-
-		// Now populate the reducedArray without the blank items from the original array.
-		for (int i = 0; i < numberOfRows; i++) {
-			if (filteredArray[i] == BLANK_ENTRY) {
-				subtractor++;
-			} else {
-				finalArray[i - subtractor] = db.getStrainData(i).getStrainId();
-			}
-		}
-
-		// Return
-		return finalArray;
-	} //*********************************************************************************************/
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

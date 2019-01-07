@@ -211,6 +211,78 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
 
 	//**********************************************************************************************
+	// Gets all integer values within a single column from the cannabis strain table.
+	//**********************************************************************************************
+	public int[] getDatabaseValuesFromColumn_intArray(String columnName, int numberOfRows) {
+		int i = 0;
+		int[] columnValues = new int[numberOfRows];
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				columnValues[i] = cursor.getInt(cursor.getColumnIndex("" + columnName));
+				i++;
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return columnValues;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	// Gets all doubles values within a single column from the cannabis strain table.
+	//**********************************************************************************************
+	public double[] getDatabaseValuesFromColumn_doubleArray(String columnName, int numberOfRows) {
+		int i = 0;
+		double[] columnValues = new double[numberOfRows];
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				columnValues[i] = cursor.getDouble(cursor.getColumnIndex("" + columnName));
+				i++;
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return columnValues;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	// Gets all String values within a single column from the cannabis strain table.
+	//**********************************************************************************************
+	public String[] getDatabaseValuesFromColumn_stringArray(String columnName, int numberOfRows) {
+		int i = 0;
+		String[] columnValues = new String[numberOfRows];
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
+
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				columnValues[i] = cursor.getString(cursor.getColumnIndex("" + columnName));
+				i++;
+			}
+		}
+
+		// close & return
+		cursor.close();
+		db.close();
+		return columnValues;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
 	// Gets number of elements in the database from the MyStrains column: stores the # of "1"s found.
 	//**********************************************************************************************
 	public int getNumberOfMyStrains() {
@@ -239,10 +311,9 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//**********************************************************************************************
 	//                        Collect and Filter My Strains List
 	//**********************************************************************************************
-	public int[] collectAndFilterMyStrains() {
+	public int[] collectAndFilterMyStrains(int numberOfRows) {
 		// Start out with a list of all strains.
 		int subtractor = 0;
-		int numberOfRows = getStrainDatabaseRows();
 		int[] finalArray = new int[numberOfRows];
 
 		SQLiteDatabase db = this.getReadableDatabase();

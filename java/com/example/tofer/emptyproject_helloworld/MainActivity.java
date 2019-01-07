@@ -14,6 +14,7 @@ import android.widget.Button;
 // just use general app behavior and text labels to achieve this.
 // todo add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
 // todo admob advertisement banner?
+// todo improve activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
 
 // todo: copy database to memory on init?
 
@@ -24,17 +25,17 @@ public class MainActivity extends AppCompatActivity {
     int MIN = 1;						    // #DEFINE
     int MAX = 2;						    // #DEFINE
     int BLANK_ENTRY = -1;				    // #DEFINE
-	final static int HAPPINESS = 1;		    // #DEFINE
-	final static int EUPHORIA = 2;		    // #DEFINE
-	final static int FOCUS = 3;		        // #DEFINE
-	final static int ENERGY = 4;		    // #DEFINE
-	final static int RELAXATION = 5;	    // #DEFINE
-	final static int SLEEPINESS = 6;	 	// #DEFINE
-	final static int SICKNESS_RELIEF = 7;	// #DEFINE
-	final static int PAIN_RELIEF = 8;	    // #DEFINE
-	final static int HUNGER = 9;		    // #DEFINE
-	final static int DEHYDRATION = 10;       // #DEFINE
-	final static int ANXIETY = 11;      	 // #DEFINE
+	final static int HAPPINESS = 5;		    // #DEFINE
+	final static int EUPHORIA = 6;		    // #DEFINE
+	final static int FOCUS = 7;		        // #DEFINE
+	final static int ENERGY = 8;		    // #DEFINE
+	final static int RELAXATION = 9;	    // #DEFINE
+	final static int SLEEPINESS = 10;	 	// #DEFINE
+	final static int SICKNESS_RELIEF = 11;	// #DEFINE
+	final static int PAIN_RELIEF = 12;	    // #DEFINE
+	final static int HUNGER = 13;		    // #DEFINE
+	final static int DEHYDRATION = 14;       // #DEFINE
+	final static int ANXIETY = 15;      	 // #DEFINE
     final String STR_SATIVA = "Sativa";
     final String STR_INDICA = "Indica";
     final String STR_HYBRID = "Hybrid";
@@ -96,5 +97,48 @@ public class MainActivity extends AppCompatActivity {
 			}
 		}); //**************************************************************************************
 		// TODO summarize the code block above into a routine **********************************************************************
+   }
+
+   public String getEffectString(int effect) {
+    	String effectName;
+    	switch(effect) {
+			case HAPPINESS:
+				effectName = "Happiness";
+				break;
+			case EUPHORIA:
+				effectName = "Euphoria";
+				break;
+			case FOCUS:
+				effectName = "Focus";
+				break;
+			case ENERGY:
+				effectName = "Energy";
+				break;
+			case RELAXATION:
+				effectName = "Relaxation";
+				break;
+			case SLEEPINESS:
+				effectName = "Sleepiness";
+				break;
+			case SICKNESS_RELIEF:
+				effectName = "Sickness_Relief";
+				break;
+			case PAIN_RELIEF:
+				effectName = "Pain_Relief";
+				break;
+			case HUNGER:
+				effectName = "Hunger";
+				break;
+			case DEHYDRATION:
+				effectName = "Dehydration";
+				break;
+			case ANXIETY:
+				effectName = "Anxiety";
+				break;
+			default:
+				effectName = "";
+				break;
+		}
+		return effectName;
    }
 }

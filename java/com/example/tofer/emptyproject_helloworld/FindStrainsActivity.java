@@ -62,7 +62,6 @@ public class FindStrainsActivity extends MainActivity {
         searchIntensityValue = findViewById(R.id.lblSearchIntensity);
         searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress() + "%");
 
-
 		// 1. get a reference to recyclerView
 		recyclerView = findViewById(R.id.searchList);
 		for (int i = 0; i < itemDataSize; i++) {
@@ -203,10 +202,11 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] collectAndFilterAllStrainData() {
 		// Start out with a list of all strains.
-		int[] filteredArray = new int[db.getStrainDatabaseRows()];
-		//Log.d("collectAndFilter...", "" + db.getStrainDatabaseRows());
-
-		filteredArray = getAllStrainIDs(filteredArray);
+		Log.d("timerF", "1");
+		int numberOfRows = db.getStrainDatabaseRows();
+		Log.d("timerF", "2");
+		int[] filteredArray = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
+		Log.d("timerF", "3");
 		//Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());  // Banana OG
 		//Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());  // 77
 		//Log.d("ItemLength", "" + itemsData.size());  // 10
@@ -216,11 +216,13 @@ public class FindStrainsActivity extends MainActivity {
 		for (int i = 0; i < itemDataSize; i++) {
 			filteredArray = filterArrayByColumn(itemsData.get(i).getFilter(), db, effectsArray[i], filteredArray);
 		}
+		Log.d("timerF", "4");
 
 		// Reduce the array to non-null values only.
 		finalArraySize = getFinalArraySize(filteredArray, db);
 		finalArray = new int[finalArraySize];
 		finalArray = reduceFilteredArray(filteredArray, db);
+		Log.d("timerF", "5");
 		//Log.d("FinalArraySize", "" + finalArraySize);
 		//Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
 		//Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
@@ -247,7 +249,7 @@ public class FindStrainsActivity extends MainActivity {
 	//
 	// NOTE: This part does take a bit of time, but it's the next routine(s) that take 10x longer...maybe it's not worth investigating the above
 	//		necessarilly for this routine, but for the others.
-	//**********************************************************************************************
+/*	//**********************************************************************************************
 	public int[] getAllStrainIDs(int[] filteredArray) {
 		int dbRows = db.getStrainDatabaseRows();
 		//Log.d("getAllStrainIDs", "dbRows = " + dbRows);
@@ -259,7 +261,7 @@ public class FindStrainsActivity extends MainActivity {
 		}
 		//Log.d("getAllStrainIDs", "Got all strains.");
 		return filteredArray;
-	} //********************************************************************************************
+	} //*********************************************************************************************/
 
 
 	//**********************************************************************************************
@@ -277,18 +279,20 @@ public class FindStrainsActivity extends MainActivity {
 		double maxLimit = (progressChangedValue/100.0);
 		double effectValue = 0;
 		int newArray[] = new int[databaseRows];
+		int[] IDArray = db.getDatabaseValuesFromColumn_intArray("id", databaseRows);
+		double[] effectsArray = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(effect), databaseRows);
 
 		if (btnResult == MIN) {
 			//Log.d("minSelected", "Min is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
-				effectValue = db.getStrainData(i + 0).getEffect(effect);
+				effectValue = effectsArray[i];
 				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 				if (effectValue < minLimit) {
 					if (originalArray[i] == BLANK_ENTRY) {
 						newArray[i] = BLANK_ENTRY;
 						//Log.d("KeepMinFieldBlank", "new id: " + newArray[i] + ". original id: " + originalArray[i] + ". new = blank. value: " + effectValue + ". limit: " + minLimit);
 					} else {
-						newArray[i] = db.getStrainData(i + 0).getStrainId();
+						newArray[i] = IDArray[i];
 						//Log.d("KeepMinField", ". new id: " + newArray[i] + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 					}
 				} else {
@@ -300,14 +304,14 @@ public class FindStrainsActivity extends MainActivity {
 		} else if (btnResult == MAX) {
 			//Log.d("maxSelected", "Max is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
-				effectValue = db.getStrainData(i + 0).getEffect(effect);
+				effectValue = effectsArray[i];
 				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 				if (effectValue >= maxLimit) {
 					if (originalArray[i] == BLANK_ENTRY) {
 						newArray[i] = BLANK_ENTRY;
 						//Log.d("KeepMaxFieldBlank", "new id: " + newArray[i] + ". original id: " + originalArray[i] + ". new = blank. value: " + effectValue + ". limit: " + minLimit);
 					} else {
-						newArray[i] = db.getStrainData(i + 0).getStrainId();
+						newArray[i] = IDArray[i];
 						//Log.d("KeepMaxField", ". new id: " + newArray[i] + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 					}
 				} else {
@@ -425,7 +429,7 @@ public class FindStrainsActivity extends MainActivity {
 
 			// Set the default selection to "omit", save previous selection otherwise.
 			// todo: save fields when return to this page in a single opened session
-			// todo: get back to this later, not completely working
+			// todo: get back to this later, not completely working, appears that we are not properly recycling the view when code is placed in onBind...???
 			if (itemsData.get(position).getFilter() == MIN) {
 				viewHolder.minBtn.setChecked(true);
 			} else if (itemsData.get(position).getFilter() == MAX) {
