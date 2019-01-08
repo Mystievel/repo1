@@ -21,9 +21,7 @@ import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
-	int strainID;
-	String strainName;
-	String strainType;
+
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,27 +34,29 @@ public class ResultsActivity extends FindStrainsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_activity);
 
-        Log.d("timerR", "1");
+        //Log.d("timerR", "1");
 		// 1. get a reference to recyclerView
 		ArrayList<ResultsListItemData> itemsDataArrayList = new ArrayList<>();
-		Log.d("timerR", "2");
+		//Log.d("timerR", "2");
 
 		RecyclerView recyclerView = findViewById(R.id.resultsList);
-		Log.d("timerR", "3");
+		Log.d("timerR", "3"); // longest time is from 3-4.
+
+		int[] arrayOfStrainIDs = db.getDatabaseIntByID("id", finalArray);
+		String[] arrayOfStrainNames = db.getDatabaseStringByID("StrainName", finalArray);
+		String[] arrayOfStrainTypes = db.getDatabaseStringByID("StrainType", finalArray);
+
+		Log.d("timerR", "3.5"); // longest time is from 3-4.
+
 		for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
 			// todo - try making a routine getDatabaseValueByID(String columnName, int id) use Id, StrainName, StrainType---NO DONT DO THIS, NO FASTER
 			// would it be any faster to create a column in the table for display purposes only??? "CurrentDisplay"
 
-			//Log.d("timerR.", "3.1"); // 1 to 2 takes longer than 2 to 1.
-			int strainID = db.getStrainData(finalArray[i] + 0).getStrainId();
-        	String strainName = db.getStrainData(finalArray[i] + 0).getStrainName();
-        	String strainType = db.getStrainData(finalArray[i] + 0).getStrainType();
-			//strainID = db.getDatabaseIntByID("id", finalArray[i]);
-			//strainName = db.getDatabaseStringByID("StrainName", finalArray[i]);
-			//strainType = db.getDatabaseStringByID("StrainType", finalArray[i]);
-
-			//Log.d("timerR.", "3.2");
-			itemsDataArrayList.add(new ResultsListItemData(0 + strainID, "" + strainName, "" + strainType));
+			//int strainID = db.getStrainData(finalArray[i] + 0).getStrainId();
+        	//String strainName = db.getStrainData(finalArray[i] + 0).getStrainName();
+        	//String strainType = db.getStrainData(finalArray[i] + 0).getStrainType();
+			Log.d("indexNumber", "" + i);
+			itemsDataArrayList.add(new ResultsListItemData(0 + arrayOfStrainIDs[i], "" + arrayOfStrainNames[i], "" + arrayOfStrainTypes[i]));
         }
 		Log.d("timerR", "4");
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
@@ -64,7 +64,7 @@ public class ResultsActivity extends FindStrainsActivity {
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
-		Log.d("timerR", "5");
+		//Log.d("timerR", "5");
 
 		// Let the user know if there were no results.
 		TextView noResults = findViewById(R.id.lblNoResults);
@@ -74,7 +74,7 @@ public class ResultsActivity extends FindStrainsActivity {
 			noResults.setVisibility(View.INVISIBLE);
 		}
 
-		Log.d("timerR", "6");
+		//Log.d("timerR", "6");
 
 
 		// TODO summarize the code block below into a routine **********************************************************************

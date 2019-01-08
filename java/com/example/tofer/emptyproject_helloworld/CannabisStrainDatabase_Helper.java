@@ -212,6 +212,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
 	//**********************************************************************************************
 	// Gets all integer values within a single column from the cannabis strain table.
+	// todo polymorph these 3 routines in own java file
 	//**********************************************************************************************
 	public int[] getDatabaseValuesFromColumn_intArray(String columnName, int numberOfRows) {
 		int i = 0;
@@ -232,7 +233,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		db.close();
 		return columnValues;
 	} //********************************************************************************************
-
 
 	//**********************************************************************************************
 	// Gets all doubles values within a single column from the cannabis strain table.
@@ -256,7 +256,6 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		db.close();
 		return columnValues;
 	} //********************************************************************************************
-
 
 	//**********************************************************************************************
 	// Gets all String values within a single column from the cannabis strain table.
@@ -339,25 +338,24 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		return finalArray;
 	} //********************************************************************************************
 
-/*
+
 	//**********************************************************************************************
 	//			Get Index of item in database based on position (row) of item in database.
 	//**********************************************************************************************
-	public int getDatabaseIntByID(String columnName, int index) {
+	public int[] getDatabaseIntByID(String columnName, int[] arrayOfIndexes) {
+		int[] values = new int[arrayOfIndexes.length];
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor;
 
+		Log.d("intVal", "array length: " + arrayOfIndexes.length);
 		// Remove all entries not == 1.
 		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
 		if (cursor != null) {
 			while (cursor.moveToNext()) {
-				int value = cursor.getInt(cursor.getColumnIndex("" + columnName));
-				int cursorPosition = cursor.getPosition();
-				if (cursorPosition == index) {
-					// close & return
-					cursor.close();
-					db.close();
-					return value;
+				for (int i = 0; i < arrayOfIndexes.length; i++) {
+					cursor.moveToPosition(arrayOfIndexes[i]);
+					values[i] = cursor.getInt(cursor.getColumnIndex("" + columnName));
+					Log.d("intVal", "" + values[i] + " at position " + i);
 				}
 			}
 		}
@@ -365,35 +363,31 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 		// close & return
 		cursor.close();
 		db.close();
-		return -1;
+		return null;
 	} //********************************************************************************************
 
 
 	//**********************************************************************************************
 	//			Get Index of item in database based on position (row) of item in database.
 	//**********************************************************************************************
-	public String getDatabaseStringByID(String columnName, int index) {
+	public String[] getDatabaseStringByID(String columnName, int[] arrayOfIndexes) {
+		String[] values = new String[arrayOfIndexes.length];
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor;
 
 		// Remove all entries not == 1.
 		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
 		if (cursor != null) {
-			while (cursor.moveToNext()) {
-				String value = cursor.getString(cursor.getColumnIndex("" + columnName));
-				int cursorPosition = cursor.getPosition();
-				if (cursorPosition == index) {
-					// close & return
-					cursor.close();
-					db.close();
-					return value;
-				}
+			for (int i = 0; i < arrayOfIndexes.length; i++) {
+				cursor.moveToPosition(arrayOfIndexes[i]);
+				values[i] = cursor.getString(cursor.getColumnIndex("" + columnName));
+				Log.d("stringVal", "" + values[i] + " at position " + i);
 			}
 		}
 
 		// close & return
 		cursor.close();
 		db.close();
-		return "";
-	} //*********************************************************************************************/
+		return null;
+	} //********************************************************************************************
 } //************************************************************************************************
