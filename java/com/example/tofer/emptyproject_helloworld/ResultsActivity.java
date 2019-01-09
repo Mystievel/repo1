@@ -21,7 +21,8 @@ import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
-
+	String[] arrayOfStrainNames;
+	String[] arrayOfStrainTypes;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -34,28 +35,25 @@ public class ResultsActivity extends FindStrainsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_activity);
 
-        //Log.d("timerR", "1");
+        Log.d("timerR", "1");
 		// 1. get a reference to recyclerView
 		ArrayList<ResultsListItemData> itemsDataArrayList = new ArrayList<>();
-		//Log.d("timerR", "2");
+		Log.d("timerR", "2");
 
 		RecyclerView recyclerView = findViewById(R.id.resultsList);
 		Log.d("timerR", "3"); // longest time is from 3-4.
 
-		int[] arrayOfStrainIDs = db.getDatabaseIntByID("id", finalArray);
-		String[] arrayOfStrainNames = db.getDatabaseStringByID("StrainName", finalArray);
-		String[] arrayOfStrainTypes = db.getDatabaseStringByID("StrainType", finalArray);
+		//Log.d("FinalArraySize", "" + finalArraySize);
+		//Log.d("FinalArraySize", "" + finalArray.length);
+		int[] arrayOfStrainIDs = db.getDatabaseIntByID("id", finalArray, finalArraySize);
+		arrayOfStrainNames = db.getDatabaseStringByID("StrainName", finalArray, finalArraySize);
+		arrayOfStrainTypes = db.getDatabaseStringByID("StrainType", finalArray, finalArraySize);
 
 		Log.d("timerR", "3.5"); // longest time is from 3-4.
 
-		for (int i = 0; i < finalArraySize; i++) {							// Check resulting array for all items in database.
-			// todo - try making a routine getDatabaseValueByID(String columnName, int id) use Id, StrainName, StrainType---NO DONT DO THIS, NO FASTER
-			// would it be any faster to create a column in the table for display purposes only??? "CurrentDisplay"
-
-			//int strainID = db.getStrainData(finalArray[i] + 0).getStrainId();
-        	//String strainName = db.getStrainData(finalArray[i] + 0).getStrainName();
-        	//String strainType = db.getStrainData(finalArray[i] + 0).getStrainType();
-			Log.d("indexNumber", "" + i);
+		// Compare resulting array for all items in database.
+		for (int i = 0; i < finalArraySize; i++) {
+			//Log.d("indexNumber", "" + i);
 			itemsDataArrayList.add(new ResultsListItemData(0 + arrayOfStrainIDs[i], "" + arrayOfStrainNames[i], "" + arrayOfStrainTypes[i]));
         }
 		Log.d("timerR", "4");

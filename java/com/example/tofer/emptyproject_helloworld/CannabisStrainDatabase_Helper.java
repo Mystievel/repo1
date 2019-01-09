@@ -342,22 +342,32 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//**********************************************************************************************
 	//			Get Index of item in database based on position (row) of item in database.
 	//**********************************************************************************************
-	public int[] getDatabaseIntByID(String columnName, int[] arrayOfIndexes) {
+	public int[] getDatabaseIntByID(String columnName, int[] arrayOfIndexes, int arraySize) {
 		int[] values = new int[arrayOfIndexes.length];
+		int cursorPosition;
+		int tempCursorPosition;
+		int originalCursorPosition = 0;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor;
 
-		Log.d("intVal", "array length: " + arrayOfIndexes.length);
+		//Log.d("intVal", "array length: " + arrayOfIndexes.length);
 		// Remove all entries not == 1.
 		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
 		if (cursor != null) {
-			while (cursor.moveToNext()) {
-				for (int i = 0; i < arrayOfIndexes.length; i++) {
-					cursor.moveToPosition(arrayOfIndexes[i]);
-					values[i] = cursor.getInt(cursor.getColumnIndex("" + columnName));
-					Log.d("intVal", "" + values[i] + " at position " + i);
-				}
+			for (int i = 0; i < arraySize; i ++) {
+				cursor.moveToPosition(arrayOfIndexes[originalCursorPosition]);
+				tempCursorPosition = cursor.getPosition();
+				values[originalCursorPosition] = cursor.getInt(cursor.getColumnIndex("" + columnName));
+				//Log.d("intVal", values[originalCursorPosition] + " at index " + originalCursorPosition + " at id " + tempCursorPosition + " == arrayval: " + arrayOfIndexes[originalCursorPosition]);
+
+				// increase the original cursor position.
+				originalCursorPosition++;
 			}
+
+			// close & return
+			cursor.close();
+			db.close();
+			return values;
 		}
 
 		// close & return
@@ -370,19 +380,32 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//**********************************************************************************************
 	//			Get Index of item in database based on position (row) of item in database.
 	//**********************************************************************************************
-	public String[] getDatabaseStringByID(String columnName, int[] arrayOfIndexes) {
+	public String[] getDatabaseStringByID(String columnName, int[] arrayOfIndexes, int arraySize) {
 		String[] values = new String[arrayOfIndexes.length];
+		int cursorPosition;
+		int tempCursorPosition;
+		int originalCursorPosition = 0;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor;
 
+		//Log.d("stringVal", "array length: " + arrayOfIndexes.length);
 		// Remove all entries not == 1.
 		cursor = db.query(CANNABIS_STRAIN_TABLE, null, null, null, null, null, null, null);
 		if (cursor != null) {
-			for (int i = 0; i < arrayOfIndexes.length; i++) {
-				cursor.moveToPosition(arrayOfIndexes[i]);
-				values[i] = cursor.getString(cursor.getColumnIndex("" + columnName));
-				Log.d("stringVal", "" + values[i] + " at position " + i);
+			for (int i = 0; i < arraySize; i ++) {
+				cursor.moveToPosition(arrayOfIndexes[originalCursorPosition]);
+				tempCursorPosition = cursor.getPosition();
+				values[originalCursorPosition] = cursor.getString(cursor.getColumnIndex("" + columnName));
+				//Log.d("stringVal", values[originalCursorPosition] + " at index " + originalCursorPosition + " at id " + tempCursorPosition + " == arrayval: " + arrayOfIndexes[originalCursorPosition]);
+
+				// increase the original cursor position.
+				originalCursorPosition++;
 			}
+
+			// close & return
+			cursor.close();
+			db.close();
+			return values;
 		}
 
 		// close & return

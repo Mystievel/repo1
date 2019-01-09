@@ -221,7 +221,9 @@ public class FindStrainsActivity extends MainActivity {
 		// Reduce the array to non-null values only.
 		finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
 		Log.d("timerF", "4.1");
+		Log.d("FinalArraySize", "" + finalArraySize);
 		finalArray = new int[finalArraySize];
+		Log.d("FinalArraySize", "" + finalArray.length);
 		Log.d("timerF", "4.2");
 		finalArray = reduceFilteredArray(filteredArray, db);
 		Log.d("timerF", "5");
