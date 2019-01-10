@@ -243,11 +243,15 @@ public class MyStrainsActivity extends MainActivity {
 		} //****************************************************************************************
 
 
+		//******************************************************************************************
+		//							Get And Display Strains Info Packet
+		//
+		// Todo: try to combine this routine with that in ResultsActivity
+		// This routine displays relevant information for the list item clicked.
+		//******************************************************************************************
 		public String getStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {
-			// todo: Continue populating how the text info packet is formatted based on the MyStrains data. Pull & display values from database for each effect.
-			// try and use this same routine in the resultsactivity...
 			CannabisStrainDatabase_Definition Strain = db.getStrainData(itemsData.get(position).getStrainID());;
-			Log.d("timerM", "1");
+
 			String dataPacket;
 			String strainName = Strain.getStrainName();
 			String strainType = Strain.getStrainType();
@@ -277,9 +281,8 @@ public class MyStrainsActivity extends MainActivity {
 										"Dehydration: %.2f%%\n" +
 										"Anxiety: %.2f%%", strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
 
-			Log.d("timerM", "2");
 			return dataPacket;
-		}
+		} //****************************************************************************************
 
 
 		//******************************************************************************************

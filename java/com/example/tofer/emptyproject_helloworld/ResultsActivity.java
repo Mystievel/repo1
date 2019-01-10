@@ -23,6 +23,7 @@ public class ResultsActivity extends FindStrainsActivity {
 	// Globals
 	String[] arrayOfStrainNames;
 	String[] arrayOfStrainTypes;
+	RecyclerView recyclerView;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		ArrayList<ResultsListItemData> itemsDataArrayList = new ArrayList<>();
 		Log.d("timerR", "2");
 
-		RecyclerView recyclerView = findViewById(R.id.resultsList);
+		recyclerView = findViewById(R.id.resultsList);
 		Log.d("timerR", "3"); // longest time is from 3-4.
 
 		//Log.d("FinalArraySize", "" + finalArraySize);
@@ -72,6 +73,23 @@ public class ResultsActivity extends FindStrainsActivity {
 		}
 
 		//Log.d("timerR", "6");
+
+
+		//******************************************************************************************
+		// Info Object - Button Clicked
+		//******************************************************************************************
+		btnCancel = findViewById(R.id.cancelBtn);
+		lblInfoBox = findViewById(R.id.lblInfoBox);
+		btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Show the list to prevent accidental button clicks.
+				recyclerView.setVisibility(View.VISIBLE);
+				// Hide the'x' btn and details.
+				lblInfoBox.setVisibility(View.INVISIBLE);
+				btnCancel.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
 
 
 		// TODO summarize the code block below into a routine **********************************************************************
@@ -185,6 +203,7 @@ public class ResultsActivity extends FindStrainsActivity {
 				txtViewDescription = itemLayoutView.findViewById(R.id.item_description);
 				btnAddToMyStrains = itemLayoutView.findViewById(R.id.btnAddToMyStrains);
 				btnAddToMyStrains.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+				itemLayoutView.setOnClickListener(this);
 			}
 
 			// Use this method to determine which item in the recyclerView was clicked
@@ -193,17 +212,72 @@ public class ResultsActivity extends FindStrainsActivity {
 				int position = getAdapterPosition();
 				//Log.d("itemClicked", "" + position);
 
-				// Remove item from the Database - must be done before removing from view.
-				db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 1);
-				//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
+				// Determine which item was clicked and act accordingly.
+				if (view == btnAddToMyStrains) {
+					// Remove item from the Database - must be done before removing from view.
+					db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 1);
+					//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
 
-				// Remove item from the view
-				itemsData.remove(position);
-				//notifyItemRemoved(position);
-				//notifyItemRangeChanged(position, getItemCount());
-				notifyDataSetChanged();
-				//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
+					// Remove item from the view
+					itemsData.remove(position);
+					//notifyItemRemoved(position);
+					//notifyItemRangeChanged(position, getItemCount());
+					notifyDataSetChanged();
+
+					// todo: setNoResultsLabel(numberOfMyStrains);
+					//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
+				} else {
+					// Set text based on the item clicked
+					lblInfoBox.setText(getStrainsInfoPacket(position, db));
+					// Show the 'x' btn and details.
+					lblInfoBox.setVisibility(View.VISIBLE);
+					btnCancel.setVisibility(View.VISIBLE);
+					// Hide the list to prevent accidental button clicks.
+					recyclerView.setVisibility(View.INVISIBLE);
+				}
 			}
+		} //****************************************************************************************
+
+
+		//******************************************************************************************
+		//							Get And Display Strains Info Packet
+		//
+		// Todo: try to combine this routine with that in ResultsActivity
+		// This routine displays relevant information for the list item clicked.
+		//******************************************************************************************
+		public String getStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {
+			CannabisStrainDatabase_Definition Strain = db.getStrainData(itemsData.get(position).getStrainID());;
+
+			String dataPacket;
+			String strainName = Strain.getStrainName();
+			String strainType = Strain.getStrainType();
+			Double happiness = 100.0 * Strain.getEffectsHappiness();
+			Double euphoria = 100.0 * Strain.getEffectsEuphoria();
+			Double focus = 100.0 * Strain.getEffectsFocus();
+			Double energy = 100.0 * Strain.getEffectsEnergy();
+			Double relaxation = 100.0 * Strain.getEffectsRelaxation();
+			Double sleepiness = 100.0 * Strain.getEffectsSleepiness();
+			Double sick = 100.0 * Strain.getEffectsSickness_Relief();
+			Double pain = 100.0 * Strain.getEffectsPain_Relief();
+			Double hunger = 100.0 * Strain.getEffectsHunger();
+			Double dehydration = 100.0 * Strain.getEffectsDehydration();
+			Double anxiety = 100.0 * Strain.getEffectsAnxiety();
+
+			dataPacket = String.format(	"Name: %s\n" +
+					"Type: %s\n\n" +
+					"Happiness: %.2f%%\n" +
+					"Euphoria: %.2f%%\n" +
+					"Focus: %.2f%%\n" +
+					"Energy: %.2f%%\n" +
+					"Relaxation: %.2f%%\n" +
+					"Sleepiness: %.2f%%\n" +
+					"Sickness Relief: %.2f%%\n" +
+					"Pain Relief: %.2f%%\n" +
+					"Hunger: %.2f%%\n" +
+					"Dehydration: %.2f%%\n" +
+					"Anxiety: %.2f%%", strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
+
+			return dataPacket;
 		} //****************************************************************************************
 
 
