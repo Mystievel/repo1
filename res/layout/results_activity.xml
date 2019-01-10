@@ -133,18 +133,20 @@
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="@+id/resultsList"
 		app:layout_constraintTop_toTopOf="@+id/resultsList"
-		app:layout_constraintVertical_bias="0.0" />
+		app:layout_constraintVertical_bias="1.0" />
 
 
-    <Button
-        android:id="@+id/cancelBtn"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        android:text="x"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
-        app:layout_constraintTop_toTopOf="@+id/lblInfoBox" />
+	<Button
+		android:id="@+id/cancelBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="16dp"
+		android:text="Close"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/lblInfoBox"
+		app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
+		app:layout_constraintStart_toStartOf="@+id/lblInfoBox" />
 
 </android.support.constraint.ConstraintLayout>
