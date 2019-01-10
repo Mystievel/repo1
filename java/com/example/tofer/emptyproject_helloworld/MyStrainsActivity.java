@@ -40,7 +40,7 @@ public class MyStrainsActivity extends MainActivity {
 
         // todo: Routine takes 4 seconds: 1-2 = 200ms, 2-3 = 1200ms, 3-4 = 2400ms, 4-5 = 0ms.
         Log.d("timer1", "1");
-		numberOfMyStrains = db.getNumberOfMyStrains();	// For some reason, if this variable is populated anywhere but within this onCreate method, we receive a "Null Pointer Exception".
+		numberOfMyStrains = db.getNumberOfMyStrains();	// This variable must be populated here under onCreate, otherwise "Null Pointer Exception".
 		Log.d("timer1", "2");
 		int[] myStrainsIndexArray = db.collectAndFilterMyStrains(numberOfMyStrains);
 		Log.d("timer1", "3");
@@ -50,9 +50,10 @@ public class MyStrainsActivity extends MainActivity {
 
 		recyclerView = findViewById(R.id.myStrainsList);
         for (int i = 0; i < numberOfMyStrains; i++) {
-        	String strainName = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainName();
-			String strainType = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainType();
-			int strainID = db.getStrainData(myStrainsIndexArray[i] + 0).getStrainId();
+			CannabisStrainDatabase_Definition Strain = db.getStrainData(myStrainsIndexArray[i]);
+        	String strainName = Strain.getStrainName();
+			String strainType = Strain.getStrainType();
+			int strainID = Strain.getStrainId();
 			itemsDataArrayList.add(new MyStrainsItemData("" + strainName, "" + strainType, 0 + strainID));
 			//Log.d("itemAdded id: " + i, " id: " + itemsDataArrayList.get(i).getStrainID() + ". name: " + itemsDataArrayList.get(i).getStrainName() + ".  type: " + itemsDataArrayList.get(i).getStrainType());
         	//Log.d("itemAdded", " id: " + strainID + ". name: " + strainName + ".  type: " + strainType);
@@ -204,7 +205,7 @@ public class MyStrainsActivity extends MainActivity {
 				strainNameLbl = itemLayoutView.findViewById(R.id.strainNameLbl);
 				strainTypeLbl = itemLayoutView.findViewById(R.id.strainTypeLbl);
 				btnRemoveMyStrain = itemLayoutView.findViewById(R.id.btnRemoveMyStrain);
-				//btnRemoveMyStrain.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+				btnRemoveMyStrain.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
 				itemLayoutView.setOnClickListener(this);
 			}
 
@@ -213,8 +214,9 @@ public class MyStrainsActivity extends MainActivity {
 			public void onClick(View view) {
 				int position = getAdapterPosition();
 				//Log.d("itemClicked", "" + position);
+
 				// Determine which item was clicked and act accordingly.
-		/*		if (view == btnRemoveMyStrain) {
+				if (view == btnRemoveMyStrain) {
 					// Remove item from the Database - must be done before removing from view.
 					//Log.d("itemRemoved id: " + position, "" + itemsData.get(position).getStrainID());
 					db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 0);
@@ -228,24 +230,55 @@ public class MyStrainsActivity extends MainActivity {
 					setNoStrainsLabel(numberOfMyStrains);
 
 				// default action (item clicked)
-				} else {*/
+				} else {
 					// Set text based on the item clicked
-					lblInfoBox.setText(getMyStrainsInfoPacket(position, db));
+					lblInfoBox.setText(getStrainsInfoPacket(position, db));
 					// Show the 'x' btn and details.
 					lblInfoBox.setVisibility(View.VISIBLE);
 					btnCancel.setVisibility(View.VISIBLE);
 					// Hide the list to prevent accidental button clicks.
 					recyclerView.setVisibility(View.INVISIBLE);
-				//}
+				}
 			}
 		} //****************************************************************************************
 
 
-		public String getMyStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {
+		public String getStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {
 			// todo: Continue populating how the text info packet is formatted based on the MyStrains data. Pull & display values from database for each effect.
 			// try and use this same routine in the resultsactivity...
-			//db.getStrainData(itemsData.get(position).getStrainID());
-			return "test";
+			CannabisStrainDatabase_Definition Strain = db.getStrainData(itemsData.get(position).getStrainID());;
+			Log.d("timerM", "1");
+			String dataPacket;
+			String strainName = Strain.getStrainName();
+			String strainType = Strain.getStrainType();
+			Double happiness = 100.0 * Strain.getEffectsHappiness();
+			Double euphoria = 100.0 * Strain.getEffectsEuphoria();
+			Double focus = 100.0 * Strain.getEffectsFocus();
+			Double energy = 100.0 * Strain.getEffectsEnergy();
+			Double relaxation = 100.0 * Strain.getEffectsRelaxation();
+			Double sleepiness = 100.0 * Strain.getEffectsSleepiness();
+			Double sick = 100.0 * Strain.getEffectsSickness_Relief();
+			Double pain = 100.0 * Strain.getEffectsPain_Relief();
+			Double hunger = 100.0 * Strain.getEffectsHunger();
+			Double dehydration = 100.0 * Strain.getEffectsDehydration();
+			Double anxiety = 100.0 * Strain.getEffectsAnxiety();
+
+			dataPacket = String.format(	"Name: %s\n" +
+										"Type: %s\n\n" +
+										"Happiness: %.2f%%\n" +
+										"Euphoria: %.2f%%\n" +
+										"Focus: %.2f%%\n" +
+										"Energy: %.2f%%\n" +
+										"Relaxation: %.2f%%\n" +
+										"Sleepiness: %.2f%%\n" +
+										"Sickness Relief: %.2f%%\n" +
+										"Pain Relief: %.2f%%\n" +
+										"Hunger: %.2f%%\n" +
+										"Dehydration: %.2f%%\n" +
+										"Anxiety: %.2f%%", strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
+
+			Log.d("timerM", "2");
+			return dataPacket;
 		}
 
 

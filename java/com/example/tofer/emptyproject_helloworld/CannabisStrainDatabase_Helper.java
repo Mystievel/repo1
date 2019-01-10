@@ -342,7 +342,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//**********************************************************************************************
 	//			Get Index of item in database based on position (row) of item in database.
 	//**********************************************************************************************
-	public int[] getDatabaseIntByID(String columnName, int[] arrayOfIndexes, int arraySize) {
+	public int[] getDatabaseItemValueByID(String columnName, int[] arrayOfIndexes, int arraySize) {
 		int[] values = new int[arrayOfIndexes.length];
 		int cursorPosition;
 		int tempCursorPosition;
@@ -380,7 +380,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 	//**********************************************************************************************
 	//			Get Index of item in database based on position (row) of item in database.
 	//**********************************************************************************************
-	public String[] getDatabaseStringByID(String columnName, int[] arrayOfIndexes, int arraySize) {
+	public String[] getDatabaseItemValueByID(String columnName, int arraySize, int[] arrayOfIndexes) {
 		String[] values = new String[arrayOfIndexes.length];
 		int cursorPosition;
 		int tempCursorPosition;

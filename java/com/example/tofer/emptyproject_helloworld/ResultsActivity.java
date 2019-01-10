@@ -45,15 +45,14 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		//Log.d("FinalArraySize", "" + finalArraySize);
 		//Log.d("FinalArraySize", "" + finalArray.length);
-		int[] arrayOfStrainIDs = db.getDatabaseIntByID("id", finalArray, finalArraySize);
-		arrayOfStrainNames = db.getDatabaseStringByID("StrainName", finalArray, finalArraySize);
-		arrayOfStrainTypes = db.getDatabaseStringByID("StrainType", finalArray, finalArraySize);
+		int[] arrayOfStrainIDs = db.getDatabaseItemValueByID("id", finalArray, finalArraySize);
+		arrayOfStrainNames = db.getDatabaseItemValueByID("StrainName", finalArraySize, finalArray);
+		arrayOfStrainTypes = db.getDatabaseItemValueByID("StrainType", finalArraySize, finalArray);
 
 		Log.d("timerR", "3.5"); // longest time is from 3-4.
 
 		// Compare resulting array for all items in database.
 		for (int i = 0; i < finalArraySize; i++) {
-			//Log.d("indexNumber", "" + i);
 			itemsDataArrayList.add(new ResultsListItemData(0 + arrayOfStrainIDs[i], "" + arrayOfStrainNames[i], "" + arrayOfStrainTypes[i]));
         }
 		Log.d("timerR", "4");
@@ -62,7 +61,7 @@ public class ResultsActivity extends FindStrainsActivity {
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
-		//Log.d("timerR", "5");
+		Log.d("timerR", "5");
 
 		// Let the user know if there were no results.
 		TextView noResults = findViewById(R.id.lblNoResults);
