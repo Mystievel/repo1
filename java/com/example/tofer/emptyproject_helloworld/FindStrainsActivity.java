@@ -42,6 +42,7 @@ public class FindStrainsActivity extends MainActivity {
     TextView lblInfoBox;
     Button btnCancel;
     RecyclerView recyclerView;
+	int numberOfRows;
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,11 +56,14 @@ public class FindStrainsActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.findstrains_activity);
 
-        // Initiate Views
+        // Initialize variables
+		numberOfRows = db.getStrainDatabaseRows();
+
+		// Initiate Views
         searchIntensitySeekBar = findViewById(R.id.seekBarSearchIntensity);
         searchIntensitySeekBar.setProgress(progressChangedValue);
         searchIntensityValue = findViewById(R.id.lblSearchIntensity);
-        searchIntensityValue.setText("Search Intensity: " + searchIntensitySeekBar.getProgress() + "%");
+		createSearchIntensityString(progressChangedValue, numberOfRows);
 
 		// 1. get a reference to recyclerView
 		recyclerView = findViewById(R.id.searchList);
@@ -89,7 +93,7 @@ public class FindStrainsActivity extends MainActivity {
             	// todo: Medium Priority - only sort of working... search term: "android onclick set button text"
 				// https://stackoverflow.com/questions/6297159/change-button-text-and-action-android-development
             	searchButton.setText("Processing...");
-				finalArray = collectAndFilterAllStrainData();
+				finalArray = collectAndFilterAllStrainData(numberOfRows);
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
@@ -191,48 +195,45 @@ public class FindStrainsActivity extends MainActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-				int numberOfRows = db.getStrainDatabaseRows();
-				int[] filteredArray = createFilteredArray(numberOfRows);
-				finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
-
+				int finalArraySize = getAndCreateFinalArraySize();
 				createSearchIntensityString(progressChangedValue, finalArraySize);
             }
-
-            public void createSearchIntensityString(int progressChangedValue, int finalArraySize) {
-				searchIntensityValue.setText(String.format("Search Intensity: %d%%\n" +
-															"(%d results)", progressChangedValue, finalArraySize));
-			}
         }); //**************************************************************************************
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	//                     Get and Create Final Array and Return Array Size
+	//**********************************************************************************************
+	public int getAndCreateFinalArraySize() {
+		int numberOfRows = db.getStrainDatabaseRows();
+		int[] filteredArray = createFilteredArray(numberOfRows);
+		int finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
+		return finalArraySize;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	//                        Create Search Intensity String
+	//**********************************************************************************************
+	public void createSearchIntensityString(int progressChangedValue, int finalArraySize) {
+		searchIntensityValue.setText(String.format("Search Intensity: %d%%\n" +
+				"(%d results)", progressChangedValue, finalArraySize));
 	} //********************************************************************************************
 
 
 	//**********************************************************************************************
 	//                        Collect and Filter All Strain Data
 	//**********************************************************************************************
-	public int[] collectAndFilterAllStrainData() {
-		// Start out with a list of all strains.
-		//Log.d("timerF", "1");
-		int numberOfRows = db.getStrainDatabaseRows();
+	public int[] collectAndFilterAllStrainData(int numberOfRows) {
 		//Log.d("timerF", "2");
-		//Log.d("timerF", "3");
 		int[] filteredArray = createFilteredArray(numberOfRows);
+		//Log.d("timerF", "3");
+		finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);	// Reduce the array to non-null values only.
 		//Log.d("timerF", "4");
-
-		// Reduce the array to non-null values only.
-		finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
-		//Log.d("timerF", "4.1");
-		//Log.d("FinalArraySize", "" + finalArraySize);
 		finalArray = new int[finalArraySize];
-		//Log.d("FinalArraySize", "" + finalArray.length);
-		//Log.d("timerF", "4.2");
 		finalArray = reduceFilteredArray(filteredArray, db);
 		//Log.d("timerF", "5");
-		//Log.d("FinalArraySize", "" + finalArraySize);
-		//Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
-		//Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
-		//Log.d("FinalArrayIndex 60", "" + db.getStrainData(finalArray[60]).getStrainName());
-
-		// Return
 		return finalArray;
 	} //********************************************************************************************
 
@@ -395,6 +396,7 @@ public class FindStrainsActivity extends MainActivity {
 		// Local variables
 		private List<FindStrainsListItemData> itemsData;
 
+
 		//******************************************************************************************
 		// Create Adapter
 		//******************************************************************************************
@@ -463,6 +465,9 @@ public class FindStrainsActivity extends MainActivity {
 						itemsData.get(position).setFilter(IGNORE);
 						Log.d("RecyclerViewItemClicked", String.format("ignore clicked at %d, set to %d with value read-in: %d.", position, IGNORE, myFilter));
 					}
+
+					int finalArraySize = getAndCreateFinalArraySize();
+					createSearchIntensityString(progressChangedValue, finalArraySize);
 
 					// Print all itemsData clicked results in order.
 					//logAllItemsClicked(getItemCount(), itemsData);
