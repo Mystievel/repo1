@@ -12,8 +12,8 @@ public class SupportActivity extends MainActivity {
         setContentView(R.layout.support_activity);
 
 
-        // TODO summarize the code block below into a routine **********************************************************************
-		// Todo - this is done by creating a fragment
+        // todo: Medium Priority -  summarize the code block below into a routine **********************************************************************
+		// todo: Medium Priority - this is done by creating a fragment
 		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
@@ -57,7 +57,7 @@ public class SupportActivity extends MainActivity {
                 startActivity(new Intent(SupportActivity.this, MyStrainsActivity.class));
             }
         }); //**************************************************************************************
-        // TODO summarize the code block above into a routine **********************************************************************
+        // todo: Medium Priority -  summarize the code block above into a routine **********************************************************************
 
     }
 }

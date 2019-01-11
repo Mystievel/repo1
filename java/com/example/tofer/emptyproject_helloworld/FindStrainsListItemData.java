@@ -3,7 +3,7 @@ package com.example.tofer.emptyproject_helloworld;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-// todo: add "?" graphic with click to see popup info.
+// todo: Medium Priority - split background to radio button side and text "Happiness" "Realaxed" to left side avoid annoying accidental bug clicks on the radio buttons bringing up the info page.
 
 public class FindStrainsListItemData extends FindStrainsActivity {
 	private String effect;

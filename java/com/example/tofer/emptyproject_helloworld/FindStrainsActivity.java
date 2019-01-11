@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// todo: active search - show "Search will produce: x results." while moving the slider and selecting radio buttons
-// todo: bug - click an item and scroll down, other item appears to have same value, its because we're not "recycling the View view"
+// todo: High Priority - active search - show "Search will produce: x results." while moving the slider and selecting radio buttons
 
 
 public class FindStrainsActivity extends MainActivity {
@@ -87,7 +86,7 @@ public class FindStrainsActivity extends MainActivity {
 		searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            	// todo, not working... search term: "android onclick set button text"
+            	// todo: Medium Priority - only sort of working... search term: "android onclick set button text"
 				// https://stackoverflow.com/questions/6297159/change-button-text-and-action-android-development
             	searchButton.setText("Processing...");
 				finalArray = collectAndFilterAllStrainData();
@@ -98,6 +97,7 @@ public class FindStrainsActivity extends MainActivity {
 
 		//******************************************************************************************
 		// Info Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
 		//******************************************************************************************
 		btnInfo = findViewById(R.id.infoBtn);
 		lblInfoBox = findViewById(R.id.lblInfoBox);
@@ -125,8 +125,8 @@ public class FindStrainsActivity extends MainActivity {
 		}); //**************************************************************************************
 
 
-		// TODO summarize the code block below into a routine **********************************************************************
-		// Todo - this is done by creating a fragment
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		// todo: Medium Priority - this is done by creating a fragment
 		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
@@ -170,7 +170,7 @@ public class FindStrainsActivity extends MainActivity {
 				startActivity(new Intent(FindStrainsActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-		// TODO summarize the code block above into a routine **********************************************************************
+		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
 
 
 
@@ -212,7 +212,7 @@ public class FindStrainsActivity extends MainActivity {
 		//Log.d("ItemLength", "" + itemsData.size());  // 10
 
 		// Loop through the buttons array and filter based on each buttons' selection.
-		// TODO: This piece of code still takes quite a bit of time. (1400 ms).
+		// todo: Low Priority - This piece of code still takes quite a bit of time. (1400 ms).
 		for (int i = 0; i < itemDataSize; i++) {
 			filteredArray = filterArrayByColumn(itemsData.get(i).getFilter(), db, effectsArray[i], filteredArray);
 		}
@@ -238,37 +238,6 @@ public class FindStrainsActivity extends MainActivity {
 
 
 	//**********************************************************************************************
-	//                    Gets any single Column from the Strains Database
-	// todo: see todo below or move items into database rather than memory.
-	//https://stackoverflow.com/questions/24121589/how-to-iterate-through-very-large-string-arrays-in-android
-	//
-	// todo: instead of getting all strains at once, get just the n amount that are shown on the screen
-	// due to the recycler view loading, this will speed up the searching too (must also be applied to
-	// the searching routines too! This is not an easy task but is recommended for speed improvments.
-	// https://developer.android.com/training/articles/perf-tips
-	//
-	// todo: Besides those listed above, maybe pull all strain data from the database once and store locally
-	//		into an array, will this speed things up rather than pulling from the database objects as we need
-	//		values?
-	//
-	// NOTE: This part does take a bit of time, but it's the next routine(s) that take 10x longer...maybe it's not worth investigating the above
-	//		necessarilly for this routine, but for the others.
-/*	//**********************************************************************************************
-	public int[] getAllStrainIDs(int[] filteredArray) {
-		int dbRows = db.getStrainDatabaseRows();
-		//Log.d("getAllStrainIDs", "dbRows = " + dbRows);
-
-		for (int i = 0; i < dbRows; i++) {
-			//Log.d("getAllStrainIDs", "i="+i);
-			filteredArray[i] = db.getStrainData(i + 0).getStrainId();
-			//Log.d("getAllStrainIDs", "filteredArray[i] = " + filteredArray[i]);
-		}
-		//Log.d("getAllStrainIDs", "Got all strains.");
-		return filteredArray;
-	} //*********************************************************************************************/
-
-
-	//**********************************************************************************************
 	//                             Filter Array by db Column
 	//
 	// Search a single column within a database, make invalid entries == "" (null), and return the final array.
@@ -283,13 +252,17 @@ public class FindStrainsActivity extends MainActivity {
 		double maxLimit = (progressChangedValue/100.0);
 		double effectValue = 0;
 		int newArray[] = new int[databaseRows];
+
+		Log.d("timerFA", "1");
 		int[] IDArray = db.getDatabaseValuesFromColumn_intArray("id", databaseRows);
-		double[] effectsArray = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(effect), databaseRows);
+		double[] valuesArray = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(effect), databaseRows);
+
+		Log.d("timerFA", "2");
 
 		if (btnResult == MIN) {
 			//Log.d("minSelected", "Min is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
-				effectValue = effectsArray[i];
+				effectValue = valuesArray[i];
 				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 				if (effectValue < minLimit) {
 					if (originalArray[i] == BLANK_ENTRY) {
@@ -308,7 +281,7 @@ public class FindStrainsActivity extends MainActivity {
 		} else if (btnResult == MAX) {
 			//Log.d("maxSelected", "Max is selected for effect #: " + effect);
 			for (i = 0; i < databaseRows; i++) {
-				effectValue = effectsArray[i];
+				effectValue = valuesArray[i];
 				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 				if (effectValue >= maxLimit) {
 					if (originalArray[i] == BLANK_ENTRY) {
@@ -335,6 +308,8 @@ public class FindStrainsActivity extends MainActivity {
 				//Log.d("ignoreSelected", "original = " + originalArray[i] + ". newArray = " + newArray[i]);
 			}
 		}
+
+		Log.d("timerFA", "3");
 
 		// Return the reduced array
 		//Log.d("filterArrayByColumn()", "Filter " + effect + " complete.");
@@ -432,38 +407,44 @@ public class FindStrainsActivity extends MainActivity {
 			viewHolder.effectLbl.setText(itemsData.get(position).getEffect());
 
 			// Set the default selection to "omit", save previous selection otherwise.
-			// todo: save fields when return to this page in a single opened session
-			// todo: get back to this later, not completely working, appears that we are not properly recycling the view when code is placed in onBind...???
-			if (itemsData.get(position).getFilter() == MIN) {
+			// todo: High Priority - save fields when return to this page in a single opened session
+			// todo: High Priority - appears that we are not properly recycling the view when code is placed in onBind...???
+			int myFilter = itemsData.get(position).getFilter();
+			if (myFilter == MIN) {
 				viewHolder.minBtn.setChecked(true);
-			} else if (itemsData.get(position).getFilter() == MAX) {
+				Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to min. Read in %d.", position, myFilter));
+			} else if (myFilter == MAX) {
 				viewHolder.maxBtn.setChecked(true);
+				Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to max. Read in %d.", position, myFilter));
 			} else {
 				viewHolder.ignoreBtn.setChecked(true);
+				Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to ignore. Read in %d.", position, myFilter));
 			}
 
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+				// todo: High Priority - issue is when scrolling it activates a click event when the next item appears in view...
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
 					RadioButton checkedBtn = findViewById(checkedId);
 					int ignoreID = R.id.effect_ignore;
 					int minID = R.id.effect_min;
 					int maxID = R.id.effect_max;
+					int myFilter = itemsData.get(position).getFilter();
 					//Log.d("RecyclerViewItemClicked", "all btn ids: ignore: " + ignoreID + ". min: " + minID + ". max: " + maxID);
 
 					// Sets the value of the filter clicked at the given position in the list to the itemsData object.
 					//Log.d("RecyclerViewItemClicked", "btn id: " + checkedId);
 					if (checkedId == minID) {
 						itemsData.get(position).setFilter(MIN);
-						//Log.d("RecyclerViewItemClicked", "min clicked at " + position);
+						Log.d("RecyclerViewItemClicked", String.format("min clicked at %d, set to %d with value read-in: %d.", position, MIN, myFilter));
 					} else if (checkedId == maxID) {
 						itemsData.get(position).setFilter(MAX);
-						//Log.d("RecyclerViewItemClicked", "max clicked at " + position);
+						Log.d("RecyclerViewItemClicked", String.format("max clicked at %d, set to %d with value read-in: %d.", position, MAX, myFilter));
 					} else {
 						itemsData.get(position).setFilter(IGNORE);
-						//Log.d("RecyclerViewItemClicked", "ignore clicked at " + position);
+						Log.d("RecyclerViewItemClicked", String.format("ignore clicked at %d, set to %d with value read-in: %d.", position, IGNORE, myFilter));
 					}
 
 					// Print all itemsData clicked results in order.
@@ -516,6 +497,10 @@ public class FindStrainsActivity extends MainActivity {
 			@Override
 			public void onClick(View view) {
 				int position = getAdapterPosition();
+
+				// Determine which item was clicked and act accordingly.
+				// todo: Low Priority - either 1) set focus on element clicked using recyclerView.smoothScrollToPosition(position), requires creating a list or changing text in list, or...
+				// ...2) st convert code so that the itemsData just all change text to these strings;
 
 				// Set text based on the item clicked
 				lblInfoBox.setText(infoList[position]);

@@ -212,7 +212,7 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
 	//**********************************************************************************************
 	// Gets all integer values within a single column from the cannabis strain table.
-	// todo polymorph these 3 routines in own java file
+	// todo: Medium Priority - polymorph these 3 routines in own java file
 	//**********************************************************************************************
 	public int[] getDatabaseValuesFromColumn_intArray(String columnName, int numberOfRows) {
 		int i = 0;

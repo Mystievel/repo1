@@ -16,8 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
-// todo: create filter option: sort results list by strain type, name, highest/lowest of some value.
+// todo: High Priority - create filter option: sort results list by strain type, name, highest/lowest of some value.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
@@ -77,6 +76,7 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		//******************************************************************************************
 		// Info Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
 		//******************************************************************************************
 		btnCancel = findViewById(R.id.cancelBtn);
 		lblInfoBox = findViewById(R.id.lblInfoBox);
@@ -92,8 +92,8 @@ public class ResultsActivity extends FindStrainsActivity {
 		}); //**************************************************************************************
 
 
-		// TODO summarize the code block below into a routine **********************************************************************
-		// Todo - this is done by creating a fragment
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		// todo: Medium Priority - this is done by creating a fragment
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -137,7 +137,7 @@ public class ResultsActivity extends FindStrainsActivity {
 				startActivity(new Intent(ResultsActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-		// TODO summarize the code block above into a routine **********************************************************************
+		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
 	}
 
 
@@ -224,7 +224,7 @@ public class ResultsActivity extends FindStrainsActivity {
 					//notifyItemRangeChanged(position, getItemCount());
 					notifyDataSetChanged();
 
-					// todo: setNoResultsLabel(numberOfMyStrains);
+					// todo: High Priority - setNoResultsLabel(numberOfMyStrains);
 					//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
 				} else {
 					// Set text based on the item clicked
@@ -242,7 +242,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		//******************************************************************************************
 		//							Get And Display Strains Info Packet
 		//
-		// Todo: try to combine this routine with that in ResultsActivity
+		// todo: Medium Priority - try to combine this routine with that in ResultsActivity
 		// This routine displays relevant information for the list item clicked.
 		//******************************************************************************************
 		public String getStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {

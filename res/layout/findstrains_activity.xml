@@ -141,20 +141,6 @@
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent" />
 
-	<TextView
-		android:id="@+id/lblInfoBox"
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:background="#ffffff"
-		android:scrollbars="vertical"
-		android:fadeScrollbars="false"
-		android:text="@string/findStrainsTip1"
-		android:textAlignment="textStart"
-		android:visibility="invisible"
-		app:layout_constraintBottom_toBottomOf="@+id/searchList"
-		app:layout_constraintEnd_toEndOf="@+id/searchList"
-		app:layout_constraintStart_toStartOf="@+id/searchList"
-		app:layout_constraintTop_toBottomOf="@+id/searchList" />
 
 	<Button
 		android:id="@+id/infoBtn"
@@ -171,16 +157,6 @@
 		app:layout_constraintStart_toEndOf="@+id/lblStep1"
 		app:layout_constraintTop_toTopOf="@+id/lblStep1" />
 
-	<Button
-		android:id="@+id/cancelBtn"
-		android:layout_width="40sp"
-		android:layout_height="40sp"
-		android:text="x"
-		android:textAllCaps="false"
-		android:textColor="#000000"
-		android:visibility="invisible"
-		app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
-		app:layout_constraintTop_toTopOf="@+id/lblInfoBox" />
 
 	<TextView
 		android:id="@+id/lblSearchIntensity"
@@ -195,5 +171,37 @@
 		app:layout_constraintBottom_toTopOf="@+id/seekBarSearchIntensity"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
+
+
+	<TextView
+		android:id="@+id/lblInfoBox"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="#ffffff"
+		android:fadeScrollbars="false"
+		android:scrollbars="vertical"
+		android:text="@string/findStrainsTip1"
+		android:textAlignment="textStart"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/searchList"
+		app:layout_constraintEnd_toEndOf="@+id/searchList"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="@+id/searchList"
+		app:layout_constraintTop_toTopOf="@+id/searchList"
+		app:layout_constraintVertical_bias="1.0" />
+
+
+	<Button
+		android:id="@+id/cancelBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="16dp"
+		android:text="Close"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/lblInfoBox"
+		app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
+		app:layout_constraintStart_toStartOf="@+id/lblInfoBox" />
 
 </android.support.constraint.ConstraintLayout>

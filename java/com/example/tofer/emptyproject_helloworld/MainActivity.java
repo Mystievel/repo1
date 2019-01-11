@@ -6,17 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-// todo add "?" to provide more info, last feature before moving to apple, speed should be tested with an actual device
 
-// todo add scroll bars across lists
-// todo Change overall font to same fontFamily
-// todo walk the user through how to use the app "Start screen" --> My Strains --> Find Strains, etc.
-// just use general app behavior and text labels to achieve this.
-// todo add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
-// todo admob advertisement banner?
-// todo improve activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
-
-// todo: copy database to memory on init?
+// todo: Low Priority - Change overall font to same fontFamily using a variable
+// todo: Medium Priority - use general app behavior along with good text labels (Error messages) to walk the user through how to use the app My Strains --> "you dont have any strains, click on 'Find Strains' to begin searching.", , etc.
+// todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
+// todo: Medium Priority - admob advertisement banner?
+// todo: Medium Priority - phone app seems fast...in case not, improve activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-		// TODO summarize the code block below into a routine **********************************************************************
-		// Todo - this is done by creating a fragment, or put in as a list.
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		// todo: Medium Priority - this is done by creating a fragment, or put in as a list.
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -96,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(new Intent(MainActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-		// TODO summarize the code block above into a routine **********************************************************************
+		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
    }
 
    public String getEffectString(int effect) {

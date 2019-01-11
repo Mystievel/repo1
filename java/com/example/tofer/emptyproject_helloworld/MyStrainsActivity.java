@@ -15,10 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: 12/29/18 It's time to do a time study on this one and make it faster!!!
 
-// todo: Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
-// todo: click and hold feature on item titles or "?" button for more info, or popup window for info when item is clicked
+// todo: Medium Priority - Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 
 public class MyStrainsActivity extends MainActivity {
 	// Globals
@@ -71,6 +69,7 @@ public class MyStrainsActivity extends MainActivity {
 
 		//******************************************************************************************
 		// Info Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
 		//******************************************************************************************
 		btnCancel = findViewById(R.id.cancelBtn);
 		lblInfoBox = findViewById(R.id.lblInfoBox);
@@ -86,8 +85,8 @@ public class MyStrainsActivity extends MainActivity {
 		}); //**************************************************************************************
 
 
-		// TODO summarize the code block below into a routine **********************************************************************
-		// Todo - this is done by creating a fragment
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		// todo: Medium Priority - this is done by creating a fragment
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -131,7 +130,7 @@ public class MyStrainsActivity extends MainActivity {
 				startActivity(new Intent(MyStrainsActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-		// TODO summarize the code block above into a routine **********************************************************************
+		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
 	} //********************************************************************************************
 
 
@@ -246,7 +245,7 @@ public class MyStrainsActivity extends MainActivity {
 		//******************************************************************************************
 		//							Get And Display Strains Info Packet
 		//
-		// Todo: try to combine this routine with that in ResultsActivity
+		// todo: Medium Priority - try to combine this routine with that in ResultsActivity
 		// This routine displays relevant information for the list item clicked.
 		//******************************************************************************************
 		public String getStrainsInfoPacket(int position, CannabisStrainDatabase_Helper db) {
