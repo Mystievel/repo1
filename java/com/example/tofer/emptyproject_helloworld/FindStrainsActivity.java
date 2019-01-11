@@ -186,13 +186,22 @@ public class FindStrainsActivity extends MainActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                searchIntensityValue.setText("Search Intensity: " + progressChangedValue + "%");
+				// No action
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                searchIntensityValue.setText("Search Intensity: " + progressChangedValue + "%");
+				int numberOfRows = db.getStrainDatabaseRows();
+				int[] filteredArray = createFilteredArray(numberOfRows);
+				finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
+
+				createSearchIntensityString(progressChangedValue, finalArraySize);
             }
+
+            public void createSearchIntensityString(int progressChangedValue, int finalArraySize) {
+				searchIntensityValue.setText(String.format("Search Intensity: %d%%\n" +
+															"(%d results)", progressChangedValue, finalArraySize));
+			}
         }); //**************************************************************************************
 	} //********************************************************************************************
 
@@ -202,31 +211,22 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] collectAndFilterAllStrainData() {
 		// Start out with a list of all strains.
-		Log.d("timerF", "1");
+		//Log.d("timerF", "1");
 		int numberOfRows = db.getStrainDatabaseRows();
-		Log.d("timerF", "2");
-		int[] filteredArray = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
-		Log.d("timerF", "3");
-		//Log.d("FObjName", "" + db.getStrainData(filteredArray[77]).getStrainName());  // Banana OG
-		//Log.d("FObjID", "" + db.getStrainData(filteredArray[77]).getStrainId());  // 77
-		//Log.d("ItemLength", "" + itemsData.size());  // 10
-
-		// Loop through the buttons array and filter based on each buttons' selection.
-		// todo: Low Priority - This piece of code still takes quite a bit of time. (1400 ms).
-		for (int i = 0; i < itemDataSize; i++) {
-			filteredArray = filterArrayByColumn(itemsData.get(i).getFilter(), db, effectsArray[i], filteredArray);
-		}
-		Log.d("timerF", "4");
+		//Log.d("timerF", "2");
+		//Log.d("timerF", "3");
+		int[] filteredArray = createFilteredArray(numberOfRows);
+		//Log.d("timerF", "4");
 
 		// Reduce the array to non-null values only.
 		finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
-		Log.d("timerF", "4.1");
-		Log.d("FinalArraySize", "" + finalArraySize);
+		//Log.d("timerF", "4.1");
+		//Log.d("FinalArraySize", "" + finalArraySize);
 		finalArray = new int[finalArraySize];
-		Log.d("FinalArraySize", "" + finalArray.length);
-		Log.d("timerF", "4.2");
+		//Log.d("FinalArraySize", "" + finalArray.length);
+		//Log.d("timerF", "4.2");
 		finalArray = reduceFilteredArray(filteredArray, db);
-		Log.d("timerF", "5");
+		//Log.d("timerF", "5");
 		//Log.d("FinalArraySize", "" + finalArraySize);
 		//Log.d("FinalArrayIndex 2", "" + db.getStrainData(finalArray[2]).getStrainName());
 		//Log.d("FinalArrayIndex 25", "" + db.getStrainData(finalArray[25]).getStrainName());
@@ -234,6 +234,23 @@ public class FindStrainsActivity extends MainActivity {
 
 		// Return
 		return finalArray;
+	} //********************************************************************************************
+
+
+	//**********************************************************************************************
+	//                             Create Filtered Array
+	//
+	// todo: Low Priority - Speed up this bit of code. (1400 ms).
+	//**********************************************************************************************
+	public int[] createFilteredArray(int numberOfRows) {
+		int[] filteredArray = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
+
+		// Loop through the buttons array and filter based on each buttons' selection.
+		for (int i = 0; i < itemDataSize; i++) {
+			filteredArray = filterArrayByColumn(itemsData.get(i).getFilter(), db, effectsArray[i], filteredArray);
+		}
+
+		return filteredArray;
 	} //********************************************************************************************
 
 
@@ -253,11 +270,11 @@ public class FindStrainsActivity extends MainActivity {
 		double effectValue = 0;
 		int newArray[] = new int[databaseRows];
 
-		Log.d("timerFA", "1");
+		//Log.d("timerFA", "1");
 		int[] IDArray = db.getDatabaseValuesFromColumn_intArray("id", databaseRows);
 		double[] valuesArray = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(effect), databaseRows);
 
-		Log.d("timerFA", "2");
+		//Log.d("timerFA", "2");
 
 		if (btnResult == MIN) {
 			//Log.d("minSelected", "Min is selected for effect #: " + effect);
@@ -309,7 +326,7 @@ public class FindStrainsActivity extends MainActivity {
 			}
 		}
 
-		Log.d("timerFA", "3");
+		//Log.d("timerFA", "3");
 
 		// Return the reduced array
 		//Log.d("filterArrayByColumn()", "Filter " + effect + " complete.");
