@@ -16,10 +16,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: High Priority - create filter option: sort results list by strain type, name, highest/lowest of some value.
+// todo: High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
+	int numberOfMyStrains;
 	String[] arrayOfStrainNames;
 	String[] arrayOfStrainTypes;
 	RecyclerView recyclerView;
@@ -35,13 +36,15 @@ public class ResultsActivity extends FindStrainsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_activity);
 
-        Log.d("timerR", "1");
+        //Log.d("timerR", "1");
+		numberOfMyStrains = db.getNumberOfMyStrains();	// This variable must be populated here under onCreate, otherwise "Null Pointer Exception".
+
 		// 1. get a reference to recyclerView
 		ArrayList<ResultsListItemData> itemsDataArrayList = new ArrayList<>();
-		Log.d("timerR", "2");
+		//Log.d("timerR", "2");
 
 		recyclerView = findViewById(R.id.resultsList);
-		Log.d("timerR", "3"); // longest time is from 3-4.
+		//Log.d("timerR", "3"); // longest time is from 3-4.
 
 		//Log.d("FinalArraySize", "" + finalArraySize);
 		//Log.d("FinalArraySize", "" + finalArray.length);
@@ -49,19 +52,22 @@ public class ResultsActivity extends FindStrainsActivity {
 		arrayOfStrainNames = db.getDatabaseItemValueByID("StrainName", finalArraySize, finalArray);
 		arrayOfStrainTypes = db.getDatabaseItemValueByID("StrainType", finalArraySize, finalArray);
 
-		Log.d("timerR", "3.5"); // longest time is from 3-4.
+		//Log.d("timerR", "3.5"); // longest time is from 3-4.
 
 		// Compare resulting array for all items in database.
 		for (int i = 0; i < finalArraySize; i++) {
 			itemsDataArrayList.add(new ResultsListItemData(0 + arrayOfStrainIDs[i], "" + arrayOfStrainNames[i], "" + arrayOfStrainTypes[i]));
         }
-		Log.d("timerR", "4");
+		//Log.d("timerR", "4");
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));               // 2. set layoutManger
         ResultsRecyclerViewAdapter mAdapter = new ResultsRecyclerViewAdapter(itemsDataArrayList);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
 
-		Log.d("timerR", "5");
+		//Log.d("timerR", "5");
+
+		// Let the user know if no strains exist.
+		setNoResultsLabel(numberOfMyStrains);
 
 		// Let the user know if there were no results.
 		TextView noResults = findViewById(R.id.lblNoResults);
@@ -140,6 +146,14 @@ public class ResultsActivity extends FindStrainsActivity {
 		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
 	}
 
+	public void setNoResultsLabel(int numberOfMyStrains) {
+		TextView noResults = findViewById(R.id.lblNoResults);
+		if (numberOfMyStrains == 0) {
+			noResults.setVisibility(View.VISIBLE);
+		} else {
+			noResults.setVisibility(View.INVISIBLE);
+		}
+	}
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

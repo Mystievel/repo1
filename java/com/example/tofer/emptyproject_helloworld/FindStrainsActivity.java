@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// todo: High Priority - active search - show "Search will produce: x results." while moving the slider and selecting radio buttons
-
-
 public class FindStrainsActivity extends MainActivity {
     // Defines
     private int EFFECTS_COL_START_INDEX = 5;	// #DEFINE
@@ -431,13 +428,13 @@ public class FindStrainsActivity extends MainActivity {
 			int myFilter = itemsData.get(position).getFilter();
 			if (myFilter == MIN) {
 				viewHolder.minBtn.setChecked(true);
-				Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to min. Read in %d.", position, myFilter));
+				//Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to min. Read in %d.", position, myFilter));
 			} else if (myFilter == MAX) {
 				viewHolder.maxBtn.setChecked(true);
-				Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to max. Read in %d.", position, myFilter));
+				//Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to max. Read in %d.", position, myFilter));
 			} else {
 				viewHolder.ignoreBtn.setChecked(true);
-				Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to ignore. Read in %d.", position, myFilter));
+				//Log.d("RecyclerViewItemClicked", String.format("Set item #: %d to ignore. Read in %d.", position, myFilter));
 			}
 
 
@@ -457,37 +454,20 @@ public class FindStrainsActivity extends MainActivity {
 					//Log.d("RecyclerViewItemClicked", "btn id: " + checkedId);
 					if (checkedId == minID) {
 						itemsData.get(position).setFilter(MIN);
-						Log.d("RecyclerViewItemClicked", String.format("min clicked at %d, set to %d with value read-in: %d.", position, MIN, myFilter));
+						//Log.d("RecyclerViewItemClicked", String.format("min clicked at %d, set to %d with value read-in: %d.", position, MIN, myFilter));
 					} else if (checkedId == maxID) {
 						itemsData.get(position).setFilter(MAX);
-						Log.d("RecyclerViewItemClicked", String.format("max clicked at %d, set to %d with value read-in: %d.", position, MAX, myFilter));
+						//Log.d("RecyclerViewItemClicked", String.format("max clicked at %d, set to %d with value read-in: %d.", position, MAX, myFilter));
 					} else {
 						itemsData.get(position).setFilter(IGNORE);
-						Log.d("RecyclerViewItemClicked", String.format("ignore clicked at %d, set to %d with value read-in: %d.", position, IGNORE, myFilter));
+						//Log.d("RecyclerViewItemClicked", String.format("ignore clicked at %d, set to %d with value read-in: %d.", position, IGNORE, myFilter));
 					}
 
 					int finalArraySize = getAndCreateFinalArraySize();
 					createSearchIntensityString(progressChangedValue, finalArraySize);
-
-					// Print all itemsData clicked results in order.
-					//logAllItemsClicked(getItemCount(), itemsData);
 				}
 			});
 		} //****************************************************************************************
-
-
-		public void logAllItemsClicked(int itemsSize, List<FindStrainsListItemData> itemsData) {
-			// Stylistic printing (box)
-			Log.d("RecyclerViewItemClicked", "-----------------------------------------");
-
-			// Log which radio button is clicked for all items in the list.
-			for(int i = 0; i < itemsSize; i++) {
-				Log.d("RecyclerViewItemClicked", itemsData.get(i).getFilter() + " at " + i);
-			}
-
-			// Stylistic printing (box)
-			Log.d("RecyclerViewItemClicked", "-----------------------------------------");
-		}
 
 
 		//******************************************************************************************

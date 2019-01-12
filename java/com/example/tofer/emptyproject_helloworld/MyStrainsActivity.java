@@ -36,12 +36,12 @@ public class MyStrainsActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mystrains_activity);
 
-        // todo: Routine takes 4 seconds: 1-2 = 200ms, 2-3 = 1200ms, 3-4 = 2400ms, 4-5 = 0ms.
-        Log.d("timer1", "1");
+		//Log.d("timer1", "1");
 		numberOfMyStrains = db.getNumberOfMyStrains();	// This variable must be populated here under onCreate, otherwise "Null Pointer Exception".
-		Log.d("timer1", "2");
+		// todo: Medium Priority - routine takes 600 ms from 2-3.
+		//Log.d("timer1", "2");
 		int[] myStrainsIndexArray = db.collectAndFilterMyStrains(numberOfMyStrains);
-		Log.d("timer1", "3");
+		//Log.d("timer1", "3");
 
 		// 1. get a reference to recyclerView
 		ArrayList<MyStrainsItemData> itemsDataArrayList = new ArrayList<>();
@@ -60,11 +60,11 @@ public class MyStrainsActivity extends MainActivity {
         MyStrainsRecyclerViewAdapter mAdapter = new MyStrainsRecyclerViewAdapter(itemsDataArrayList);    // 3. create an adapter
         recyclerView.setAdapter(mAdapter);                                                  // 4. set adapter
         recyclerView.setItemAnimator(new DefaultItemAnimator());                            // 5. set item animator to DefaultAnimator
-		Log.d("timer1", "4");
+		//Log.d("timer1", "4");
 
 		// Let the user know if no strains exist.
 		setNoStrainsLabel(numberOfMyStrains);
-		Log.d("timer1", "5");
+		//Log.d("timer1", "5");
 
 
 		//******************************************************************************************
