@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo: High Priority - must find something to do with this page or modify/remove it from all layouts
+
 public class ConstructorActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

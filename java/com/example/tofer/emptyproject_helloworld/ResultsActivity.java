@@ -98,6 +98,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		}); //**************************************************************************************
 
 
+		// todo: High Priority - Fix the Button to Button spacing/formatting on the Menu Bar
 		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
 		// todo: Medium Priority - this is done by creating a fragment
 		//******************************************************************************************
@@ -237,9 +238,6 @@ public class ResultsActivity extends FindStrainsActivity {
 					//notifyItemRemoved(position);
 					//notifyItemRangeChanged(position, getItemCount());
 					notifyDataSetChanged();
-
-					// todo: High Priority - setNoResultsLabel(numberOfMyStrains);
-					//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
 				} else {
 					// Set text based on the item clicked
 					lblInfoBox.setText(getStrainsInfoPacket(position, db));

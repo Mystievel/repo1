@@ -85,6 +85,7 @@ public class MyStrainsActivity extends MainActivity {
 		}); //**************************************************************************************
 
 
+		// todo: High Priority - Fix the Button to Button spacing/formatting on the Menu Bar
 		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
 		// todo: Medium Priority - this is done by creating a fragment
 		//******************************************************************************************

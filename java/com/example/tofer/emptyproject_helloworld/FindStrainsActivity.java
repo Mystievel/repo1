@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo: Medium Priority - fix bug where 95% is the maximum scroll limit and then app freezes.
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
@@ -126,8 +127,7 @@ public class FindStrainsActivity extends MainActivity {
 		}); //**************************************************************************************
 
 
-		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
-		// todo: Medium Priority - this is done by creating a fragment
+		// todo: High Priority - Fix the Button to Button spacing/formatting on the Menu Bar
 		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
@@ -171,9 +171,6 @@ public class FindStrainsActivity extends MainActivity {
 				startActivity(new Intent(FindStrainsActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
-
-
 
 
 		//******************************************************************************************
