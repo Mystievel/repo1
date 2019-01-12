@@ -20,26 +20,38 @@
 		<RadioButton
 			android:id="@+id/effect_ignore"
 			android:layout_width="60sp"
-			android:layout_height="20sp"
+			android:layout_height="wrap_content"
+			android:paddingVertical="5sp"
 			android:layout_weight="1"
-			android:background="@drawable/ignore_btn"
-			android:button="@null" />
+			android:background="@drawable/radio_button"
+			android:button="@null"
+			android:text="omit"
+			android:textAlignment="center"
+			android:textSize="16sp"/>
 
 		<RadioButton
 			android:id="@+id/effect_min"
 			android:layout_width="60sp"
-			android:layout_height="20sp"
+			android:layout_height="wrap_content"
+			android:paddingVertical="5sp"
 			android:layout_weight="1"
-			android:background="@drawable/min_button"
-			android:button="@null" />
+			android:background="@drawable/radio_button"
+			android:button="@null"
+			android:text="min"
+			android:textAlignment="center"
+			android:textSize="16sp" />
 
 		<RadioButton
 			android:id="@+id/effect_max"
 			android:layout_width="60sp"
-			android:layout_height="20sp"
+			android:layout_height="wrap_content"
+			android:paddingVertical="5sp"
 			android:layout_weight="1"
-			android:background="@drawable/max_button"
-			android:button="@null" />
+			android:background="@drawable/radio_button"
+			android:button="@null"
+			android:text="max"
+			android:textAlignment="center"
+			android:textSize="16sp" />
 	</RadioGroup>
 
 

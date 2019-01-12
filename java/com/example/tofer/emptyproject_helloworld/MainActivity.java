@@ -11,7 +11,7 @@ import android.widget.Button;
 // todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
 // todo: Medium Priority - admob advertisement banner?
 // todo: Medium Priority - phone app seems fast...in case not, improve activity to activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
-
+// todo: High Priority - draw app background (ic_launcher).
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines
