@@ -21,7 +21,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: Medium Priority - fix bug where 95% is the maximum scroll limit and then app freezes.
+// todo: High Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
+// "Large intensity will reduce the number of results --> Increased intensity reduces the number of results."
+// todo: High Priority - Sickness Relief is too long and not formatted properly.
+// todo: High Priority - make search bar easier to grab, fix bug where 95% is the maximum scroll limit and then app freezes.
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
