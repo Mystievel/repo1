@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-// todo: High Priority - just put a new email address for feedback support@appname.com or @gmail.com eventually create a form
+// todo: High Priority - add new email address for feedback support@appname.com or @gmail.com eventually create a form
 
 public class SupportActivity extends MainActivity {
     @Override
@@ -14,8 +14,7 @@ public class SupportActivity extends MainActivity {
         setContentView(R.layout.support_activity);
 
 
-        // todo: Medium Priority -  summarize the code block below into a routine **********************************************************************
-		// todo: Medium Priority - this is done by creating a fragment
+        // todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
@@ -59,7 +58,5 @@ public class SupportActivity extends MainActivity {
                 startActivity(new Intent(SupportActivity.this, MyStrainsActivity.class));
             }
         }); //**************************************************************************************
-        // todo: Medium Priority -  summarize the code block above into a routine **********************************************************************
-
     }
 }

@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        // todo: High Priority - Fix the Button to Button spacing/formatting on the Menu Bar
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************

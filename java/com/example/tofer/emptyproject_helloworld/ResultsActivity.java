@@ -82,7 +82,7 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		//******************************************************************************************
 		// Info Object - Button Clicked
-		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		// todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
 		btnCancel = findViewById(R.id.cancelBtn);
 		lblInfoBox = findViewById(R.id.lblInfoBox);
@@ -98,9 +98,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		}); //**************************************************************************************
 
 
-		// todo: High Priority - Fix the Button to Button spacing/formatting on the Menu Bar
-		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
-		// todo: Medium Priority - this is done by creating a fragment
+		// todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -144,7 +142,6 @@ public class ResultsActivity extends FindStrainsActivity {
 				startActivity(new Intent(ResultsActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-		// todo: Medium Priority - summarize the code block above into a routine **********************************************************************
 	}
 
 	public void setNoResultsLabel(int numberOfMyStrains) {

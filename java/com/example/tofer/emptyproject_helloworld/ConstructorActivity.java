@@ -15,8 +15,7 @@ public class ConstructorActivity extends MainActivity {
 
 
 
-        // todo: Medium Priority - summarize the code block below into a routine **********************************************************************
-		// todo: Medium Priority - this is done by creating a fragment
+        // todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
@@ -60,7 +59,5 @@ public class ConstructorActivity extends MainActivity {
                 startActivity(new Intent(ConstructorActivity.this, MyStrainsActivity.class));
             }
         }); //**************************************************************************************
-        // todo: Medium Priority - summarize the code block above into a routine **********************************************************************
-
     }
 }

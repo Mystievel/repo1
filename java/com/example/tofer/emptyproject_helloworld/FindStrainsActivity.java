@@ -22,10 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // todo: High Priority - admob advertisement short video (after 3 uses or just do it every search for now)?
-// todo: High Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
-// todo: High Priority - "Large intensity will reduce the number of results --> Increased intensity reduces the number of results."
-// todo: High Priority - 'Sickness Relief' text is too long and not formatted properly.
-// todo: High Priority - make search bar easier to grab, fix bug where 95% is the maximum scroll limit and then app freezes.
+// todo: Medium Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
@@ -119,7 +116,6 @@ public class FindStrainsActivity extends MainActivity {
 		}); //**************************************************************************************
 
 
-		// todo: High Priority - Fix the Button to Button spacing/formatting on the Menu Bar
 		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
