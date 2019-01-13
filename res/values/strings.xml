@@ -6,7 +6,7 @@
         You dont have any saved strains.\nSearch for strains using the Find Strains page.
     </string>
     <string name="narrowSearch">
-        Step 2: Narrow your search.\n(Increased intensity = less results)
+        Step 2: Narrow your search.\n(Increased intensity reduces the number of results.)
     </string>
     <string name="findStrainsTip1">
 		\n\n

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo: High Prority - before launch, ensure color and font size/scheme is same across app, maybe create "labels" and "buttons" for default use with variable fields.
 // todo: High Priority - v2 - Find strain in store.
 // todo: Low Priority - Change overall font to same fontFamily using a variable
 // todo: Medium Priority - use general app behavior along with good text labels (Error messages) to walk the user through how to use the app My Strains --> "you dont have any strains, click on 'Find Strains' to begin searching.", , etc.
