@@ -21,9 +21,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo: High Priority - admob advertisement short video (after 3 uses or just do it every search for now)?
 // todo: High Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
-// "Large intensity will reduce the number of results --> Increased intensity reduces the number of results."
-// todo: High Priority - Sickness Relief is too long and not formatted properly.
+// todo: High Priority - "Large intensity will reduce the number of results --> Increased intensity reduces the number of results."
+// todo: High Priority - 'Sickness Relief' text is too long and not formatted properly.
 // todo: High Priority - make search bar easier to grab, fix bug where 95% is the maximum scroll limit and then app freezes.
 
 public class FindStrainsActivity extends MainActivity {
@@ -39,7 +40,6 @@ public class FindStrainsActivity extends MainActivity {
     private SeekBar searchIntensitySeekBar;
     ArrayList<FindStrainsListItemData> itemsData = new ArrayList<>();
     String[] infoList = new String[itemDataSize];
-	Button btnInfo;
     TextView lblInfoBox;
     Button btnCancel;
     RecyclerView recyclerView;
@@ -104,20 +104,9 @@ public class FindStrainsActivity extends MainActivity {
 		// Info Object - Button Clicked
 		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
 		//******************************************************************************************
-		btnInfo = findViewById(R.id.infoBtn);
 		lblInfoBox = findViewById(R.id.lblInfoBox);
 		btnCancel = findViewById(R.id.cancelBtn);
 		lblInfoBox.setMovementMethod(new ScrollingMovementMethod()); // allow scrolling through text within textview
-		btnInfo.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				// Show the 'x' btn and details.
-				lblInfoBox.setVisibility(View.VISIBLE);
-				btnCancel.setVisibility(View.VISIBLE);
-				// Hide the list to prevent accidental button clicks.
-				recyclerView.setVisibility(View.INVISIBLE);
-			}
-		});
 		btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -423,7 +412,7 @@ public class FindStrainsActivity extends MainActivity {
 			viewHolder.effectLbl.setText(itemsData.get(position).getEffect());
 
 			// Set the default selection to "omit", save previous selection otherwise.
-			// todo: High Priority - save fields when return to this page in a single opened session
+			// todo: Medium Priority - save fields when return to this page in a single opened session
 			// todo: High Priority - appears that we are not properly recycling the view when code is placed in onBind...???
 			int myFilter = itemsData.get(position).getFilter();
 			if (myFilter == MIN) {

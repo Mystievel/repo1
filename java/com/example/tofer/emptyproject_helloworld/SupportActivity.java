@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-// todo: High Priority - must find something to do with this page or modify/remove it from all layouts
+// todo: High Priority - just put a new email address for feedback support@appname.com or @gmail.com eventually create a form
 
 public class SupportActivity extends MainActivity {
     @Override

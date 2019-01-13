@@ -8,118 +8,87 @@
     android:background="@drawable/gradient_radial_silvergreen1"
     tools:context=".SupportActivity">
 
-    <Button
-        android:id="@+id/btnFindStrainsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Find\nStrains"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnConstructorPage"
-        app:layout_constraintStart_toEndOf="@+id/btnMyStrainsPage" />
+	<Button
+		android:id="@+id/btnFindStrainsPage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="4dp"
+		android:text="Find\nStrains"
+		android:textSize="10sp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/btnConstructorPage"
+		app:layout_constraintStart_toEndOf="@+id/btnMyStrainsPage" />
 
-    <Button
-        android:id="@+id/btnMyStrainsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
+	<Button
+		android:id="@+id/btnMyStrainsPage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="2dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
+		android:text="My\nStrains"
+		android:textSize="10sp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/btnFindStrainsPage"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/divider"
+		app:layout_constraintVertical_bias="1.0" />
+
+	<Button
+		android:id="@+id/btnConstructorPage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
+		android:text="Constructor"
+		android:textSize="10sp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/btnSupportPage"
+		app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage"
+		app:layout_constraintTop_toBottomOf="@+id/divider"
+		app:layout_constraintVertical_bias="1.0" />
+
+	<Button
+		android:id="@+id/btnSupportPage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:layout_marginEnd="2dp"
+		android:layout_marginBottom="4dp"
+		android:text="Support"
+		android:textSize="10sp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/btnConstructorPage"
+		app:layout_constraintTop_toBottomOf="@+id/divider"
+		app:layout_constraintVertical_bias="1.0" />
+
+	<View
+		android:id="@+id/divider"
+		android:layout_width="0dp"
+		android:layout_height="2dp"
+		android:layout_marginStart="2dp"
+		android:layout_marginEnd="2dp"
+		android:layout_marginBottom="4dp"
+		android:background="?android:attr/listDivider"
+		app:layout_constraintBottom_toTopOf="@+id/btnFindStrainsPage"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="My\nStrains"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnFindStrainsPage"
+        android:text="This page is currently under construction.\n\nPlease send all feedback requests to:\nxxxxxx@gmail.com"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btnConstructorPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Constructor"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSupportPage"
-        app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btnSupportPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="8dp"
-        android:text="Support"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnConstructorPage"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="368dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/btnFindStrainsPage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnReportABug"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="115dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="36dp"
-        android:text="Report a Bug"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSponsorship" />
-
-    <Button
-        android:id="@+id/btnUserGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="134dp"
-        android:layout_marginTop="71dp"
-        android:text="User Guide"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnSponsorship"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="117dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="9dp"
-        android:text="Sponsorship"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUserGuide" />
-
-    <Button
-        android:id="@+id/btnOther"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="95dp"
-        android:layout_marginTop="32dp"
-        android:text="Other Feedback"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btnUserGuide"
-        app:layout_constraintTop_toBottomOf="@+id/btnReportABug" />
 </android.support.constraint.ConstraintLayout>

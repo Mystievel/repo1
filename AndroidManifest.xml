@@ -7,9 +7,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Canbis Project"
         android:screenOrientation="portrait"
+		android:configChanges="orientation|keyboardHidden"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+		android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".FindStrainsActivity">

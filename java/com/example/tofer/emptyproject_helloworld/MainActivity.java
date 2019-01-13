@@ -10,7 +10,6 @@ import android.widget.Button;
 // todo: Low Priority - Change overall font to same fontFamily using a variable
 // todo: Medium Priority - use general app behavior along with good text labels (Error messages) to walk the user through how to use the app My Strains --> "you dont have any strains, click on 'Find Strains' to begin searching.", , etc.
 // todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
-// todo: Medium Priority - admob advertisement banner?
 // todo: Medium Priority - phone app seems fast...in case not, improve activity to activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
 // todo: High Priority - draw app background (ic_launcher).
 
