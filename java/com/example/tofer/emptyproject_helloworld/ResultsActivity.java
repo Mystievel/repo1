@@ -10,13 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
+// todo: continue here --- High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
@@ -80,12 +82,89 @@ public class ResultsActivity extends FindStrainsActivity {
 		//Log.d("timerR", "6");
 
 
+
+
+		//******************************************************************************************
+		// Filter Object
+		// todo: Medium Priority - summarize the code block below using a fragment
+		//******************************************************************************************
+		final TextView backgroundFilters = findViewById(R.id.lblFilterBoxBkgd);
+		final TextView lblSortBy = findViewById(R.id.lblSortBy);
+		final Spinner spinnerSortBy = findViewById(R.id.spinner_sortby);
+		final TextView lblFilterBy = findViewById(R.id.lblFilterBy);
+		final Spinner spinnerFilterBy = findViewById(R.id.spinner_filterby);
+		final Button btnApplyFilters = findViewById(R.id.okBtn_filters);
+		final Button btnCancelFilters = findViewById(R.id.cancelBtn_filters);
+		final Button btnFilter = findViewById(R.id.btnFilter);
+
+		// Populate "Sort Spinner"
+		String[] sortTitles = new String[]{"low to high (a to z)", "high to low (z to a)"};
+		ArrayAdapter<String> adapterSortSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortTitles);
+		spinnerSortBy.setAdapter(adapterSortSpinner);
+
+
+		// Populate "Filter Spinner"
+		String[] effectsNames = new String[effectsArray.length];
+		for (int i = 0; i < effectsArray.length; i++) {
+			effectsNames[i] = getEffectString(effectsArray[i]);
+		}
+		ArrayAdapter<String> adapterFilterSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, effectsNames);
+		spinnerFilterBy.setAdapter(adapterFilterSpinner);
+
+
+		//******************************************************************************************
+		btnCancelFilters.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Set filter box items Invisible.
+				backgroundFilters.setVisibility(View.INVISIBLE);
+				lblSortBy.setVisibility(View.INVISIBLE);
+				spinnerSortBy.setVisibility(View.INVISIBLE);
+				lblFilterBy.setVisibility(View.INVISIBLE);
+				spinnerFilterBy.setVisibility(View.INVISIBLE);
+				btnApplyFilters.setVisibility(View.INVISIBLE);
+				btnCancelFilters.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		btnApplyFilters.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Store filter selection and re-sort the list
+				// Set filter box items Visible.
+				backgroundFilters.setVisibility(View.INVISIBLE);
+				lblSortBy.setVisibility(View.INVISIBLE);
+				spinnerSortBy.setVisibility(View.INVISIBLE);
+				lblFilterBy.setVisibility(View.INVISIBLE);
+				spinnerFilterBy.setVisibility(View.INVISIBLE);
+				btnApplyFilters.setVisibility(View.INVISIBLE);
+				btnCancelFilters.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
+
+		//******************************************************************************************
+		btnFilter.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Set filter box items Visible.
+				backgroundFilters.setVisibility(View.VISIBLE);
+				lblSortBy.setVisibility(View.VISIBLE);
+				spinnerSortBy.setVisibility(View.VISIBLE);
+				lblFilterBy.setVisibility(View.VISIBLE);
+				spinnerFilterBy.setVisibility(View.VISIBLE);
+				btnApplyFilters.setVisibility(View.VISIBLE);
+				btnCancelFilters.setVisibility(View.VISIBLE);
+			}
+		}); //**************************************************************************************
+
+
 		//******************************************************************************************
 		// Info Object - Button Clicked
 		// todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
-		btnCancel = findViewById(R.id.cancelBtn);
-		lblInfoBox = findViewById(R.id.lblInfoBox);
+		final Button btnCancel = findViewById(R.id.cancelBtn);
+		final TextView lblInfoBox = findViewById(R.id.lblInfoBox);
 		btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

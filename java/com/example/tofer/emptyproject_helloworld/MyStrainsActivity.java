@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo: High Priority - Add popup window "are you sure you want to remove <strain name> from your list?"
 // todo: High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
 // todo: Medium Priority - Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 // todo: Medium Priority - Make a thumbs down feature that shows across the board which strains you've thumbs down and a folder or view that shows disliked strains so you can add or remove them from the list.

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo: High Priority - add back "?" button to show what omit/min/max means in detail
 // todo: High Priority - admob advertisement short video (after 3 uses or just do it every search for now)?
 // todo: Medium Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
 
@@ -31,8 +32,8 @@ public class FindStrainsActivity extends MainActivity {
     // Local variables
 	private static int startingValue = 75;
 	private static int progressChangedValue = startingValue;
-    private final static int[] effectsArray = new int[]{HAPPINESS, EUPHORIA, FOCUS, ENERGY, RELAXATION, SLEEPINESS, SICKNESS_RELIEF, PAIN_RELIEF, HUNGER, DEHYDRATION, ANXIETY};
-    private int itemDataSize = effectsArray.length;
+    public final static int[] effectsArray = new int[]{HAPPINESS, EUPHORIA, FOCUS, ENERGY, RELAXATION, SLEEPINESS, SICKNESS_RELIEF, PAIN_RELIEF, HUNGER, DEHYDRATION, ANXIETY};
+	private int itemDataSize = effectsArray.length;
     private TextView searchIntensityValue;
     private SeekBar searchIntensitySeekBar;
     ArrayList<FindStrainsListItemData> itemsData = new ArrayList<>();
