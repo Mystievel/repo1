@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo: Medium Priority - maybe add a teaser "where to buy?" when viewing myStrains.
 // todo: High Prority - before launch, ensure color and font size/scheme is same across app, maybe create "labels" and "buttons" for default use with variable fields.
 // todo: High Priority - v2 - Find strain in store.
 // todo: Low Priority - Change overall font to same fontFamily using a variable

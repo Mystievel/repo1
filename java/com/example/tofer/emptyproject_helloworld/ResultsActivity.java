@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // todo: continue here --- High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
+// todo: continue here --- infoBox not working right....why not?
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
@@ -26,6 +27,8 @@ public class ResultsActivity extends FindStrainsActivity {
 	String[] arrayOfStrainNames;
 	String[] arrayOfStrainTypes;
 	RecyclerView recyclerView;
+	Button btnCancel; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
+	TextView lblInfoBox; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,6 +120,7 @@ public class ResultsActivity extends FindStrainsActivity {
 			@Override
 			public void onClick(View view) {
 				// Set filter box items Invisible.
+				recyclerView.setVisibility(View.VISIBLE); // Set recycler view visible first
 				backgroundFilters.setVisibility(View.INVISIBLE);
 				lblSortBy.setVisibility(View.INVISIBLE);
 				spinnerSortBy.setVisibility(View.INVISIBLE);
@@ -133,6 +137,7 @@ public class ResultsActivity extends FindStrainsActivity {
 			public void onClick(View view) {
 				// Store filter selection and re-sort the list
 				// Set filter box items Visible.
+				recyclerView.setVisibility(View.VISIBLE);	// Set recycler view visible first
 				backgroundFilters.setVisibility(View.INVISIBLE);
 				lblSortBy.setVisibility(View.INVISIBLE);
 				spinnerSortBy.setVisibility(View.INVISIBLE);
@@ -155,6 +160,7 @@ public class ResultsActivity extends FindStrainsActivity {
 				spinnerFilterBy.setVisibility(View.VISIBLE);
 				btnApplyFilters.setVisibility(View.VISIBLE);
 				btnCancelFilters.setVisibility(View.VISIBLE);
+				recyclerView.setVisibility(View.INVISIBLE); // Set recycler view invisible last
 			}
 		}); //**************************************************************************************
 
@@ -163,8 +169,8 @@ public class ResultsActivity extends FindStrainsActivity {
 		// Info Object - Button Clicked
 		// todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
-		final Button btnCancel = findViewById(R.id.cancelBtn);
-		final TextView lblInfoBox = findViewById(R.id.lblInfoBox);
+		btnCancel = findViewById(R.id.cancelBtn);
+		lblInfoBox = findViewById(R.id.lblInfoBox);
 		btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
