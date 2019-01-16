@@ -23,12 +23,16 @@ import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
+	ArrayList<ResultsListItemData> itemsDataArrayList;
 	int numberOfMyStrains;
 	String[] arrayOfStrainNames;
 	String[] arrayOfStrainTypes;
 	RecyclerView recyclerView;
 	Button btnCancel; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
 	TextView lblInfoBox; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
+	int sortByValue;
+	int filterByValue;
+	Button btnFilter;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -45,7 +49,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		numberOfMyStrains = db.getNumberOfMyStrains();	// This variable must be populated here under onCreate, otherwise "Null Pointer Exception".
 
 		// 1. get a reference to recyclerView
-		ArrayList<ResultsListItemData> itemsDataArrayList = new ArrayList<>();
+		itemsDataArrayList = new ArrayList<>();
 		//Log.d("timerR", "2");
 
 		recyclerView = findViewById(R.id.resultsList);
@@ -53,9 +57,9 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		//Log.d("FinalArraySize", "" + finalArraySize);
 		//Log.d("FinalArraySize", "" + finalArray.length);
-		int[] arrayOfStrainIDs = db.getDatabaseItemValueByID("id", finalArray, finalArraySize);
-		arrayOfStrainNames = db.getDatabaseItemValueByID("StrainName", finalArraySize, finalArray);
-		arrayOfStrainTypes = db.getDatabaseItemValueByID("StrainType", finalArraySize, finalArray);
+		int[] arrayOfStrainIDs = db.getDatabaseItemValueByID_int("id", finalArray, finalArraySize);
+		arrayOfStrainNames = db.getDatabaseItemValueByID_string("StrainName", finalArray, finalArraySize);
+		arrayOfStrainTypes = db.getDatabaseItemValueByID_string("StrainType", finalArray, finalArraySize);
 
 		//Log.d("timerR", "3.5"); // longest time is from 3-4.
 
@@ -81,16 +85,15 @@ public class ResultsActivity extends FindStrainsActivity {
 		} else {
 			noResults.setVisibility(View.INVISIBLE);
 		}
-
 		//Log.d("timerR", "6");
-
-
 
 
 		//******************************************************************************************
 		// Filter Object
 		// todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
+		btnFilter = findViewById(R.id.btnFilter); // global, not really part of this segment.
+
 		final TextView backgroundFilters = findViewById(R.id.lblFilterBoxBkgd);
 		final TextView lblSortBy = findViewById(R.id.lblSortBy);
 		final Spinner spinnerSortBy = findViewById(R.id.spinner_sortby);
@@ -116,6 +119,10 @@ public class ResultsActivity extends FindStrainsActivity {
 
 
 		//******************************************************************************************
+		// Info Object - Filter
+		// todo: Medium Priority - summarize the code block below using a fragment
+		//******************************************************************************************
+		//******************************************************************************************
 		btnCancelFilters.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -130,13 +137,21 @@ public class ResultsActivity extends FindStrainsActivity {
 				btnCancelFilters.setVisibility(View.INVISIBLE);
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
 		btnApplyFilters.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				// Store filter selection and re-sort the list
-				// Set filter box items Visible.
+				int[] newListOfIDs;
+				sortByValue = spinnerSortBy.getSelectedItemPosition();
+				filterByValue = spinnerFilterBy.getSelectedItemPosition();
+				newListOfIDs = sortResultsItems(sortByValue, filterByValue, itemsDataArrayList);
+
+				// todo: 	need to make a decision...get database read into array on startup...or need to learn how to now convert this into the view order based on
+				//		 	solely the ID, even though we have strain Name and strainType too.
+				Log.d("listCompare", String.format("old list: %d, new list %d", itemsDataArrayList.get(0).getStrainID(), newListOfIDs[0]));
+
+				// Set filter box items Invisible.
 				recyclerView.setVisibility(View.VISIBLE);	// Set recycler view visible first
 				backgroundFilters.setVisibility(View.INVISIBLE);
 				lblSortBy.setVisibility(View.INVISIBLE);
@@ -147,7 +162,6 @@ public class ResultsActivity extends FindStrainsActivity {
 				btnCancelFilters.setVisibility(View.INVISIBLE);
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
 		btnFilter.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -176,6 +190,10 @@ public class ResultsActivity extends FindStrainsActivity {
 			public void onClick(View view) {
 				// Show the list to prevent accidental button clicks.
 				recyclerView.setVisibility(View.VISIBLE);
+
+				// Show the "filter" button.
+				btnFilter.setVisibility(View.VISIBLE);
+
 				// Hide the'x' btn and details.
 				lblInfoBox.setVisibility(View.INVISIBLE);
 				btnCancel.setVisibility(View.INVISIBLE);
@@ -194,7 +212,6 @@ public class ResultsActivity extends FindStrainsActivity {
 				startActivity(new Intent(ResultsActivity.this, FindStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -205,7 +222,6 @@ public class ResultsActivity extends FindStrainsActivity {
 				startActivity(new Intent(ResultsActivity.this, ConstructorActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -216,7 +232,6 @@ public class ResultsActivity extends FindStrainsActivity {
 				startActivity(new Intent(ResultsActivity.this, SupportActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -237,6 +252,57 @@ public class ResultsActivity extends FindStrainsActivity {
 			noResults.setVisibility(View.INVISIBLE);
 		}
 	}
+
+	//**********************************************************************************************
+	//								Sort Results List based on Filter
+	// sortByValue:		0 = low to high (a to z)
+	//					1 = high to low (z to a)
+	//
+	// filterByValue	0 = effectsArray(0) "Happiness" etc
+	//**********************************************************************************************
+	public int[] sortResultsItems(int sortByValue, int filterByValue, ArrayList<ResultsListItemData> itemsDataArrayList) {
+		int listSize = itemsDataArrayList.size();
+		int[] listOfIDs = getItemsDataIDs(itemsDataArrayList);
+		int[] tempListOfIDs = new int[listSize];
+		int tempID;
+		Log.d("listSize", String.format("Effect: %s", getEffectString(filterByValue)));
+		double[] listValues = db.getDatabaseItemValueByID_double(getEffectString(filterByValue), listOfIDs, listSize);
+
+		// Determine if we're sorting high or low
+		if (sortByValue == 0) {
+			tempID = 1; // Highest value possible is 1. Low to High.
+		} else {
+			tempID = 0; // Smallest value possible is 0. High to Low.
+		}
+
+		// Get first item in the list
+		for (int i = 0; i < listSize; i++) {
+			for (int j = 0; j < listSize; j++) {
+				if (sortByValue == 0) { // Sort low to high
+					if ((listValues[j] < listValues[i]) && (listValues[j] < tempID)) {
+						tempID = listOfIDs[j];
+					}
+				} else { // Sort high to low
+					if ((listValues[j] > listValues[i]) && (listValues[j] > tempID)) {
+						tempID = listOfIDs[j];
+					}
+				}
+			}
+			tempListOfIDs[i] = tempID;
+		}
+
+		return tempListOfIDs;
+	}
+
+	public int[] getItemsDataIDs(ArrayList<ResultsListItemData> itemsDataArrayList) {
+		int listSize = itemsDataArrayList.size();
+		int[] listOfIDs = new int[listSize];
+		for (int i = 0; i < listSize; i++) {
+			listOfIDs[i] = itemsDataArrayList.get(i).getStrainID();
+		}
+		return listOfIDs;
+	}
+
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -323,9 +389,14 @@ public class ResultsActivity extends FindStrainsActivity {
 				} else {
 					// Set text based on the item clicked
 					lblInfoBox.setText(getStrainsInfoPacket(position, db));
+
+					// Hide the "filter" button.
+					btnFilter.setVisibility(View.INVISIBLE);
+
 					// Show the 'x' btn and details.
 					lblInfoBox.setVisibility(View.VISIBLE);
 					btnCancel.setVisibility(View.VISIBLE);
+
 					// Hide the list to prevent accidental button clicks.
 					recyclerView.setVisibility(View.INVISIBLE);
 				}
