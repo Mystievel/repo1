@@ -261,9 +261,9 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		// Sort the list.
 		if (sortByValue == 0) {
-			tempListOfIDs = sortLowToHigh(listOfIDs);
+			tempListOfIDs = sortLowToHigh(listOfIDs, listValues);
 		} else {
-			tempListOfIDs = sortHighToLow(listOfIDs);
+			tempListOfIDs = sortHighToLow(listOfIDs, listValues);
 		}
 
 		arrayOfStrainIDs = db.getDatabaseItemValueByID_int("id", tempListOfIDs, listSize);
@@ -274,24 +274,27 @@ public class ResultsActivity extends FindStrainsActivity {
 			tempItemsDataArrayList.add(new ResultsListItemData(0 + arrayOfStrainIDs[i], "" + arrayOfStrainNames[i], "" + arrayOfStrainTypes[i]));
 		}
 
-		Log.d("listCompare", String.format("old list: %d, new list %d", itemsDataArrayList.get(0).getStrainID(), tempItemsDataArrayList.get(0).getStrainID()));
-		Log.d("listCompare", String.format("old list: %s, new list %s", itemsDataArrayList.get(0).getTitle(), tempItemsDataArrayList.get(0).getTitle()));
-
 		return tempItemsDataArrayList;
 	}
 
 	// Bubble sort
-	public int[] sortHighToLow(int[] arrayOfStrainIDs) {
+	public int[] sortHighToLow(int[] arrayOfStrainIDs, double[] listValues) {
 		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
 		int tempID;
+		double tempValue;
 
 		for (int i = 0; i < arraySize; i++) {
 			for (int j = 0; j < arraySize; j++) {
-				if (arrayOfStrainIDs[j] < arrayOfStrainIDs[j+1]) {
-					// Swap the two items
+				if (listValues[j] < listValues[j+1]) {
+					// Swap the two items (ID)
 					tempID = arrayOfStrainIDs[j];
 					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
 					arrayOfStrainIDs[j+1] = tempID;
+
+					// Swap the two items (value)
+					tempValue = listValues[j];
+					listValues[j] = listValues[j+1];
+					listValues[j+1] = tempValue;
 				}
 			}
 		}
@@ -299,17 +302,23 @@ public class ResultsActivity extends FindStrainsActivity {
 	}
 
 	// Bubble sort
-	public int[] sortLowToHigh(int[] arrayOfStrainIDs) {
+	public int[] sortLowToHigh(int[] arrayOfStrainIDs, double[] listValues) {
 		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
 		int tempID;
+		double tempValue;
 
 		for (int i = 0; i < arraySize; i++) {
 			for (int j = 0; j < arraySize; j++) {
-				if (arrayOfStrainIDs[j] > arrayOfStrainIDs[j+1]) {
-					// Swap the two items
+				if (listValues[j] > listValues[j+1]) {
+					// Swap the two items (ID)
 					tempID = arrayOfStrainIDs[j];
 					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
 					arrayOfStrainIDs[j+1] = tempID;
+
+					// Swap the two items (value)
+					tempValue = listValues[j];
+					listValues[j] = listValues[j+1];
+					listValues[j+1] = tempValue;
 				}
 			}
 		}
