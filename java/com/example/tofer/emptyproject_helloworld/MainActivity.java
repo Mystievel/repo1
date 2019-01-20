@@ -135,4 +135,54 @@ public class MainActivity extends AppCompatActivity {
 		}
 		return effectName;
    }
+
+
+	// Bubble sort
+	public int[] sortHighToLow(int[] arrayOfStrainIDs, double[] listValues) {
+		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
+		int tempID;
+		double tempValue;
+
+		for (int i = 0; i < arraySize; i++) {
+			for (int j = 0; j < arraySize; j++) {
+				if (listValues[j] < listValues[j+1]) {
+					// Swap the two items (ID)
+					tempID = arrayOfStrainIDs[j];
+					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
+					arrayOfStrainIDs[j+1] = tempID;
+
+					// Swap the two items (value)
+					tempValue = listValues[j];
+					listValues[j] = listValues[j+1];
+					listValues[j+1] = tempValue;
+				}
+			}
+		}
+		return arrayOfStrainIDs;
+	}
+
+
+	// Bubble sort
+	public int[] sortLowToHigh(int[] arrayOfStrainIDs, double[] listValues) {
+		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
+		int tempID;
+		double tempValue;
+
+		for (int i = 0; i < arraySize; i++) {
+			for (int j = 0; j < arraySize; j++) {
+				if (listValues[j] > listValues[j+1]) {
+					// Swap the two items (ID)
+					tempID = arrayOfStrainIDs[j];
+					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
+					arrayOfStrainIDs[j+1] = tempID;
+
+					// Swap the two items (value)
+					tempValue = listValues[j];
+					listValues[j] = listValues[j+1];
+					listValues[j+1] = tempValue;
+				}
+			}
+		}
+		return arrayOfStrainIDs;
+	}
 }

@@ -83,7 +83,7 @@
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
+		android:layout_marginTop="12dp"
 		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="8dp"
 		android:background="#fbfbfb"
@@ -100,7 +100,7 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
-		android:layout_marginTop="8dp"
+		android:layout_marginTop="4dp"
 		android:layout_marginEnd="16dp"
 		android:layout_marginBottom="8dp"
 		android:text="My Strains"
@@ -119,13 +119,13 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginEnd="16dp"
+		android:layout_marginTop="12dp"
+		android:layout_marginEnd="8dp"
 		android:text="Tap an icon to view strain details."
-		android:textAlignment="center"
+		android:textAlignment="textStart"
 		android:textColor="#666666"
 		android:textSize="12sp"
-		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/btnFilter"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/lblMyStrains" />
 
@@ -174,5 +174,132 @@
 		app:layout_constraintBottom_toBottomOf="@+id/lblInfoBox"
 		app:layout_constraintEnd_toEndOf="@+id/lblInfoBox"
 		app:layout_constraintStart_toStartOf="@+id/lblInfoBox" />
+
+
+	<TextView
+		android:id="@+id/lblFilterBoxBkgd"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="#ffffff"
+		android:fadeScrollbars="false"
+		android:scrollbars="vertical"
+		android:text=""
+		android:textAlignment="textStart"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/myStrainsList"
+		app:layout_constraintEnd_toEndOf="@+id/myStrainsList"
+		app:layout_constraintStart_toStartOf="@+id/myStrainsList"
+		app:layout_constraintTop_toTopOf="@+id/myStrainsList" />
+
+	<TextView
+		android:id="@+id/lblSortBy"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="5000dp"
+		android:background="#ffffff"
+		android:fadeScrollbars="false"
+		android:scrollbars="vertical"
+		android:text="Sort by:"
+		android:textAlignment="textStart"
+		android:textColor="#000000"
+		android:textSize="18sp"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintTop_toTopOf="@+id/lblFilterBoxBkgd" />
+
+	<Spinner
+		android:id="@+id/spinner_sortby"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:background="@android:drawable/btn_dropdown"
+		android:spinnerMode="dropdown"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintStart_toStartOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintTop_toBottomOf="@+id/lblSortBy" />
+
+	<TextView
+		android:id="@+id/lblFilterBy"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="32dp"
+		android:layout_marginEnd="5000dp"
+		android:background="#ffffff"
+		android:fadeScrollbars="false"
+		android:scrollbars="vertical"
+		android:text="Filter by:"
+		android:textAlignment="textStart"
+		android:textColor="#000000"
+		android:textSize="18sp"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintTop_toBottomOf="@+id/spinner_sortby" />
+
+	<Spinner
+		android:id="@+id/spinner_filterby"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:background="@android:drawable/btn_dropdown"
+		android:spinnerMode="dropdown"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintStart_toStartOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintTop_toBottomOf="@+id/lblFilterBy" />
+
+	<Button
+		android:id="@+id/cancelBtn_filters"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="64dp"
+		android:layout_marginEnd="64dp"
+		android:layout_marginBottom="32dp"
+		android:text="Cancel"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintEnd_toStartOf="@+id/okBtn_filters"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="@+id/lblFilterBoxBkgd" />
+
+	<Button
+		android:id="@+id/okBtn_filters"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="64dp"
+		android:layout_marginBottom="32dp"
+		android:text="Ok"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="@+id/lblFilterBoxBkgd"
+		app:layout_constraintEnd_toEndOf="@+id/lblFilterBoxBkgd" />
+
+	<Button
+		android:id="@+id/btnFilter"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_marginEnd="16dp"
+		android:text="filter"
+		android:textAlignment="center"
+		android:textAllCaps="false"
+		android:textColor="#000000"
+		android:textSize="10sp"
+		app:layout_constraintBottom_toTopOf="@+id/lblInfoBox"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/lblMyStrains" />
 
 </android.support.constraint.ConstraintLayout>

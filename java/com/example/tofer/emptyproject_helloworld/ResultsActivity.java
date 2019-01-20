@@ -34,9 +34,10 @@ public class ResultsActivity extends FindStrainsActivity {
 	RecyclerView recyclerView;
 	Button btnCancel; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
 	TextView lblInfoBox; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
+
+	// Filtering
 	int sortByValue;
 	int filterByValue;
-
 	Button btnFilter;
 	TextView backgroundFilters;
 	TextView lblSortBy;
@@ -277,57 +278,6 @@ public class ResultsActivity extends FindStrainsActivity {
 		return tempItemsDataArrayList;
 	}
 
-	// Bubble sort
-	public int[] sortHighToLow(int[] arrayOfStrainIDs, double[] listValues) {
-		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
-		int tempID;
-		double tempValue;
-
-		for (int i = 0; i < arraySize; i++) {
-			for (int j = 0; j < arraySize; j++) {
-				if (listValues[j] < listValues[j+1]) {
-					// Swap the two items (ID)
-					tempID = arrayOfStrainIDs[j];
-					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
-					arrayOfStrainIDs[j+1] = tempID;
-
-					// Swap the two items (value)
-					tempValue = listValues[j];
-					listValues[j] = listValues[j+1];
-					listValues[j+1] = tempValue;
-				}
-			}
-		}
-		return arrayOfStrainIDs;
-	}
-
-	// Bubble sort
-	public int[] sortLowToHigh(int[] arrayOfStrainIDs, double[] listValues) {
-		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
-		int tempID;
-		double tempValue;
-
-		for (int i = 0; i < arraySize; i++) {
-			for (int j = 0; j < arraySize; j++) {
-				if (listValues[j] > listValues[j+1]) {
-					// Swap the two items (ID)
-					tempID = arrayOfStrainIDs[j];
-					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
-					arrayOfStrainIDs[j+1] = tempID;
-
-					// Swap the two items (value)
-					tempValue = listValues[j];
-					listValues[j] = listValues[j+1];
-					listValues[j+1] = tempValue;
-				}
-			}
-		}
-		return arrayOfStrainIDs;
-	}
-
-
-
-
 
 	public int[] getItemsDataIDs(List<ResultsListItemData> itemsDataArrayList) {
 		int listSize = itemsDataArrayList.size();
@@ -483,19 +433,20 @@ public class ResultsActivity extends FindStrainsActivity {
 			Double dehydration = 100.0 * Strain.getEffectsDehydration();
 			Double anxiety = 100.0 * Strain.getEffectsAnxiety();
 
-			dataPacket = String.format(	"Name:\t%s\n" +
-					"Type:\t%s\n\n" +
-					"Happiness:\t%.2f%%\n" +
-					"Euphoria:\t%.2f%%\n" +
-					"Focus:\t%.2f%%\n" +
-					"Energy:\t%.2f%%\n" +
-					"Relaxation:\t%.2f%%\n" +
-					"Sleepiness:\t%.2f%%\n" +
-					"Sickness Relief:\t%.2f%%\n" +
-					"Pain Relief:\t%.2f%%\n" +
-					"Hunger:\t%.2f%%\n" +
-					"Dehydration:\t%.2f%%\n" +
-					"Anxiety:\t%.2f%%", strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
+			dataPacket = String.format(	"Name: %s\n" +
+					"Type: %s\n\n" +
+					"Happiness: %.2f%%\n" +
+					"Euphoria: %.2f%%\n" +
+					"Focus: %.2f%%\n" +
+					"Energy: %.2f%%\n" +
+					"Relaxation: %.2f%%\n" +
+					"Sleepiness: %.2f%%\n" +
+					"Sickness Relief: %.2f%%\n" +
+					"Pain Relief: %.2f%%\n" +
+					"Hunger: %.2f%%\n" +
+					"Dehydration: %.2f%%\n" +
+					"Anxiety: %.2f%%",
+					strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
 
 			return dataPacket;
 		} //****************************************************************************************
