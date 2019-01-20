@@ -16,15 +16,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 // todo: continue here --- High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
 // todo: continue here --- infoBox not working right....why not?
+// todo: high priority - some notification when "+" is clicked "Added "strain name" to your 'My Strains' list. Maybe a tooltip/info box that explains what the "+" btn does.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
 	ArrayList<ResultsListItemData> itemsDataArrayList;
 	int numberOfMyStrains;
+	int[] arrayOfStrainIDs;
 	String[] arrayOfStrainNames;
 	String[] arrayOfStrainTypes;
 	RecyclerView recyclerView;
@@ -32,7 +36,15 @@ public class ResultsActivity extends FindStrainsActivity {
 	TextView lblInfoBox; // Keep this declaration outside as a global so that the recyclerView and onCreate have visibility.
 	int sortByValue;
 	int filterByValue;
+
 	Button btnFilter;
+	TextView backgroundFilters;
+	TextView lblSortBy;
+	Spinner spinnerSortBy;
+	TextView lblFilterBy;
+	Spinner spinnerFilterBy;
+	Button btnApplyFilters;
+	Button btnCancelFilters;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -57,7 +69,7 @@ public class ResultsActivity extends FindStrainsActivity {
 
 		//Log.d("FinalArraySize", "" + finalArraySize);
 		//Log.d("FinalArraySize", "" + finalArray.length);
-		int[] arrayOfStrainIDs = db.getDatabaseItemValueByID_int("id", finalArray, finalArraySize);
+		arrayOfStrainIDs = db.getDatabaseItemValueByID_int("id", finalArray, finalArraySize);
 		arrayOfStrainNames = db.getDatabaseItemValueByID_string("StrainName", finalArray, finalArraySize);
 		arrayOfStrainTypes = db.getDatabaseItemValueByID_string("StrainType", finalArray, finalArraySize);
 
@@ -92,16 +104,15 @@ public class ResultsActivity extends FindStrainsActivity {
 		// Filter Object
 		// todo: Medium Priority - summarize the code block below using a fragment
 		//******************************************************************************************
-		btnFilter = findViewById(R.id.btnFilter); // global, not really part of this segment.
-
-		final TextView backgroundFilters = findViewById(R.id.lblFilterBoxBkgd);
-		final TextView lblSortBy = findViewById(R.id.lblSortBy);
-		final Spinner spinnerSortBy = findViewById(R.id.spinner_sortby);
-		final TextView lblFilterBy = findViewById(R.id.lblFilterBy);
-		final Spinner spinnerFilterBy = findViewById(R.id.spinner_filterby);
-		final Button btnApplyFilters = findViewById(R.id.okBtn_filters);
-		final Button btnCancelFilters = findViewById(R.id.cancelBtn_filters);
-		final Button btnFilter = findViewById(R.id.btnFilter);
+		btnFilter = findViewById(R.id.btnFilter);
+		backgroundFilters = findViewById(R.id.lblFilterBoxBkgd);
+		lblSortBy = findViewById(R.id.lblSortBy);
+		spinnerSortBy = findViewById(R.id.spinner_sortby);
+		lblFilterBy = findViewById(R.id.lblFilterBy);
+		spinnerFilterBy = findViewById(R.id.spinner_filterby);
+		btnApplyFilters = findViewById(R.id.okBtn_filters);
+		btnCancelFilters = findViewById(R.id.cancelBtn_filters);
+		btnFilter = findViewById(R.id.btnFilter);
 
 		// Populate "Sort Spinner"
 		String[] sortTitles = new String[]{"low to high (a to z)", "high to low (z to a)"};
@@ -128,31 +139,6 @@ public class ResultsActivity extends FindStrainsActivity {
 			public void onClick(View view) {
 				// Set filter box items Invisible.
 				recyclerView.setVisibility(View.VISIBLE); // Set recycler view visible first
-				backgroundFilters.setVisibility(View.INVISIBLE);
-				lblSortBy.setVisibility(View.INVISIBLE);
-				spinnerSortBy.setVisibility(View.INVISIBLE);
-				lblFilterBy.setVisibility(View.INVISIBLE);
-				spinnerFilterBy.setVisibility(View.INVISIBLE);
-				btnApplyFilters.setVisibility(View.INVISIBLE);
-				btnCancelFilters.setVisibility(View.INVISIBLE);
-			}
-		}); //**************************************************************************************
-		//******************************************************************************************
-		btnApplyFilters.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				// Store filter selection and re-sort the list
-				int[] newListOfIDs;
-				sortByValue = spinnerSortBy.getSelectedItemPosition();
-				filterByValue = spinnerFilterBy.getSelectedItemPosition();
-				newListOfIDs = sortResultsItems(sortByValue, filterByValue, itemsDataArrayList);
-
-				// todo: 	need to make a decision...get database read into array on startup...or need to learn how to now convert this into the view order based on
-				//		 	solely the ID, even though we have strain Name and strainType too.
-				Log.d("listCompare", String.format("old list: %d, new list %d", itemsDataArrayList.get(0).getStrainID(), newListOfIDs[0]));
-
-				// Set filter box items Invisible.
-				recyclerView.setVisibility(View.VISIBLE);	// Set recycler view visible first
 				backgroundFilters.setVisibility(View.INVISIBLE);
 				lblSortBy.setVisibility(View.INVISIBLE);
 				spinnerSortBy.setVisibility(View.INVISIBLE);
@@ -260,41 +246,81 @@ public class ResultsActivity extends FindStrainsActivity {
 	//
 	// filterByValue	0 = effectsArray(0) "Happiness" etc
 	//**********************************************************************************************
-	public int[] sortResultsItems(int sortByValue, int filterByValue, ArrayList<ResultsListItemData> itemsDataArrayList) {
+	public ArrayList<ResultsListItemData> sortResultsItems(int sortByValue, int filterByValue, List<ResultsListItemData> itemsDataArrayList) {
 		int listSize = itemsDataArrayList.size();
 		int[] listOfIDs = getItemsDataIDs(itemsDataArrayList);
 		int[] tempListOfIDs = new int[listSize];
+		int[] arrayOfStrainIDs;
+		String[] arrayOfStrainNames;
+		String[] arrayOfStrainTypes;
+		ArrayList<ResultsListItemData> tempItemsDataArrayList = new ArrayList<>();
 		int tempID;
+		int tempValue;
 		Log.d("listSize", String.format("Effect: %s", getEffectString(filterByValue)));
 		double[] listValues = db.getDatabaseItemValueByID_double(getEffectString(filterByValue), listOfIDs, listSize);
 
-		// Determine if we're sorting high or low
+		// Sort the list.
 		if (sortByValue == 0) {
-			tempID = 1; // Highest value possible is 1. Low to High.
+			tempListOfIDs = sortLowToHigh(listOfIDs);
 		} else {
-			tempID = 0; // Smallest value possible is 0. High to Low.
+			tempListOfIDs = sortHighToLow(listOfIDs);
 		}
 
-		// Get first item in the list
+		arrayOfStrainIDs = db.getDatabaseItemValueByID_int("id", tempListOfIDs, listSize);
+		arrayOfStrainNames = db.getDatabaseItemValueByID_string("StrainName", tempListOfIDs, listSize);
+		arrayOfStrainTypes = db.getDatabaseItemValueByID_string("StrainType", tempListOfIDs, listSize);
+
 		for (int i = 0; i < listSize; i++) {
-			for (int j = 0; j < listSize; j++) {
-				if (sortByValue == 0) { // Sort low to high
-					if ((listValues[j] < listValues[i]) && (listValues[j] < tempID)) {
-						tempID = listOfIDs[j];
-					}
-				} else { // Sort high to low
-					if ((listValues[j] > listValues[i]) && (listValues[j] > tempID)) {
-						tempID = listOfIDs[j];
-					}
-				}
-			}
-			tempListOfIDs[i] = tempID;
+			tempItemsDataArrayList.add(new ResultsListItemData(0 + arrayOfStrainIDs[i], "" + arrayOfStrainNames[i], "" + arrayOfStrainTypes[i]));
 		}
 
-		return tempListOfIDs;
+		Log.d("listCompare", String.format("old list: %d, new list %d", itemsDataArrayList.get(0).getStrainID(), tempItemsDataArrayList.get(0).getStrainID()));
+		Log.d("listCompare", String.format("old list: %s, new list %s", itemsDataArrayList.get(0).getTitle(), tempItemsDataArrayList.get(0).getTitle()));
+
+		return tempItemsDataArrayList;
 	}
 
-	public int[] getItemsDataIDs(ArrayList<ResultsListItemData> itemsDataArrayList) {
+	// Bubble sort
+	public int[] sortHighToLow(int[] arrayOfStrainIDs) {
+		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
+		int tempID;
+
+		for (int i = 0; i < arraySize; i++) {
+			for (int j = 0; j < arraySize; j++) {
+				if (arrayOfStrainIDs[j] < arrayOfStrainIDs[j+1]) {
+					// Swap the two items
+					tempID = arrayOfStrainIDs[j];
+					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
+					arrayOfStrainIDs[j+1] = tempID;
+				}
+			}
+		}
+		return arrayOfStrainIDs;
+	}
+
+	// Bubble sort
+	public int[] sortLowToHigh(int[] arrayOfStrainIDs) {
+		int arraySize = arrayOfStrainIDs.length - 1; // Bubble sort uses -1 on the total length since we compare j+1.
+		int tempID;
+
+		for (int i = 0; i < arraySize; i++) {
+			for (int j = 0; j < arraySize; j++) {
+				if (arrayOfStrainIDs[j] > arrayOfStrainIDs[j+1]) {
+					// Swap the two items
+					tempID = arrayOfStrainIDs[j];
+					arrayOfStrainIDs[j] = arrayOfStrainIDs[j+1];
+					arrayOfStrainIDs[j+1] = tempID;
+				}
+			}
+		}
+		return arrayOfStrainIDs;
+	}
+
+
+
+
+
+	public int[] getItemsDataIDs(List<ResultsListItemData> itemsDataArrayList) {
 		int listSize = itemsDataArrayList.size();
 		int[] listOfIDs = new int[listSize];
 		for (int i = 0; i < listSize; i++) {
@@ -359,13 +385,16 @@ public class ResultsActivity extends FindStrainsActivity {
 			public TextView txtViewTitle;
 			public TextView txtViewDescription;
 			public Button btnAddToMyStrains;
+			public Button btnOkFilters;
 
 			public ViewHolder(View itemLayoutView) {
 				super(itemLayoutView);
 				txtViewTitle = itemLayoutView.findViewById(R.id.item_title);
 				txtViewDescription = itemLayoutView.findViewById(R.id.item_description);
 				btnAddToMyStrains = itemLayoutView.findViewById(R.id.btnAddToMyStrains);
+				btnOkFilters = findViewById(R.id.okBtn_filters);
 				btnAddToMyStrains.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
+				btnOkFilters.setOnClickListener(this);
 				itemLayoutView.setOnClickListener(this);
 			}
 
@@ -386,6 +415,23 @@ public class ResultsActivity extends FindStrainsActivity {
 					//notifyItemRemoved(position);
 					//notifyItemRangeChanged(position, getItemCount());
 					notifyDataSetChanged();
+				} else if (view == btnOkFilters) {
+					// Store filter selection and re-sort the list
+					// todo: 	need to make a decision...get database read into array on startup...or need to learn how to now convert this into the view order based on
+					sortByValue = spinnerSortBy.getSelectedItemPosition();
+					filterByValue = spinnerFilterBy.getSelectedItemPosition();
+					itemsData = sortResultsItems(sortByValue, filterByValue, itemsData);
+					notifyDataSetChanged();
+
+					// Set filter box items Invisible.
+					recyclerView.setVisibility(View.VISIBLE);	// Set recycler view visible first
+					backgroundFilters.setVisibility(View.INVISIBLE);
+					lblSortBy.setVisibility(View.INVISIBLE);
+					spinnerSortBy.setVisibility(View.INVISIBLE);
+					lblFilterBy.setVisibility(View.INVISIBLE);
+					spinnerFilterBy.setVisibility(View.INVISIBLE);
+					btnApplyFilters.setVisibility(View.INVISIBLE);
+					btnCancelFilters.setVisibility(View.INVISIBLE);
 				} else {
 					// Set text based on the item clicked
 					lblInfoBox.setText(getStrainsInfoPacket(position, db));
@@ -428,19 +474,19 @@ public class ResultsActivity extends FindStrainsActivity {
 			Double dehydration = 100.0 * Strain.getEffectsDehydration();
 			Double anxiety = 100.0 * Strain.getEffectsAnxiety();
 
-			dataPacket = String.format(	"Name: %s\n" +
-					"Type: %s\n\n" +
-					"Happiness: %.2f%%\n" +
-					"Euphoria: %.2f%%\n" +
-					"Focus: %.2f%%\n" +
-					"Energy: %.2f%%\n" +
-					"Relaxation: %.2f%%\n" +
-					"Sleepiness: %.2f%%\n" +
-					"Sickness Relief: %.2f%%\n" +
-					"Pain Relief: %.2f%%\n" +
-					"Hunger: %.2f%%\n" +
-					"Dehydration: %.2f%%\n" +
-					"Anxiety: %.2f%%", strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
+			dataPacket = String.format(	"Name:\t%s\n" +
+					"Type:\t%s\n\n" +
+					"Happiness:\t%.2f%%\n" +
+					"Euphoria:\t%.2f%%\n" +
+					"Focus:\t%.2f%%\n" +
+					"Energy:\t%.2f%%\n" +
+					"Relaxation:\t%.2f%%\n" +
+					"Sleepiness:\t%.2f%%\n" +
+					"Sickness Relief:\t%.2f%%\n" +
+					"Pain Relief:\t%.2f%%\n" +
+					"Hunger:\t%.2f%%\n" +
+					"Dehydration:\t%.2f%%\n" +
+					"Anxiety:\t%.2f%%", strainName, strainType, happiness, euphoria, focus, energy, relaxation, sleepiness, sick, pain, hunger, dehydration, anxiety);
 
 			return dataPacket;
 		} //****************************************************************************************

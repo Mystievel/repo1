@@ -24,6 +24,7 @@ import java.util.List;
 // todo: High Priority - add back "?" button to show what omit/min/max means in detail
 // todo: High Priority - admob advertisement short video (after 3 uses or just do it every search for now)?
 // todo: Medium Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
+// todo: Medium Priority - As you scroll, make updates to "x results" info label, seems slow also when clicking buttons, speed this up.
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
