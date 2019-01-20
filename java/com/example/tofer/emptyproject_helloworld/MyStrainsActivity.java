@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -355,6 +356,7 @@ public class MyStrainsActivity extends MainActivity {
 					// Remove item from the Database - must be done before removing from view.
 					//Log.d("itemRemoved id: " + position, "" + itemsData.get(position).getStrainID());
 					db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 0);
+					Toast.makeText(MyStrainsActivity.this, String.format("Removed '%s' from My Strains.", itemsData.get(position).getStrainName()), Toast.LENGTH_SHORT).show();
 
 					// Remove item from the view
 					itemsData.remove(position);

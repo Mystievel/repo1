@@ -14,13 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-// todo: high priority - some notification when "+" is clicked "Added "strain name" to your 'My Strains' list. Maybe a tooltip/info box that explains what the "+" btn does.
 
 public class ResultsActivity extends FindStrainsActivity {
 	// Globals
@@ -365,6 +364,7 @@ public class ResultsActivity extends FindStrainsActivity {
 				if (view == btnAddToMyStrains) {
 					// Remove item from the Database - must be done before removing from view.
 					db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 1);
+					Toast.makeText(ResultsActivity.this, String.format("Added '%s' to My Strains.", itemsData.get(position).getTitle()), Toast.LENGTH_SHORT).show();
 					//Log.d("viewHolderUpdate", "" + itemsData.get(position).getTitle());
 
 					// Remove item from the view
