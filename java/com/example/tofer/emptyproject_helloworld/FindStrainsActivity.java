@@ -411,7 +411,6 @@ public class FindStrainsActivity extends MainActivity {
 
 			// Set the default selection to "omit", save previous selection otherwise.
 			// todo: Medium Priority - save fields when return to this page in a single opened session
-			// todo: High Priority - appears that we are not properly recycling the view when code is placed in onBind...???
 			int myFilter = itemsData.get(position).getFilter();
 			if (myFilter == MIN) {
 				viewHolder.minBtn.setChecked(true);

@@ -20,8 +20,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-// todo: continue here --- High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
-// todo: continue here --- infoBox not working right....why not?
 // todo: high priority - some notification when "+" is clicked "Added "strain name" to your 'My Strains' list. Maybe a tooltip/info box that explains what the "+" btn does.
 
 public class ResultsActivity extends FindStrainsActivity {

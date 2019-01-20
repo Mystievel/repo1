@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-// todo: High Priority - add new email address for feedback support@appname.com or @gmail.com eventually create a form
+// todo: High Priority - add new email address for feedback support@appname.com or @gmail.com eventually create a form and youtube link for instructional "about/how to use" video
 
 public class SupportActivity extends MainActivity {
     @Override

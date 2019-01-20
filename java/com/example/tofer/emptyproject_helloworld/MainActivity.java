@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo: High Priority - portrait mode only.
 // todo: Medium Priority - maybe add a teaser "where to buy?" when viewing myStrains.
 // todo: High Prority - before launch, ensure color and font size/scheme is same across app, maybe create "labels" and "buttons" for default use with variable fields.
 // todo: High Priority - v2 - Find strain in store.
@@ -13,8 +14,6 @@ import android.widget.Button;
 // todo: Medium Priority - use general app behavior along with good text labels (Error messages) to walk the user through how to use the app My Strains --> "you dont have any strains, click on 'Find Strains' to begin searching.", , etc.
 // todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
 // todo: Medium Priority - phone app seems fast...in case not, improve activity to activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
-// todo: High Priority - draw app background (ic_launcher).
-// todo: High Priority - portrait mode only.
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines

@@ -20,7 +20,6 @@ import java.util.List;
 import static com.example.tofer.emptyproject_helloworld.FindStrainsActivity.effectsArray;
 
 // todo: High Priority - Add popup window "are you sure you want to remove <strain name> from your list?"
-// todo: High Priority - create filter option: highest/lowest of some value, strain type, name, effect (assign priority to tasks), etc.
 // todo: Medium Priority - Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 // todo: Medium Priority - Make a thumbs down feature that shows across the board which strains you've thumbs down and a folder or view that shows disliked strains so you can add or remove them from the list.
 
@@ -161,6 +160,10 @@ public class MyStrainsActivity extends MainActivity {
 			public void onClick(View view) {
 				// Show the list to prevent accidental button clicks.
 				recyclerView.setVisibility(View.VISIBLE);
+
+				// Show the "filter" button.
+				btnFilter.setVisibility(View.VISIBLE);
+
 				// Hide the'x' btn and details.
 				lblInfoBox.setVisibility(View.INVISIBLE);
 				btnCancel.setVisibility(View.INVISIBLE);
@@ -381,9 +384,14 @@ public class MyStrainsActivity extends MainActivity {
 				} else {
 					// Set text based on the item clicked
 					lblInfoBox.setText(getStrainsInfoPacket(position, db));
+
+					// Hide the "filter" button.
+					btnFilter.setVisibility(View.INVISIBLE);
+
 					// Show the 'x' btn and details.
 					lblInfoBox.setVisibility(View.VISIBLE);
 					btnCancel.setVisibility(View.VISIBLE);
+
 					// Hide the list to prevent accidental button clicks.
 					recyclerView.setVisibility(View.INVISIBLE);
 				}
