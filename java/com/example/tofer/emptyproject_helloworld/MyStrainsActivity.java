@@ -43,6 +43,12 @@ public class MyStrainsActivity extends MainActivity {
 	Button btnApplyFilters;
 	Button btnCancelFilters;
 
+	// Query Remove Item
+	TextView queryText;
+	Button queryCancel;
+	Button queryOk;
+	int currentItem;
+
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,6 +89,39 @@ public class MyStrainsActivity extends MainActivity {
 		// Let the user know if no strains exist.
 		setNoStrainsLabel(numberOfMyStrains);
 		//Log.d("timer1", "5");
+
+
+		//******************************************************************************************
+		// Query - Remove Item from List
+		//******************************************************************************************
+		queryCancel = findViewById(R.id.queryCancel);
+		queryOk = findViewById(R.id.queryOk);
+		queryText = findViewById(R.id.queryText);
+
+		queryCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Set query box items Invisible.
+				recyclerView.setVisibility(View.VISIBLE); // Set recycler view visible first
+				btnFilter.setVisibility(View.VISIBLE);
+				queryCancel.setVisibility(View.INVISIBLE);
+				queryOk.setVisibility(View.INVISIBLE);
+				queryText.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
+		queryOk.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Set query box items Invisible.
+				recyclerView.setVisibility(View.VISIBLE); // Set recycler view visible first
+				btnFilter.setVisibility(View.VISIBLE);
+				queryCancel.setVisibility(View.INVISIBLE);
+				queryOk.setVisibility(View.INVISIBLE);
+				queryText.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
+		//******************************************************************************************
+
 
 
 		//******************************************************************************************
@@ -333,15 +372,22 @@ public class MyStrainsActivity extends MainActivity {
 			public TextView strainTypeLbl;
 			public Button btnRemoveMyStrain;
 			public Button btnOkFilters;
+			public TextView queryText;
+			public Button queryOk;
 
 			public ViewHolder(View itemLayoutView) {
 				super(itemLayoutView);
 				strainNameLbl = itemLayoutView.findViewById(R.id.strainNameLbl);
 				strainTypeLbl = itemLayoutView.findViewById(R.id.strainTypeLbl);
 				btnRemoveMyStrain = itemLayoutView.findViewById(R.id.btnRemoveMyStrain);
+
 				btnOkFilters = findViewById(R.id.okBtn_filters);
+				queryOk = findViewById(R.id.queryOk);
+				queryText = findViewById(R.id.queryText);
+
 				btnRemoveMyStrain.setOnClickListener(this);  // Use this in conjunction with "implements View.OnClickListener" in the class header and the onClick method below to determine which item in the recyclerView was clicked
 				btnOkFilters.setOnClickListener(this);
+				queryOk.setOnClickListener(this);
 				itemLayoutView.setOnClickListener(this);
 			}
 
@@ -353,13 +399,28 @@ public class MyStrainsActivity extends MainActivity {
 
 				// Determine which item was clicked and act accordingly.
 				if (view == btnRemoveMyStrain) {
+					currentItem = position;
+					btnFilter.setVisibility(View.INVISIBLE);
+					queryText.setText(String.format("Are you sure you want to remove '%s' from your list?", itemsData.get(position).getStrainName()));
+					queryCancel.setVisibility(View.VISIBLE);
+					queryOk.setVisibility(View.VISIBLE);
+					queryText.setVisibility(View.VISIBLE);
+				} else if (view == queryOk) {
+					// Hide query box
+					queryCancel.setVisibility(View.INVISIBLE);
+					queryOk.setVisibility(View.INVISIBLE);
+					queryText.setVisibility(View.INVISIBLE);
+
+					// Show filter btn
+					btnFilter.setVisibility(View.VISIBLE);
+
 					// Remove item from the Database - must be done before removing from view.
 					//Log.d("itemRemoved id: " + position, "" + itemsData.get(position).getStrainID());
-					db.updateMyStrain(db.getStrainData(itemsData.get(position).getStrainID() + 0), 0);
-					Toast.makeText(MyStrainsActivity.this, String.format("Removed '%s' from My Strains.", itemsData.get(position).getStrainName()), Toast.LENGTH_SHORT).show();
+					Toast.makeText(MyStrainsActivity.this, String.format("Removed '%s' from My Strains.", itemsData.get(currentItem).getStrainName()), Toast.LENGTH_SHORT).show();
+					db.updateMyStrain(db.getStrainData(itemsData.get(currentItem).getStrainID() + 0), 0);
 
 					// Remove item from the view
-					itemsData.remove(position);
+					itemsData.remove(currentItem);
 					//notifyItemRemoved(position);
 					//notifyItemRangeChanged(position, getItemCount());
 					notifyDataSetChanged();
@@ -387,8 +448,13 @@ public class MyStrainsActivity extends MainActivity {
 					// Set text based on the item clicked
 					lblInfoBox.setText(getStrainsInfoPacket(position, db));
 
-					// Hide the "filter" button.
+					// Hide the "filter" button
 					btnFilter.setVisibility(View.INVISIBLE);
+
+					// Hide query box
+					queryCancel.setVisibility(View.INVISIBLE);
+					queryOk.setVisibility(View.INVISIBLE);
+					queryText.setVisibility(View.INVISIBLE);
 
 					// Show the 'x' btn and details.
 					lblInfoBox.setVisibility(View.VISIBLE);
