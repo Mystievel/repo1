@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:state_pressed="false">
+	<item>
 		<shape android:shape="oval">
-			<solid android:background="@drawable/gradient_linear_grey"/>
-		</shape>
-	</item>
-	<item android:state_pressed="true">
-		<shape android:shape="oval">
-			<solid android:background="@android:color/darker_gray"/>
+			<stroke android:color="#8AC6FF" android:width="2dp" />
+			<solid android:color="#DDEEFF"/>
+			<size android:width="100dp" android:height="100dp"/>
 		</shape>
 	</item>
 </selector>

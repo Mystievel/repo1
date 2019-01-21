@@ -23,7 +23,7 @@ import java.util.List;
 
 // todo: High Priority - add back "?" button to show what omit/min/max means in detail
 // todo: High Priority - admob advertisement short video (after 3 uses or just do it every search for now)?
-// todo: Medium Priority - click on list item shows directly on list the text rather than creating separate pop-up window & remove "?" button
+// todo: Medium Priority - click on list item shows directly on list the "info box" text rather than creating separate pop-up window.
 // todo: Medium Priority - As you scroll, make updates to "x results" info label, seems slow also when clicking buttons, speed this up.
 
 public class FindStrainsActivity extends MainActivity {
@@ -43,6 +43,7 @@ public class FindStrainsActivity extends MainActivity {
     Button btnCancel;
     RecyclerView recyclerView;
 	int numberOfRows;
+	Button infoBtn;
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -97,6 +98,23 @@ public class FindStrainsActivity extends MainActivity {
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
+
+
+		infoBtn = findViewById(R.id.infoBtn);
+		infoBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Set text based on the item clicked
+				lblInfoBox.setText(getString(R.string.findStrainsInfo));
+
+				// Show the 'x' btn and details.
+				lblInfoBox.setVisibility(View.VISIBLE);
+				btnCancel.setVisibility(View.VISIBLE);
+
+				// Hide the list to prevent accidental button clicks.
+				recyclerView.setVisibility(View.INVISIBLE);
+			}
+		}); //**************************************************************************************
 
 
 		//******************************************************************************************
@@ -426,7 +444,7 @@ public class FindStrainsActivity extends MainActivity {
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-				// todo: High Priority - issue is when scrolling it activates a click event when the next item appears in view...
+				// todo: Low Priority - save search criteria when navigating about the app, return to page & last selections are preserved. Btn then to "clear selection"
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
 					RadioButton checkedBtn = findViewById(checkedId);

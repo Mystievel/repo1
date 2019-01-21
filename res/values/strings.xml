@@ -6,46 +6,59 @@
         You dont have any saved strains.\nSearch for strains using the Find Strains page.
     </string>
     <string name="narrowSearch">
-        Step 2: Narrow your search.\n(Increased intensity reduces the number of results.)
+        Step 2: Narrow your search.\n(Increase the \'Search Intensity\' to reduce the number of results.)
     </string>
     <string name="findStrainsTip1">
-		\n\n
-
+		\n
+		\n
         Happiness:\n
-		Strains that make you feel happy, uplifted, or relieve depression.\n\n
-
+		Strains that make you feel happy, uplifted, or relieve depression.\n
+		\n
         Euphoria:\n
-		Most often described as a tingly (Body High). Produces giggles or feelings of sexual arousal.\n\n
-
+		Most often described as a tingly (Body High). Produces giggles or feelings of sexual arousal.\n
+		\n
         Focus:\n
-		Strains that increase focus or creativity.\n\n
-
+		Strains that increase focus or creativity.\n
+		\n
         Energy:\n
-		Similar to Focus but specific to treating fatigue,, providing energy, or makes the user feel talkative or have racing thoughts.\n\n
-
+		Similar to Focus but specific to treating fatigue,, providing energy, or makes the user feel talkative or have racing thoughts.\n
+		\n
         Relaxation:\n
-		Treats stress, anxiety, relaxes muscles, and treats muscle spasms.\n\n
-
+		Treats stress, anxiety, relaxes muscles, and treats muscle spasms.\n
+		\n
         Sleepiness:\n
-		Helps treat insomnia, these strains make the user feel sleepy.\n\n
-
+		Helps treat insomnia, these strains make the user feel sleepy.\n
+		\n
         Sickness Relief:\n
-		Treats nausea, headaches caused by fever, and inflammation.\n\n
-
+		Treats nausea, headaches caused by fever, and inflammation.\n
+		\n
         Pain Relief:\n
-		Treats pain caused by menstrual or muscle cramps and helps treat migraine headaches.\n\n
-
+		Treats pain caused by menstrual or muscle cramps and helps treat migraine headaches.\n
+		\n
         Hunger:\n
-		Cures lack of appetite, gives the user the munchies.\n\n
-
+		Cures lack of appetite, gives the user the munchies.\n
+		\n
         Dehydration:\n
-		Strains that cause dry mouth, dry eyes, or may imbalance eye pressure.\n\n
-
+		Strains that cause dry mouth, dry eyes, or may imbalance eye pressure.\n
+		\n
         Anxiety:\n
-		Strains that cause anxiety, stress, paranoia, or dizziness.\n\n\n\n
-
-
-
-
+		Strains that cause anxiety, stress, paranoia, or dizziness.\n
+		\n
+		\n
+		\n
     </string>
+
+	<string name="findStrainsInfo">
+		\n
+		Tap on the list to learn about the effects.\n
+		\n
+		Filters:\n
+		\t - omit: Ignores the specified effect. Use this option for effects that you don\'t care if you do or don\'t feel.\n
+		\t - min: Minimize or reduce the intensity of the effect.\n
+		\t - max: Maximize or increase the presence of the effect.\n
+		\n
+		\n
+		\n
+		\n
+	</string>
 </resources>
