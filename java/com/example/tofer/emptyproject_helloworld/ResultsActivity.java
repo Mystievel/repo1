@@ -1,7 +1,6 @@
 package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ResultsActivity extends FindStrainsActivity {
@@ -185,7 +182,10 @@ public class ResultsActivity extends FindStrainsActivity {
 		}); //**************************************************************************************
 
 
-		// todo: Medium Priority - summarize the code block below using a fragment
+		//******************************************************************************************
+		// Menu Bar Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		//******************************************************************************************
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -197,17 +197,17 @@ public class ResultsActivity extends FindStrainsActivity {
 			}
 		}); //**************************************************************************************
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// FindStore Page Clicked
 		//******************************************************************************************
-		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
-		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+		Button btnFindStore = findViewById(R.id.btnFindStorePage);
+		btnFindStore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(ResultsActivity.this, ConstructorActivity.class));
+				startActivity(new Intent(ResultsActivity.this, FindInStoreActivity.class));
 			}
 		}); //**************************************************************************************
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// Support Page Clicked
 		//******************************************************************************************
 		Button btnSupportPage = findViewById(R.id.btnSupportPage);
 		btnSupportPage.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +217,7 @@ public class ResultsActivity extends FindStrainsActivity {
 			}
 		}); //**************************************************************************************
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// My Strains Page Clicked
 		//******************************************************************************************
 		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
 		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {

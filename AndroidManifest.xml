@@ -8,9 +8,18 @@
 		android:icon="@drawable/app_logo1_0_0"
         android:roundIcon="@drawable/app_logo1_0_0"
         android:supportsRtl="true"
-		android:screenOrientation="portrait"
 		android:theme="@style/AppTheme">
 		<!--android:icon="@mipmap/ic_launcher"-->
+
+		<!-- Google play services - used for the Map Fragment.
+		https://developers.google.com/maps/documentation/android-sdk/start-->
+
+		<!--<meta-data
+			android:name="com.google.android.gms.version"
+			android:value="@integer/google_play_services_version" /> -->
+		<meta-data
+			android:name="com.google.android.geo.API_KEY"
+			android:value="AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ" />
 
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".FindStrainsActivity">
@@ -33,5 +42,13 @@
         <activity android:name=".SupportActivity">
 			android:screenOrientation="portrait"
 		</activity>
+		<activity android:name=".BlogActivity">
+			android:screenOrientation="portrait"
+		</activity>
+		<activity android:name=".FindInStoreActivity">
+			android:screenOrientation="portrait"
+		</activity>
     </application>
+
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>

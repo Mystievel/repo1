@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// todo: High Priority - v2 - Find strain in store.
+// todo: High Prority - before launch, ensure color and font size/scheme is same across app, maybe create "labels" and "buttons" for default use with variable fields.
+// todo: High Priority - finalize app logo (Add faded/blurred pot leaf in backgnd?).
 // todo: High Priority - portrait mode only.
 // todo: Medium Priority - maybe add a teaser "where to buy?" when viewing myStrains.
-// todo: High Prority - before launch, ensure color and font size/scheme is same across app, maybe create "labels" and "buttons" for default use with variable fields.
-// todo: High Priority - v2 - Find strain in store.
 // todo: Low Priority - Change overall font to same fontFamily using a variable
 // todo: Medium Priority - use general app behavior along with good text labels (Error messages) to walk the user through how to use the app My Strains --> "you dont have any strains, click on 'Find Strains' to begin searching.", , etc.
 // todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
 		//******************************************************************************************
+		// Menu Bar Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		//******************************************************************************************
+		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
 		Button btnFindStrainsPage = findViewById(R.id.btnFindStrainsPage);
@@ -57,20 +62,18 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(new Intent(MainActivity.this, FindStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// FindStore Page Clicked
 		//******************************************************************************************
-		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
-		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+		Button btnFindStore = findViewById(R.id.btnFindStorePage);
+		btnFindStore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(MainActivity.this, ConstructorActivity.class));
+				startActivity(new Intent(MainActivity.this, FindInStoreActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// Support Page Clicked
 		//******************************************************************************************
 		Button btnSupportPage = findViewById(R.id.btnSupportPage);
 		btnSupportPage.setOnClickListener(new View.OnClickListener() {
@@ -79,9 +82,8 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(new Intent(MainActivity.this, SupportActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// My Strains Page Clicked
 		//******************************************************************************************
 		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
 		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {

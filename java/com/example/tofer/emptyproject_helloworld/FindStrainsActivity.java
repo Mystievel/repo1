@@ -2,17 +2,14 @@ package com.example.tofer.emptyproject_helloworld;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -137,6 +134,10 @@ public class FindStrainsActivity extends MainActivity {
 
 
 		//******************************************************************************************
+		// Menu Bar Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		//******************************************************************************************
+		//******************************************************************************************
         // Find Strains Page Clicked
         //******************************************************************************************
 		Button btnFindStrainsPage = findViewById(R.id.btnFindStrainsPage);
@@ -146,20 +147,18 @@ public class FindStrainsActivity extends MainActivity {
                 startActivity(new Intent(FindStrainsActivity.this, FindStrainsActivity.class));
             }
         }); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// FindStore Page Clicked
 		//******************************************************************************************
-		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
-		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+		Button btnFindStore = findViewById(R.id.btnFindStorePage);
+		btnFindStore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(FindStrainsActivity.this, ConstructorActivity.class));
+				startActivity(new Intent(FindStrainsActivity.this, FindInStoreActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// Support Page Clicked
 		//******************************************************************************************
 		Button btnSupportPage = findViewById(R.id.btnSupportPage);
 		btnSupportPage.setOnClickListener(new View.OnClickListener() {
@@ -168,9 +167,8 @@ public class FindStrainsActivity extends MainActivity {
 				startActivity(new Intent(FindStrainsActivity.this, SupportActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// My Strains Page Clicked
 		//******************************************************************************************
 		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
 		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {

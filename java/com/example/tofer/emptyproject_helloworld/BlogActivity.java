@@ -11,7 +11,10 @@ public class BlogActivity extends MainActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blog_activity);
 
-		// todo: Medium Priority - summarize the code block below using a fragment
+		//******************************************************************************************
+		// Menu Bar Object - Button Clicked
+		// todo: Medium Priority - summarize the code block below into a routine **********************************************************************
+		//******************************************************************************************
 		//******************************************************************************************
 		// Find Strains Page Clicked
 		//******************************************************************************************
@@ -22,20 +25,18 @@ public class BlogActivity extends MainActivity{
 				startActivity(new Intent(BlogActivity.this, FindStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// FindStore Page Clicked
 		//******************************************************************************************
-		Button btnConstructorPage = findViewById(R.id.btnConstructorPage);
-		btnConstructorPage.setOnClickListener(new View.OnClickListener() {
+		Button btnFindStore = findViewById(R.id.btnFindStorePage);
+		btnFindStore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(BlogActivity.this, ConstructorActivity.class));
+				startActivity(new Intent(BlogActivity.this, FindInStoreActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// Support Page Clicked
 		//******************************************************************************************
 		Button btnSupportPage = findViewById(R.id.btnSupportPage);
 		btnSupportPage.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +45,8 @@ public class BlogActivity extends MainActivity{
 				startActivity(new Intent(BlogActivity.this, SupportActivity.class));
 			}
 		}); //**************************************************************************************
-
 		//******************************************************************************************
-		// Find Strains Page Clicked
+		// My Strains Page Clicked
 		//******************************************************************************************
 		Button btnMyStrainsPage = findViewById(R.id.btnMyStrainsPage);
 		btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {
