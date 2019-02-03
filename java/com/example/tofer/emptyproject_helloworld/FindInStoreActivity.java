@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 
+import java.util.List;
+
 public class FindInStoreActivity extends MainActivity implements OnMapReadyCallback {
 	// Globals
 	GoogleMap myMap;
@@ -106,7 +108,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		// Get the user's current location
 		LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		// todo: High Priority - Bug fix with https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
-		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Location location = getDevicesLastKnownLocation();
 
 		Log.d("nulloc", "" + location);
 		if (location != null) {
@@ -127,7 +129,27 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
 	}
 
+	private Location getDevicesLastKnownLocation() {
+		LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		List<String> providers = mLocationManager.getProviders(true);
+		Location bestLocation = null;
+		for (String provider : providers) {
+			Location l = mLocationManager.getLastKnownLocation(provider);
+			Log.d("Last Location", String.format("last known location, provider: %s, location: %s", provider, l));
 
+			if (l == null) {
+				continue;
+			}
+			if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+				Log.d("Last Location", String.format("found best last known location: %s", l));
+				bestLocation = l;
+			}
+		}
+		if (bestLocation == null) {
+			return null;
+		}
+		return bestLocation;
+	}
 
 
 	// todo: High Priority - Bug fix with https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
