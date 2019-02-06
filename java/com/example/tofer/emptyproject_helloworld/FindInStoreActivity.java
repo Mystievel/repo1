@@ -24,6 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
@@ -35,13 +37,14 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.util.Arrays;
 import java.util.List;
 
+// todo: https://developers.google.com/places/android-sdk/client-migration if fragment of autofill search bar does not work
 
 // todo: High Priority - protect API Key
 
 
 public class FindInStoreActivity extends MainActivity implements OnMapReadyCallback {
 	// Globals
-
+	AutocompleteSupportFragment placeAutoComplete;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,10 +58,15 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		setContentView(R.layout.find_in_store_activity);
 
 		// todo: search not working, need to encompass within fragment???
+		// todo: see link:   https://stackoverflow.com/questions/38174075/place-autocomplete-in-mapfragment-invisible-on-old-apis
+		if (!Places.isInitialized()) {
+			Places.initialize(getApplicationContext(), "AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ");
+		}
+
 		// Useful Link: https://developers.google.com/places/android-sdk/autocomplete#add_an_autocomplete_widget
-		AutocompleteSupportFragment placeAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autoCompleteSearch);
+		placeAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autoCompleteSearch);
 		// Specify the types of place data to return.
-		//placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME));
+		placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PHONE_NUMBER));
 		// Auto-complete listener.
 		placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 			@Override

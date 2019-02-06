@@ -19,7 +19,7 @@
 			android:value="@integer/google_play_services_version" /> -->
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
-			android:value="AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ" />
+			android:value="@string/google_api_key"/>
 
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".FindStrainsActivity">
@@ -28,25 +28,18 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-			android:screenOrientation="portrait"
 		</activity>
         <activity android:name=".ConstructorActivity">
-			android:screenOrientation="portrait"
 		</activity>
         <activity android:name=".MyStrainsActivity">
-			android:screenOrientation="portrait"
 		</activity>
         <activity android:name=".ResultsActivity">
-			android:screenOrientation="portrait"
 		</activity>
         <activity android:name=".SupportActivity">
-			android:screenOrientation="portrait"
 		</activity>
 		<activity android:name=".BlogActivity">
-			android:screenOrientation="portrait"
 		</activity>
 		<activity android:name=".FindInStoreActivity">
-			android:screenOrientation="portrait"
 		</activity>
     </application>
 
