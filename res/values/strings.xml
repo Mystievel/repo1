@@ -2,7 +2,7 @@
 	<string name="google_api_key">AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ
 	</string>
     <string name="app_name">
-        Canbis Proj
+        Project Name
     </string>
     <string name="noSavedStrains">
         You dont have any saved strains.\nSearch for strains using the Find Strains page.
