@@ -22,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.internal.IGoogleMapDelegate;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
@@ -38,10 +39,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.util.Arrays;
 import java.util.List;
 
-// todo: https://developers.google.com/places/android-sdk/client-migration if fragment of autofill search bar does not work
-
-// todo: High Priority - protect API Key
-
+// todo: medium priority - update map data/location every 0.000xxx degrees of lat/lng.
 
 public class FindInStoreActivity extends MainActivity implements OnMapReadyCallback {
 	// Globals
@@ -64,15 +62,24 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 			Places.initialize(getApplicationContext(), "AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ");
 		}
 
-		// Useful Link: https://developers.google.com/places/android-sdk/autocomplete#add_an_autocomplete_widget
+		// Useful Link: https://developers.google.com/places/android-sdk/autocomplete#add_an_autocomplete_widget.
 		placeAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autoCompleteSearch);
 		// Specify the types of place data to return.
-		placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PHONE_NUMBER));
+		placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PHONE_NUMBER, Place.Field.LAT_LNG));
 		// Auto-complete listener.
 		placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 			@Override
 			public void onPlaceSelected(Place place) {
-				// todo: get information about the selected place
+				double latitude = place.getLatLng().latitude;
+				double longitude = place.getLatLng().longitude;
+				String placeName = place.getName();
+				Log.d("weredty", "Name: " + placeName);
+				Log.d("weredty", "Lat: " + latitude);
+				Log.d("weredty", "Lng: " + longitude);
+
+
+				// todo: https://www.google.com/search?q=android+add+marker+from+autocomplete+search&source=lnt&tbs=qdr:y&sa=X&ved=0ahUKEwiQ0buMl6vgAhVSR60KHeSWDikQpwUIJg&biw=1920&bih=969
+				//moveMapToLocationWithMarker(googleMap, latitude, longitude, placeName);
 				Log.d("MapsSelPl", "Place selected: " + place.getName() + ", " + place.getId());
 			}
 
@@ -133,7 +140,6 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		}); //**************************************************************************************
 	}
 
-
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		Location location = getDevicesLastKnownLocation(googleMap);
@@ -179,7 +185,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 					continue; // Advance to next loop iteration.
 				}
 				if (bestLocation == null || location.getAccuracy() < bestLocation.getAccuracy()) {
-					Log.d("LastDeviceLocation", String.format("Best last known location: %s", location));
+					Log.d("LastDeviceLocation", String.format("Best last known location so far: %s", location));
 					bestLocation = location;
 				}
 			} else {
@@ -187,6 +193,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 			}
 		}
+		Log.d("LastDeviceLocation", String.format("Best location: %s", bestLocation));
 		return bestLocation;
 	}
 }
