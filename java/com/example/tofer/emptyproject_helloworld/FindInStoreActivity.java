@@ -23,13 +23,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.internal.IGoogleMapDelegate;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
@@ -43,6 +46,7 @@ import java.util.List;
 
 public class FindInStoreActivity extends MainActivity implements OnMapReadyCallback {
 	// Globals
+	GoogleMap mMap;
 	AutocompleteSupportFragment placeAutoComplete;
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,9 +81,9 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 				Log.d("weredty", "Lat: " + latitude);
 				Log.d("weredty", "Lng: " + longitude);
 
-
+				mMap.clear();
 				// todo: https://www.google.com/search?q=android+add+marker+from+autocomplete+search&source=lnt&tbs=qdr:y&sa=X&ved=0ahUKEwiQ0buMl6vgAhVSR60KHeSWDikQpwUIJg&biw=1920&bih=969
-				//moveMapToLocationWithMarker(googleMap, latitude, longitude, placeName);
+				moveMapToLocationWithMarker(mMap, latitude, longitude, placeName);
 				Log.d("MapsSelPl", "Place selected: " + place.getName() + ", " + place.getId());
 			}
 
@@ -142,15 +146,20 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
+		mMap = googleMap;
 		Location location = getDevicesLastKnownLocation(googleMap);
 		handleNullLocation(googleMap, location);
+
+		// now get nearest 5 dispenseries.
 	}
 
 
 	public void moveMapToLocationWithMarker(GoogleMap googleMap, double latitude, double longitude, String tag) {
+		double inc = 0.1;
 		LatLng userLocation = new LatLng(latitude, longitude);
+		LatLngBounds mapBounds = new LatLngBounds(new LatLng(latitude - inc, longitude - inc), new LatLng(latitude + inc, longitude + inc));
 		googleMap.addMarker(new MarkerOptions().position(userLocation).title(tag));
-		googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+		googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mapBounds, 0));
 	}
 
 
