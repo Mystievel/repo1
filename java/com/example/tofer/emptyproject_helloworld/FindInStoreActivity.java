@@ -242,12 +242,12 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 	@Override
 	public void onConnected(@Nullable Bundle bundle) {
 		locationRequest = new LocationRequest();
-		locationRequest.setInterval(100);
+		locationRequest.setInterval(1000);
 		locationRequest.setFastestInterval(1000);
 		locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
 		if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
-			LocationServices.FusedLocationApi.requestLocationUpdates(client, locationRequest, this);
+			LocationServices.getFusedLocationProviderClient(this);
 		}
 	}
 
