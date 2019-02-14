@@ -11,7 +11,7 @@ import java.net.URL;
 
 
 public class DownloadURL {
-	public String readUrl(String myUrl) throws IOException {
+	String readUrl(String myUrl) throws IOException {
 		String data = "";
 		InputStream inputStream = null;
 		HttpURLConnection urlConnection = null;
@@ -26,8 +26,7 @@ public class DownloadURL {
 			StringBuffer sb = new StringBuffer();
 
 			String line = "";
-			while((line = br.readLine()) != null)
-			{
+			while((line = br.readLine()) != null) {
 				sb.append(line);
 			}
 
@@ -42,7 +41,7 @@ public class DownloadURL {
 			urlConnection.disconnect();
 		}
 
-		Log.d("DownloadURL","Returning data = " + data);
+		//Log.d("DownloadURL","Returning data = " + data);
 		return data;
 	}
 }

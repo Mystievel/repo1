@@ -3,7 +3,6 @@ package com.example.tofer.emptyproject_helloworld;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -11,13 +10,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -30,31 +26,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.internal.IGoogleMapDelegate;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.util.Arrays;
 import java.util.List;
 
+// // Note: if needed - go to the google dev web page and set restrictions on the Places API (go to places API --> Credentials (3rd tab on right), the scroll to bottom. This seemed to fix getting the nearest x hospital, hotel, etc.
 
 public class FindInStoreActivity extends MainActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 	// Defines
 	double INCREMENTAL = 0.1;
-	double PROX_RADIUS = 1;
 
 	// Globals
 	GoogleMap mMap;
@@ -77,14 +64,14 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.find_in_store_activity);
 
-		if (!Places.isInitialized()) {
+		//if (!Places.isInitialized()) {
 			Places.initialize(getApplicationContext(), "AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ");
-		}
+		//}
 
 		// Useful Link: https://developers.google.com/places/android-sdk/autocomplete#add_an_autocomplete_widget.
 		placeAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autoCompleteSearch);
 		// Specify the types of place data to return.
-		placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PHONE_NUMBER, Place.Field.LAT_LNG));
+		placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG));
 		// Auto-complete listener.
 		placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 			@Override
@@ -92,16 +79,14 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 				double latitude = place.getLatLng().latitude;
 				double longitude = place.getLatLng().longitude;
 				String placeName = place.getName();
-				String placeTag = place.getName() + "\n" + place.getPhoneNumber() + "\n" + Place.Field.ADDRESS;
-				//Log.d("MapsSelPl", "Name: " + placeName + ". Lat: " + latitude + ". Lng: " + longitude);
-
+				Log.d("MapsSelPl", "Name: " + placeName + ". Lat: " + latitude + ". Lng: " + longitude );//+ ". Types: " + place.getTypes() + ". Plus Code: " + place.getPlusCode());
 				mMap.clear();
-				moveMapToLocationWithMarker(mMap, latitude, longitude, placeTag);
+				moveMapToLocationWithMarker(mMap, latitude, longitude, placeName);
 			}
 
 			@Override
 			public void onError(Status status) {
-				Toast.makeText(FindInStoreActivity.this, "Error getting data.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(FindInStoreActivity.this, "Error getting map data.", Toast.LENGTH_SHORT).show();
 				Log.d("MapsSelPl", "An error occurred: " + status);
 			}
 		});
@@ -166,7 +151,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		Location location = getDevicesLastKnownLocation(googleMap);
 
 		// Show nearby dispensaries on the map.
-		String url = getUrl(location.getLatitude(), location.getLongitude(), "hospital");
+		String url = getUrl(location.getLatitude(), location.getLongitude(), "store");
 		dataTransfer[0] = mMap;
 		dataTransfer[1] = url;
 		getNearbyPlacesData.execute(dataTransfer);

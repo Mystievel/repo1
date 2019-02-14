@@ -14,10 +14,10 @@ public class DataParser {
 	{
 		HashMap<String, String> googlePlaceMap = new HashMap<>();
 		String placeName = "--NA--";
-		String vicinity= "--NA--";
-		String latitude= "";
-		String longitude="";
-		String reference="";
+		String vicinity = "--NA--";
+		String latitude = "";
+		String longitude ="";
+		String reference ="";
 
 		Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
 

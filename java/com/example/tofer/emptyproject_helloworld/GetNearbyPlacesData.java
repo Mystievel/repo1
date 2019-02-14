@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 
 class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
-
 	private String googlePlacesData;
 	private GoogleMap mMap;
 	String url;
@@ -32,6 +31,7 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 		return googlePlacesData;
 	}
 
+
 	@Override
 	protected void onPostExecute(String s) {
 		List<HashMap<String, String>> nearbyPlaceList;
@@ -41,24 +41,29 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 		showNearbyPlaces(nearbyPlaceList);
 	}
 
+
+	// establishment, store, point_of_interest = 3 key terms used.
+	// todo: Medium Priority: Switch to apple maps, google maps isn't powerful enough.
+	// todo: Medium Priority: Determine below & can we somehow search for all 3 terms at once or do the 3 searches and then compare the result, make sure all 3 are the same place.
+	// todo: Medium Priority: Maybe need to lookup: "How to perform a GENERAL search" using googlemaps'
 	private void showNearbyPlaces(List<HashMap<String, String>> nearbyPlaceList) {
 		for(int i = 0; i < nearbyPlaceList.size(); i++) {
 			MarkerOptions markerOptions = new MarkerOptions();
 			HashMap<String, String> googlePlace = nearbyPlaceList.get(i);
 
 			String placeName = googlePlace.get("place_name");
-			String vicinity = googlePlace.get("vicinity");
-			double lat = Double.parseDouble( googlePlace.get("lat"));
-			double lng = Double.parseDouble( googlePlace.get("lng"));
+			double lat = Double.parseDouble(googlePlace.get("lat"));
+			double lng = Double.parseDouble(googlePlace.get("lng"));
+			Log.d("showNearbyPlaces","name: " + placeName);
 
-			LatLng latLng = new LatLng( lat, lng);
+			LatLng latLng = new LatLng(lat, lng);
 			markerOptions.position(latLng);
-			markerOptions.title(placeName + " : "+ vicinity);
+			markerOptions.title(placeName);
 			markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
 			mMap.addMarker(markerOptions);
 			mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-			mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+			mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 		}
 	}
 }
