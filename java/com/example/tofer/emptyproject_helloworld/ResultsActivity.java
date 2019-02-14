@@ -197,16 +197,6 @@ public class ResultsActivity extends FindStrainsActivity {
 			}
 		}); //**************************************************************************************
 		//******************************************************************************************
-		// FindStore Page Clicked
-		//******************************************************************************************
-		Button btnFindStore = findViewById(R.id.btnFindStorePage);
-		btnFindStore.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(ResultsActivity.this, FindInStoreActivity.class));
-			}
-		}); //**************************************************************************************
-		//******************************************************************************************
 		// Support Page Clicked
 		//******************************************************************************************
 		Button btnSupportPage = findViewById(R.id.btnSupportPage);

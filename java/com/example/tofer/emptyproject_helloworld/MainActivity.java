@@ -7,14 +7,13 @@ import android.view.View;
 import android.widget.Button;
 
 // todo: High Priority - v2 - Find strain in store.
-// todo: High Prority - before launch, ensure color and font size/scheme is same across app, maybe create "labels" and "buttons" for default use with variable fields.
 // todo: High Priority - finalize app logo (Add faded/blurred pot leaf in backgnd?).
 // todo: High Priority - portrait mode only.
+// todo: Medium Prority - Create "labels" and "buttons" for default use of xml with variable fields across the board.
 // todo: Medium Priority - maybe add a teaser "where to buy?" when viewing myStrains.
-// todo: Low Priority - Change overall font to same fontFamily using a variable
-// todo: Medium Priority - use general app behavior along with good text labels (Error messages) to walk the user through how to use the app My Strains --> "you dont have any strains, click on 'Find Strains' to begin searching.", , etc.
-// todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
 // todo: Medium Priority - phone app seems fast...in case not, improve activity to activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
+// todo Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
+// todo: Low Priority - Change overall font to same fontFamily using a variable
 
 public class MainActivity extends AppCompatActivity {
     // Global Defines
