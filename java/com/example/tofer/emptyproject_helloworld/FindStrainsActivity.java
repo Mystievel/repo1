@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,16 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // todo: High Priority - add back "?" button to show what omit/min/max means in detail
-// todo: High Priority - admob advertisement short video (after 3 uses or just do it every search for now)?
+// todo: High Priority - admob advertisement short video/banner. Use "Interstitial" format.
+// todo: High Priority - v2 use the "Reward Video" adMob type and implement after every 2-3 searches or so unless they upgrade to premium to show their search results.
 // todo: Medium Priority - click on list item shows directly on list the "info box" text rather than creating separate pop-up window.
 // todo: Medium Priority - As you scroll, make updates to "x results" info label, seems slow also when clicking buttons, speed this up.
 
@@ -42,6 +48,9 @@ public class FindStrainsActivity extends MainActivity {
 	int numberOfRows;
 	Button infoBtn;
 
+	// ads
+	private InterstitialAd mInterstitialAd;
+
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,6 +62,12 @@ public class FindStrainsActivity extends MainActivity {
 	@Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.findstrains_activity);
+
+		// Initialize ads.
+		MobileAds.initialize(this, "ca-app-pub-7421513423472505~9290286998");
+		mInterstitialAd = new InterstitialAd(this);
+		mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+		mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         // Initialize variables
 		numberOfRows = db.getStrainDatabaseRows();
@@ -91,7 +106,19 @@ public class FindStrainsActivity extends MainActivity {
             	// todo: Medium Priority - only sort of working... search term: "android onclick set button text"
 				// https://stackoverflow.com/questions/6297159/change-button-text-and-action-android-development
             	searchButton.setText("Processing...");
+
+            	// Crunch data.
 				finalArray = collectAndFilterAllStrainData(numberOfRows);
+
+				// Show an advertisement. https://developers.google.com/admob/android/quick-start, https://developers.google.com/admob/android/interstitial
+				if (mInterstitialAd.isLoaded()) {
+					Log.d("mInterstitialAdTag", "The ad will now be shown.");
+					mInterstitialAd.show();
+				} else {
+					Log.d("mInterstitialAdTag", "The interstitial ad wasn't loaded yet.");
+				}
+
+				// Show the results.
                 startActivity(new Intent(FindStrainsActivity.this, ResultsActivity.class));
             }
         }); //**************************************************************************************
