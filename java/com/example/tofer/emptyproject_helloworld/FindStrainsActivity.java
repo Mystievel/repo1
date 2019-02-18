@@ -23,8 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: High Priority - add back "?" button to show what omit/min/max means in detail
-// todo: High Priority - admob advertisement short video/banner. Use "Interstitial" format.
+// todo: High Priority - admob final setup, see email/account.
 // todo: High Priority - v2 use the "Reward Video" adMob type and implement after every 2-3 searches or so unless they upgrade to premium to show their search results.
 // todo: Medium Priority - click on list item shows directly on list the "info box" text rather than creating separate pop-up window.
 // todo: Medium Priority - As you scroll, make updates to "x results" info label, seems slow also when clicking buttons, speed this up.
@@ -47,6 +46,18 @@ public class FindStrainsActivity extends MainActivity {
     RecyclerView recyclerView;
 	int numberOfRows;
 	Button infoBtn;
+	int[] arrayOfIDs;
+	double[] effectArray_happiness;
+	double[] effectArray_euphoria;
+	double[] effectArray_focus;
+	double[] effectArray_energy;
+	double[] effectArray_relaxation;
+	double[] effectArray_sleepiness;
+	double[] effectArray_sicknessRelief;
+	double[] effectArray_painRelief;
+	double[] effectArray_hunger;
+	double[] effectArray_dehydration;
+	double[] effectArray_anxiety;
 
 	// ads
 	private InterstitialAd mInterstitialAd;
@@ -66,11 +77,24 @@ public class FindStrainsActivity extends MainActivity {
 		// Initialize ads.
 		MobileAds.initialize(this, "ca-app-pub-7421513423472505~9290286998");
 		mInterstitialAd = new InterstitialAd(this);
-		mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+		mInterstitialAd.setAdUnitId("ca-app-pub-7421513423472505~9290286998");
 		mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         // Initialize variables
+		// todo: Medium Priority - move these to a 'loading' page and use globally.
 		numberOfRows = db.getStrainDatabaseRows();
+		arrayOfIDs = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
+		effectArray_happiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HAPPINESS), numberOfRows);
+		effectArray_euphoria = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(EUPHORIA), numberOfRows);
+		effectArray_focus = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(FOCUS), numberOfRows);
+		effectArray_energy = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ENERGY), numberOfRows);
+		effectArray_relaxation = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(RELAXATION), numberOfRows);
+		effectArray_sleepiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(SLEEPINESS), numberOfRows);
+		effectArray_sicknessRelief = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(SICKNESS_RELIEF), numberOfRows);
+		effectArray_painRelief = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(PAIN_RELIEF), numberOfRows);
+		effectArray_hunger = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HUNGER), numberOfRows);
+		effectArray_dehydration = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(DEHYDRATION), numberOfRows);
+		effectArray_anxiety = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ANXIETY), numberOfRows);
 
 		// Initiate Views
         searchIntensitySeekBar = findViewById(R.id.seekBarSearchIntensity);
@@ -112,10 +136,10 @@ public class FindStrainsActivity extends MainActivity {
 
 				// Show an advertisement. https://developers.google.com/admob/android/quick-start, https://developers.google.com/admob/android/interstitial
 				if (mInterstitialAd.isLoaded()) {
-					Log.d("mInterstitialAdTag", "The ad will now be shown.");
+					Log.d("mInterstitialAdTag", "The interstitial ad will now be shown.");
 					mInterstitialAd.show();
 				} else {
-					Log.d("mInterstitialAdTag", "The interstitial ad wasn't loaded yet.");
+					Log.d("mInterstitialAdTag", "The interstitial ad was not loaded.");
 				}
 
 				// Show the results.
@@ -203,17 +227,16 @@ public class FindStrainsActivity extends MainActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
-            }
+				int finalArraySize = getAndCreateFinalArraySize(numberOfRows);
+				createSearchIntensityString(progressChangedValue, finalArraySize);
+			}
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-				// No action
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-				int finalArraySize = getAndCreateFinalArraySize();
-				createSearchIntensityString(progressChangedValue, finalArraySize);
             }
         }); //**************************************************************************************
 	} //********************************************************************************************
@@ -222,8 +245,7 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	//                     Get and Create Final Array and Return Array Size
 	//**********************************************************************************************
-	public int getAndCreateFinalArraySize() {
-		int numberOfRows = db.getStrainDatabaseRows();
+	public int getAndCreateFinalArraySize(int numberOfRows) {
 		int[] filteredArray = createFilteredArray(numberOfRows);
 		int finalArraySize = getFinalArraySize(filteredArray, db, numberOfRows);
 		return finalArraySize;
@@ -261,7 +283,7 @@ public class FindStrainsActivity extends MainActivity {
 	// todo: Low Priority - Speed up this bit of code. (1400 ms).
 	//**********************************************************************************************
 	public int[] createFilteredArray(int numberOfRows) {
-		int[] filteredArray = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
+		int[] filteredArray = arrayOfIDs;
 
 		// Loop through the buttons array and filter based on each buttons' selection.
 		for (int i = 0; i < itemDataSize; i++) {
@@ -281,22 +303,22 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] filterArrayByColumn(int btnResult, CannabisStrainDatabase_Helper db, int effect, int[] originalArray) {
 		// Declare local variables
-		int databaseRows = db.getStrainDatabaseRows();
 		int i;
 		double minLimit = (1.0 - (progressChangedValue/100.0));
 		double maxLimit = (progressChangedValue/100.0);
 		double effectValue = 0;
-		int newArray[] = new int[databaseRows];
+		int newArray[] = new int[numberOfRows];
 
 		//Log.d("timerFA", "1");
-		int[] IDArray = db.getDatabaseValuesFromColumn_intArray("id", databaseRows);
-		double[] valuesArray = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(effect), databaseRows);
+		int[] IDArray = arrayOfIDs;
+		//double[] valuesArray = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(effect), numberOfRows); // too slow...?
+		double[] valuesArray = getEffectValueArray(effect);
 
 		//Log.d("timerFA", "2");
 
 		if (btnResult == MIN) {
 			//Log.d("minSelected", "Min is selected for effect #: " + effect);
-			for (i = 0; i < databaseRows; i++) {
+			for (i = 0; i < numberOfRows; i++) {
 				effectValue = valuesArray[i];
 				//Log.d("minSelected", "Min is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 				if (effectValue < minLimit) {
@@ -315,7 +337,7 @@ public class FindStrainsActivity extends MainActivity {
 			}
 		} else if (btnResult == MAX) {
 			//Log.d("maxSelected", "Max is selected for effect #: " + effect);
-			for (i = 0; i < databaseRows; i++) {
+			for (i = 0; i < numberOfRows; i++) {
 				effectValue = valuesArray[i];
 				//Log.d("maxSelected", "Max is selected for effect #: " + effect + ". original id: " + originalArray[i] + ". value: " + effectValue + ". limit: " + minLimit);
 				if (effectValue >= maxLimit) {
@@ -334,7 +356,7 @@ public class FindStrainsActivity extends MainActivity {
 			}
 		} else {
 			//Log.d("ignoreSelected", "Ignore is selected for effect #: " + effect);
-			for (i = 0; i < databaseRows; i++) {
+			for (i = 0; i < numberOfRows; i++) {
 				if (originalArray[i] == BLANK_ENTRY) {
 					newArray[i] = BLANK_ENTRY;
 				} else {
@@ -351,6 +373,50 @@ public class FindStrainsActivity extends MainActivity {
 		//Log.d("arraysize", "" + getFinalArraySize(newArray, db));
 		return newArray;
 	} //********************************************************************************************
+
+
+	public double[] getEffectValueArray(int effect) {
+		double[] valuesArray;
+		switch(effect) {
+			case HAPPINESS:
+				valuesArray = effectArray_happiness;
+				break;
+			case EUPHORIA:
+				valuesArray = effectArray_focus;
+				break;
+			case FOCUS:
+				valuesArray = effectArray_focus;
+				break;
+			case ENERGY:
+				valuesArray = effectArray_energy;
+				break;
+			case RELAXATION:
+				valuesArray = effectArray_relaxation;
+				break;
+			case SLEEPINESS:
+				valuesArray = effectArray_sleepiness;
+				break;
+			case SICKNESS_RELIEF:
+				valuesArray = effectArray_sicknessRelief;
+				break;
+			case PAIN_RELIEF:
+				valuesArray = effectArray_painRelief;
+				break;
+			case HUNGER:
+				valuesArray = effectArray_hunger;
+				break;
+			case DEHYDRATION:
+				valuesArray = effectArray_dehydration;
+				break;
+			case ANXIETY:
+				valuesArray = effectArray_anxiety;
+				break;
+			default:
+				valuesArray = effectArray_happiness;
+				break;
+		}
+		return valuesArray;
+	}
 
 
 	//**********************************************************************************************
@@ -376,16 +442,15 @@ public class FindStrainsActivity extends MainActivity {
 	//**********************************************************************************************
 	public int[] reduceFilteredArray(int[] filteredArray, CannabisStrainDatabase_Helper db) {
 		// Declare local variables
-		int databaseRows = db.getStrainDatabaseRows();
 		int i;
-		int count = getFinalArraySize(filteredArray, db, databaseRows);
+		int count = getFinalArraySize(filteredArray, db, numberOfRows);
 		//Log.d("reduceFilteredArrayCt", "Final array size: " + count);
 		int subtractor = 0;
-		int reducedArray[] = new int[databaseRows];
-		int[] IDArray = db.getDatabaseValuesFromColumn_intArray("id", databaseRows);
+		int reducedArray[] = new int[numberOfRows];
+		int[] IDArray = arrayOfIDs;
 
 		// Now populate the reducedArray without the blank items from the original array.
-		for (i = 0; i < databaseRows; i++) {
+		for (i = 0; i < numberOfRows; i++) {
 			if (filteredArray[i] == BLANK_ENTRY) {
 				subtractor++;
 				//Log.d("reduceFilteredArrayIf", "Found blank at index: " + i + ". filteredArray = " + db.getStrainData(filteredArray[i] + 0).getStrainName() + ".");
@@ -482,7 +547,7 @@ public class FindStrainsActivity extends MainActivity {
 						//Log.d("RecyclerViewItemClicked", String.format("ignore clicked at %d, set to %d with value read-in: %d.", position, IGNORE, myFilter));
 					}
 
-					int finalArraySize = getAndCreateFinalArraySize();
+					int finalArraySize = getAndCreateFinalArraySize(numberOfRows);
 					createSearchIntensityString(progressChangedValue, finalArraySize);
 				}
 			});
