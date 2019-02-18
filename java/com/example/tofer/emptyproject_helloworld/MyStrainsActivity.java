@@ -61,7 +61,6 @@ public class MyStrainsActivity extends MainActivity {
 
 		//Log.d("timer1", "1");
 		numberOfMyStrains = db.getNumberOfMyStrains();	// This variable must be populated here under onCreate, otherwise "Null Pointer Exception".
-		// todo: Medium Priority - routine takes 600 ms from 2-3.
 		//Log.d("timer1", "2");
 		int[] myStrainsIndexArray = db.collectAndFilterMyStrains(numberOfMyStrains);
 		//Log.d("timer1", "3");

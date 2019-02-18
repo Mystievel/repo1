@@ -11,8 +11,6 @@ import android.widget.Button;
 // todo: High Priority - portrait mode only.
 // todo: Medium Priority - code cleanup - remove use of database calls and store a copy into various arrays as needed. Crunch data in Main (loading screen), and allow all activities to access variables (always make copies when using) - huge speed improvements seen using this concept.
 // todo: Medium Prority - Create "labels" and "buttons" for default use of xml with variable fields across the board.
-// todo: Medium Priority - maybe add a teaser "where to buy?" when viewing myStrains.
-// todo: Medium Priority - phone app seems fast...in case not, improve activity to activity load time by moving to "async"?: https://stackoverflow.com/questions/26382943/how-to-increase-the-speed-to-load-an-activity
 // todo: Low Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.
 // todo: Low Priority - Change overall font to same fontFamily using a variable
 

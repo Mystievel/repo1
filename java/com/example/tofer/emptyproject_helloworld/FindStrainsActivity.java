@@ -26,7 +26,6 @@ import java.util.List;
 // todo: High Priority - admob final setup, see email/account.
 // todo: High Priority - v2 use the "Reward Video" adMob type and implement after every 2-3 searches or so unless they upgrade to premium to show their search results.
 // todo: Medium Priority - click on list item shows directly on list the "info box" text rather than creating separate pop-up window.
-// todo: Medium Priority - As you scroll, make updates to "x results" info label, seems slow also when clicking buttons, speed this up.
 
 public class FindStrainsActivity extends MainActivity {
     // Defines
