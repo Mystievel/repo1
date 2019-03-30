@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 // todo: High Priority - v2 - Find strain in store.
-// todo: High Priority - finalize app logo (Add faded/blurred pot leaf in backgnd?).
 // todo: High Priority - portrait mode only.
 // todo: Medium Priority - code cleanup - remove use of database calls and store a copy into various arrays as needed. Crunch data in Main (loading screen), and allow all activities to access variables (always make copies when using) - huge speed improvements seen using this concept.
 // todo: Medium Prority - Create "labels" and "buttons" for default use of xml with variable fields across the board.
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 	final static int PAIN_RELIEF = 7;	    // #DEFINE
 	final static int HUNGER = 8;		    // #DEFINE
 	final static int DEHYDRATION = 9;       // #DEFINE
-	final static int ANXIETY = 10;      	 // #DEFINE
+	final static int ANXIETY = 10;      	// #DEFINE
     final String STR_SATIVA = "Sativa";
     final String STR_INDICA = "Indica";
     final String STR_HYBRID = "Hybrid";
@@ -65,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
         db = new CannabisStrainDatabase_Helper(this);
-
-        // TODO: HIGHEST PRIORITY - Database isn't completely copying over, just the headers, no values or other rows...
-
 		numberOfRows = db.getStrainDatabaseRows();
 		arrayOfIDs = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
 		effectArray_happiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HAPPINESS), numberOfRows);
@@ -81,13 +77,6 @@ public class MainActivity extends AppCompatActivity {
 		effectArray_hunger = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HUNGER), numberOfRows);
 		effectArray_dehydration = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(DEHYDRATION), numberOfRows);
 		effectArray_anxiety = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ANXIETY), numberOfRows);
-
-		// create the database
-		//db.createDataBase();
-
-		// open the database
-		//db.openDataBase();
-
 
 
 		//******************************************************************************************
