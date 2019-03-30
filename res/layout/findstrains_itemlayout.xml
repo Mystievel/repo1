@@ -33,7 +33,7 @@
 			android:id="@+id/effect_min"
 			android:layout_width="60sp"
 			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="4sp"
+			android:layout_marginHorizontal="1sp"
 			android:layout_weight="1"
 			android:background="@drawable/radio_button"
 			android:button="@null"

@@ -4,6 +4,12 @@
     <string name="app_name">
         The Purple Pot
     </string>
+	<string name="welcomeMsg">
+        Welcome to The Purple Pot.
+		\n
+		\n
+		Select \"Find Strains\" below to get started.
+    </string>
     <string name="noSavedStrains">
         You dont have any saved strains.\nSearch for strains using the Find Strains page.
     </string>
