@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tofer.emptyproject_helloworld">
+    package="com.tofersapps.ThePurplePot">
 
     <application
         android:allowBackup="true"
 		android:label="@string/app_name"
-		android:icon="@drawable/app_logo1_0_0"
-        android:roundIcon="@drawable/app_logo1_0_0"
+		android:icon="@drawable/app_logo2_0_0"
+        android:roundIcon="@drawable/app_logo2_0_0"
         android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 		<!--android:icon="@mipmap/ic_launcher"-->
@@ -23,28 +23,29 @@
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="ca-app-pub-7421513423472505~9290286998"/>
-
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".FindStrainsActivity">
+        <activity android:name="com.tofersapps.ThePurplePot.MainActivity">
 			<!--- Place the code chunk below in the activity desired to launch on app startup. -->
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-        <activity android:name=".ConstructorActivity">
+        <activity android:name="com.tofersapps.ThePurplePot.FindStrainsActivity">
 		</activity>
-        <activity android:name=".MyStrainsActivity">
+        <activity android:name="com.tofersapps.ThePurplePot.ConstructorActivity">
 		</activity>
-        <activity android:name=".ResultsActivity">
+        <activity android:name="com.tofersapps.ThePurplePot.MyStrainsActivity">
 		</activity>
-        <activity android:name=".SupportActivity">
+        <activity android:name="com.tofersapps.ThePurplePot.ResultsActivity">
 		</activity>
-		<activity android:name=".BlogActivity">
+        <activity android:name="com.tofersapps.ThePurplePot.SupportActivity">
 		</activity>
-		<activity android:name=".FindInStoreActivity">
+		<activity android:name="com.tofersapps.ThePurplePot.BlogActivity">
+		</activity>
+		<activity android:name="com.tofersapps.ThePurplePot.FindInStoreActivity">
 		</activity>
     </application>
 
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

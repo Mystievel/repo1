@@ -1,6 +1,5 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
-import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

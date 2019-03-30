@@ -1,7 +1,4 @@
-package com.example.tofer.emptyproject_helloworld;
-
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+package com.tofersapps.ThePurplePot;
 
 public class CannabisStrainDatabase_Definition extends MainActivity{
 	private int id;

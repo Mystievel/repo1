@@ -1,4 +1,4 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.os.AsyncTask;
 import android.util.Log;

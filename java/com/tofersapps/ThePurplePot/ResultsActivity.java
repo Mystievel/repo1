@@ -1,4 +1,4 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +14,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;

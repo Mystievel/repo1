@@ -1,15 +1,12 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
-// todo: Medium Priority - split background to radio button side and text "Happiness" "Realaxed" to left side avoid annoying accidental bug clicks on the radio buttons bringing up the info page.
+// todo: Medium Priority - split background to radio button side and text "Happiness" "Relaxed" to left side avoid annoying accidental bug clicks on the radio buttons bringing up the info page.
 
 public class FindStrainsListItemData extends FindStrainsActivity {
 	private String effect;
 	private int checkedBtnType;
 
-	public FindStrainsListItemData(String effect){
+	public FindStrainsListItemData(String effect) {
 		this.effect = effect;
 	}
 

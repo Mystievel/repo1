@@ -1,4 +1,4 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.Intent;
 import android.os.Bundle;

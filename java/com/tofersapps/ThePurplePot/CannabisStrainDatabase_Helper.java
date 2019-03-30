@@ -1,26 +1,153 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.SQLException;
 
 public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     // Database Version & Name
-    private static final int DATABASE_VERSION = 1;
+	private final Context myContext;
+	private SQLiteDatabase myDataBase;
+	private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CannabisStrainDatabase";
+	private String DB_PATH = "/data/data/com.tofersapps.ThePurplePot/databases/";
 
 
     public CannabisStrainDatabase_Helper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		Log.d("helperReached", "The database helper was enterred.");
+		myContext = context;
+		Log.d("helperReached", "The database helper's standard routines completed.");
+
+		File folder = new File("" + DB_PATH);
+		boolean success = true;
+		if (!folder.exists()) {
+			Log.d("helperReached", "The folder does not exist, attempting to create directory and database.");
+			success = folder.mkdir();
+		} else {
+			Log.d("helperReached", "The folder already exists.");
+		}
+		if (success) {
+			Log.d("helperReached", "Success making directory (or directory already exists).");
+		} else {
+			Log.d("helperReached", "Failed to make directory.");
+		}
+		Log.d("helperReached", "Attempting to create database.");
+		createDataBase();
+		Log.d("helperReached", "2. The database helper was exited.");
+	}
+
+
+	// Creates a empty database on the system and rewrites it with your own database.
+	public void createDataBase() {
+		boolean dbExist = checkDataBase();
+
+		if (dbExist) {
+			//do nothing - database already exist
+			Log.d("databaseCreated", "The database already exists.");
+		} else {
+			//By calling this method and empty database will be created into the default system path
+			//of your application so we are gonna be able to overwrite that database with our database.
+			Log.d("databaseCreated", "The database does not exist 1.");
+
+			try {
+				Log.d("databaseCreated", "Trying to copy database.");
+				copyDataBase();
+				Log.d("databaseCreated", "The database was copied.");
+			} catch (IOException e) {
+				Log.d("databaseCreated", "The database could not be copied.");
+			}
+			Log.d("databaseCreated", "The database was copied. 2");
+		}
+		Log.d("databaseCreated", "return");
+	}
+
+
+	// Check if the database already exist to avoid re-copying the file each time you open the application.
+	// @return true if it exists, false if it doesn't
+	public boolean checkDataBase() {
+		SQLiteDatabase checkDB = null;
+		Log.d("databaseExist", "1");
+
+		String myPath = DB_PATH + DATABASE_NAME;
+		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Log.d("databaseExist", String.format("The database exists? result: %b.", checkDB));
+
+		if (checkDB != null) {
+			checkDB.close();
+		}
+		Log.d("databaseExist", "3");
+
+		return checkDB != null;
+	}
+
+
+	// Copies your database from your local assets-folder to the just created empty database in the
+	// system folder, from where it can be accessed and handled.
+	// This is done by transfering bytestream.
+	public void copyDataBase() throws IOException {
+		byte[] buffer = new byte[1024];
+		int length;
+		Log.d("databaseCopied", "1. init");
+
+		// Open your local db as the input stream.
+		InputStream myInput = myContext.getAssets().open(DATABASE_NAME);
+		Log.d("databaseCopied", "2. Got Inputs.");
+
+		// Path to the just created empty db.
+		String outFileName = DB_PATH + DATABASE_NAME;
+
+		// Open the empty db as the output stream.
+		OutputStream myOutput = new FileOutputStream(outFileName);
+		Log.d("databaseCopied", "3. Stream Opened");
+
+		// Transfer bytes from the inputfile to the outputfile.
+		while ((length = myInput.read(buffer))>0) {
+			myOutput.write(buffer, 0, length);
+		}
+		Log.d("databaseCopied", "4. Bytes Written");
+
+		//Close the streams
+		myOutput.flush();
+		myOutput.close();
+		myInput.close();
+	}
+
+
+	public void openDataBase() throws SQLException{
+		//Open the database
+		String myPath = DB_PATH + DATABASE_NAME;
+		myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+	}
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // SQL statement to create book table
+    	// Open the database.
+    	db.openDatabase(DB_PATH + DATABASE_NAME, null, SQLiteDatabase.OPEN_READONLY);
+		Log.d("onCreates1", "database opened");
+
+		// Check the database.
+		//checkDataBase();
+
+		// Create/open the database.
+		//createDataBase();
+
+        // SQL statement to create book table.
         String CREATE_DATABASE_TABLE = "CREATE TABLE " + DATABASE_NAME + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "StrainName TEXT, " +
@@ -41,7 +168,8 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
         // create books table
         db.execSQL(CREATE_DATABASE_TABLE);
-    }
+		Log.d("onCreates1", "table created");
+	}
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -56,10 +184,10 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
     //------------------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------------------
 
-    // Database table name
+	// Database table name
     private static final String CANNABIS_STRAIN_TABLE = "CannabisStrainTable";
 
-    // Strain Database (Table) Columns names
+    // Strain Database (Table) Columns names.
     // These values MUST match the Strings in the db definition file.
     private static final String COLUMN_0 = "id";
     private static final String COLUMN_1 = "StrainName";

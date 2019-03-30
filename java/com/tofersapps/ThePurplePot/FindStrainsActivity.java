@@ -1,4 +1,4 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,20 +43,8 @@ public class FindStrainsActivity extends MainActivity {
     TextView lblInfoBox;
     Button btnCancel;
     RecyclerView recyclerView;
-	int numberOfRows;
 	Button infoBtn;
-	int[] arrayOfIDs;
-	double[] effectArray_happiness;
-	double[] effectArray_euphoria;
-	double[] effectArray_focus;
-	double[] effectArray_energy;
-	double[] effectArray_relaxation;
-	double[] effectArray_sleepiness;
-	double[] effectArray_sicknessRelief;
-	double[] effectArray_painRelief;
-	double[] effectArray_hunger;
-	double[] effectArray_dehydration;
-	double[] effectArray_anxiety;
+
 
 	// ads
 	private InterstitialAd mInterstitialAd;
@@ -78,22 +66,6 @@ public class FindStrainsActivity extends MainActivity {
 		mInterstitialAd = new InterstitialAd(this);
 		mInterstitialAd.setAdUnitId("ca-app-pub-7421513423472505~9290286998");
 		mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        // Initialize variables
-		// todo: Medium Priority - move these to a 'loading' page and use globally.
-		numberOfRows = db.getStrainDatabaseRows();
-		arrayOfIDs = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
-		effectArray_happiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HAPPINESS), numberOfRows);
-		effectArray_euphoria = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(EUPHORIA), numberOfRows);
-		effectArray_focus = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(FOCUS), numberOfRows);
-		effectArray_energy = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ENERGY), numberOfRows);
-		effectArray_relaxation = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(RELAXATION), numberOfRows);
-		effectArray_sleepiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(SLEEPINESS), numberOfRows);
-		effectArray_sicknessRelief = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(SICKNESS_RELIEF), numberOfRows);
-		effectArray_painRelief = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(PAIN_RELIEF), numberOfRows);
-		effectArray_hunger = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HUNGER), numberOfRows);
-		effectArray_dehydration = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(DEHYDRATION), numberOfRows);
-		effectArray_anxiety = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ANXIETY), numberOfRows);
 
 		// Initiate Views
         searchIntensitySeekBar = findViewById(R.id.seekBarSearchIntensity);

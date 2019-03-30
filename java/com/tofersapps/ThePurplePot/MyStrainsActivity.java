@@ -1,4 +1,4 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.tofer.emptyproject_helloworld.FindStrainsActivity.effectsArray;
+import static com.tofersapps.ThePurplePot.FindStrainsActivity.effectsArray;
 
 // todo: Medium Priority - Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
 // todo: Medium Priority - Make a thumbs down feature that shows across the board which strains you've thumbs down and a folder or view that shows disliked strains so you can add or remove them from the list.

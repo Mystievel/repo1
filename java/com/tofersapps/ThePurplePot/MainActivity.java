@@ -1,10 +1,14 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 // todo: High Priority - v2 - Find strain in store.
 // todo: High Priority - finalize app logo (Add faded/blurred pot leaf in backgnd?).
@@ -38,13 +42,53 @@ public class MainActivity extends AppCompatActivity {
     // Globals
     static int finalArraySize;
     static int[] finalArray;
+	CannabisStrainDatabase_Helper db;
 
-    CannabisStrainDatabase_Helper db = new CannabisStrainDatabase_Helper(this);
+	int numberOfRows;
+	int[] arrayOfIDs;
+	double[] effectArray_happiness;
+	double[] effectArray_euphoria;
+	double[] effectArray_focus;
+	double[] effectArray_energy;
+	double[] effectArray_relaxation;
+	double[] effectArray_sleepiness;
+	double[] effectArray_sicknessRelief;
+	double[] effectArray_painRelief;
+	double[] effectArray_hunger;
+	double[] effectArray_dehydration;
+	double[] effectArray_anxiety;
 
-    @Override
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        db = new CannabisStrainDatabase_Helper(this);
+
+        // TODO: HIGHEST PRIORITY - Database isn't completely copying over, just the headers, no values or other rows...
+
+		numberOfRows = db.getStrainDatabaseRows();
+		arrayOfIDs = db.getDatabaseValuesFromColumn_intArray("id", numberOfRows);
+		effectArray_happiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HAPPINESS), numberOfRows);
+		effectArray_euphoria = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(EUPHORIA), numberOfRows);
+		effectArray_focus = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(FOCUS), numberOfRows);
+		effectArray_energy = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ENERGY), numberOfRows);
+		effectArray_relaxation = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(RELAXATION), numberOfRows);
+		effectArray_sleepiness = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(SLEEPINESS), numberOfRows);
+		effectArray_sicknessRelief = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(SICKNESS_RELIEF), numberOfRows);
+		effectArray_painRelief = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(PAIN_RELIEF), numberOfRows);
+		effectArray_hunger = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(HUNGER), numberOfRows);
+		effectArray_dehydration = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(DEHYDRATION), numberOfRows);
+		effectArray_anxiety = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ANXIETY), numberOfRows);
+
+		// create the database
+		//db.createDataBase();
+
+		// open the database
+		//db.openDataBase();
+
+
 
 		//******************************************************************************************
 		// Menu Bar Object - Button Clicked

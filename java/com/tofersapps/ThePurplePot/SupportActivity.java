@@ -1,17 +1,17 @@
-package com.example.tofer.emptyproject_helloworld;
+package com.tofersapps.ThePurplePot;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-// todo: High Priority - must find something to do with this page or modify/remove it from all layouts
+// todo: High Priority - add new email address for feedback support@appname.com or @gmail.com eventually create a form and youtube link for instructional "about/how to use" video
 
-public class ConstructorActivity extends MainActivity {
+public class SupportActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.constructor_activity);
+        setContentView(R.layout.support_activity);
 
 
         //******************************************************************************************
@@ -25,17 +25,7 @@ public class ConstructorActivity extends MainActivity {
         btnFindStrainsPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ConstructorActivity.this, FindStrainsActivity.class));
-            }
-        }); //**************************************************************************************
-        //******************************************************************************************
-        // FindStore Page Clicked
-        //******************************************************************************************
-        Button btnFindStore = findViewById(R.id.btnFindStorePage);
-        btnFindStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ConstructorActivity.this, ConstructorActivity.class));
+                startActivity(new Intent(SupportActivity.this, FindStrainsActivity.class));
             }
         }); //**************************************************************************************
         //******************************************************************************************
@@ -45,7 +35,7 @@ public class ConstructorActivity extends MainActivity {
         btnSupportPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ConstructorActivity.this, SupportActivity.class));
+                startActivity(new Intent(SupportActivity.this, SupportActivity.class));
             }
         }); //**************************************************************************************
         //******************************************************************************************
@@ -55,7 +45,7 @@ public class ConstructorActivity extends MainActivity {
         btnMyStrainsPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ConstructorActivity.this, MyStrainsActivity.class));
+                startActivity(new Intent(SupportActivity.this, MyStrainsActivity.class));
             }
         }); //**************************************************************************************
     }
