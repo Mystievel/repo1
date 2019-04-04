@@ -364,7 +364,6 @@ public class ResultsActivity extends FindStrainsActivity {
 					notifyDataSetChanged();
 				} else if (view == btnOkFilters) {
 					// Store filter selection and re-sort the list
-					// todo: 	need to make a decision...get database read into array on startup...or need to learn how to now convert this into the view order based on
 					sortByValue = spinnerSortBy.getSelectedItemPosition();
 					filterByValue = spinnerFilterBy.getSelectedItemPosition();
 					itemsData = sortResultsItems(sortByValue, filterByValue, itemsData);

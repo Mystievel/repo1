@@ -69,4 +69,14 @@
 		\n
 		\n
 	</string>
+
+	<string name="supportMessage">
+		Please send an email to:
+		\n
+		\n
+		ThePurplePotMobile@gmail.com
+		\n
+		\n
+		for all inquiries.
+	</string>
 </resources>

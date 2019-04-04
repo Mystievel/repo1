@@ -23,28 +23,61 @@
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="ca-app-pub-7421513423472505~9290286998"/>
-        <activity android:name="com.tofersapps.ThePurplePot.MainActivity">
-			<!--- Place the code chunk below in the activity desired to launch on app startup. -->
+
+
+		<!-- Main Activity -->
+        <activity
+			android:name="com.tofersapps.ThePurplePot.MainActivity"
+			android:screenOrientation="portrait">
+			<!-- Place the code chunk below in the activity desired to launch on app startup. -->
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-        <activity android:name="com.tofersapps.ThePurplePot.FindStrainsActivity">
+
+		<!-- Find Strains Activity -->
+		<activity
+			android:name="com.tofersapps.ThePurplePot.FindStrainsActivity"
+			android:screenOrientation="portrait">
 		</activity>
-        <activity android:name="com.tofersapps.ThePurplePot.ConstructorActivity">
+
+		<!-- Results Activity -->
+		<activity
+			android:name="com.tofersapps.ThePurplePot.ResultsActivity"
+			android:screenOrientation="portrait">
 		</activity>
-        <activity android:name="com.tofersapps.ThePurplePot.MyStrainsActivity">
+
+		<!-- My Strains Activity -->
+		<activity
+		android:name="com.tofersapps.ThePurplePot.MyStrainsActivity"
+		android:screenOrientation="portrait">
 		</activity>
-        <activity android:name="com.tofersapps.ThePurplePot.ResultsActivity">
+
+		<!-- Support Activity -->
+		<activity
+			android:name="com.tofersapps.ThePurplePot.SupportActivity"
+			android:screenOrientation="portrait">
 		</activity>
-        <activity android:name="com.tofersapps.ThePurplePot.SupportActivity">
+
+		<!-- Find In Store Activity -->
+		<activity
+			android:name="com.tofersapps.ThePurplePot.FindInStoreActivity"
+			android:screenOrientation="portrait">
 		</activity>
-		<activity android:name="com.tofersapps.ThePurplePot.BlogActivity">
+
+		<!-- Constructor Activity -->
+		<activity
+			android:name="com.tofersapps.ThePurplePot.ConstructorActivity"
+			android:screenOrientation="portrait">
 		</activity>
-		<activity android:name="com.tofersapps.ThePurplePot.FindInStoreActivity">
+
+		<!-- Blog Activity -->
+		<activity
+			android:name="com.tofersapps.ThePurplePot.BlogActivity"
+			android:screenOrientation="portrait">
 		</activity>
-    </application>
+	</application>
 
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
