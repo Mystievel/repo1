@@ -21,7 +21,7 @@ import java.util.List;
 import static com.tofersapps.ThePurplePot.FindStrainsActivity.effectsArray;
 
 // todo: Medium Priority - Make a way to favorite My Strains into different groups or custom category/description (like relaxed, movie high, couch lock, best shit ever, etc)
-// todo: Medium Priority - Make a thumbs down feature that shows across the board which strains you've thumbs down and a folder or view that shows disliked strains so you can add or remove them from the list.
+// todo: High Priority - Use the FavoriteStrains column of the database to make a thumbs down feature that shows across the board which strains you've thumbs down and a folder or view that shows disliked strains so you can add or remove them from the list.
 
 public class MyStrainsActivity extends MainActivity {
 	// Globals

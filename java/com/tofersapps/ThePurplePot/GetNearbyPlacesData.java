@@ -43,7 +43,7 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
 
 	// establishment, store, point_of_interest = 3 key terms used.
-	// todo: Medium Priority: Switch to apple maps, google maps isn't powerful enough.
+	// todo: Medium Priority: Perhaps switch to apple maps, google maps isn't powerful enough.
 	// todo: Medium Priority: Determine below & can we somehow search for all 3 terms at once or do the 3 searches and then compare the result, make sure all 3 are the same place.
 	// todo: Medium Priority: Maybe need to lookup: "How to perform a GENERAL search" using googlemaps'
 	private void showNearbyPlaces(List<HashMap<String, String>> nearbyPlaceList) {

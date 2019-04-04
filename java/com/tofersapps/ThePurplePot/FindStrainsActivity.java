@@ -479,7 +479,7 @@ public class FindStrainsActivity extends MainActivity {
 			viewHolder.effectLbl.setText(itemsData.get(position).getEffect());
 
 			// Set the default selection to "omit", save previous selection otherwise.
-			// todo: Medium Priority - save fields when return to this page in a single opened session
+			// todo: High Priority - save fields when return to this page in a single opened session
 			int myFilter = itemsData.get(position).getFilter();
 			if (myFilter == MIN) {
 				viewHolder.minBtn.setChecked(true);
@@ -495,7 +495,7 @@ public class FindStrainsActivity extends MainActivity {
 
 			// This working piece of code shows that we can click the radiogroup and perform an action based off the click.
 			viewHolder.effectsBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-				// todo: Low Priority - save search criteria when navigating about the app, return to page & last selections are preserved. Btn then to "clear selection"
+				// todo: High Priority - save search criteria when navigating about the app, return to page & last selections are preserved. Btn then to "clear selection"
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
 					RadioButton checkedBtn = findViewById(checkedId);
@@ -555,8 +555,8 @@ public class FindStrainsActivity extends MainActivity {
 			public void onClick(View view) {
 				int position = getAdapterPosition();
 
-				// Determine which item was clicked and act accordingly.
-				// todo: Low Priority - either 1) set focus on element clicked using recyclerView.smoothScrollToPosition(position), requires creating a list or changing text in list, or...
+				// todo: Low Priority - Determine which item was clicked and act accordingly: See comments directly below...
+				// ...either 1) set focus on element clicked using recyclerView.smoothScrollToPosition(position), requires creating a list or changing text in list, or...
 				// ...2) st convert code so that the itemsData just all change text to these strings;
 
 				// Set text based on the item clicked
