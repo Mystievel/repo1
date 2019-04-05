@@ -110,7 +110,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		btnFilter = findViewById(R.id.btnFilter);
 
 		// Populate "Sort Spinner"
-		String[] sortTitles = new String[]{"low to high (a to z)", "high to low (z to a)"};
+		String[] sortTitles = new String[]{"low to high", "high to low"};
 		ArrayAdapter<String> adapterSortSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortTitles);
 		spinnerSortBy.setAdapter(adapterSortSpinner);
 
@@ -229,8 +229,8 @@ public class ResultsActivity extends FindStrainsActivity {
 
 	//**********************************************************************************************
 	//								Sort Results List based on Filter
-	// sortByValue:		0 = low to high (a to z)
-	//					1 = high to low (z to a)
+	// sortByValue:		0 = low to high
+	//					1 = high to low
 	//
 	// filterByValue	0 = effectsArray(0) "Happiness" etc
 	//**********************************************************************************************

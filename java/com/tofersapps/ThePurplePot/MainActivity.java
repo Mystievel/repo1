@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-// todo: High Priority - Make background clickable and load find strains activity.
 // todo: High Priority - v2 - Find strain in store.
 // todo: Medium Priority - code cleanup - remove use of database calls and store a copy into various arrays as needed. Crunch data in Main (loading screen), and allow all activities to access variables (always make copies when using) - huge speed improvements seen using this concept.
 // todo: Medium Prority - Create "labels" and "buttons" for default use of xml with variable fields across the board.
@@ -77,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
 		effectArray_dehydration = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(DEHYDRATION), numberOfRows);
 		effectArray_anxiety = db.getDatabaseValuesFromColumn_doubleArray(getEffectString(ANXIETY), numberOfRows);
 
+
+		// Background Clicked
+		TextView welcomeMessage = findViewById(R.id.WelcomeMessage);
+		welcomeMessage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, FindStrainsActivity.class));
+			}
+		});
 
 		//******************************************************************************************
 		// Menu Bar Object - Button Clicked
