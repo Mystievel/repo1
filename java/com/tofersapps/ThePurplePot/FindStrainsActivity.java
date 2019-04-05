@@ -555,17 +555,17 @@ public class FindStrainsActivity extends MainActivity {
 			public void onClick(View view) {
 				int position = getAdapterPosition();
 
-				// todo: Low Priority - Determine which item was clicked and act accordingly: See comments directly below...
+				// todo: Low Priority - Uncomment the block below and determine which item was clicked and act accordingly: See comments directly below...
 				// ...either 1) set focus on element clicked using recyclerView.smoothScrollToPosition(position), requires creating a list or changing text in list, or...
 				// ...2) st convert code so that the itemsData just all change text to these strings;
 
-				// Set text based on the item clicked
+				/*// Set text based on the item clicked
 				lblInfoBox.setText(infoList[position]);
 				// Show the 'x' btn and details.
 				lblInfoBox.setVisibility(View.VISIBLE);
 				btnCancel.setVisibility(View.VISIBLE);
 				// Hide the list to prevent accidental button clicks.
-				recyclerView.setVisibility(View.INVISIBLE);
+				recyclerView.setVisibility(View.INVISIBLE);*/
 			}
 		} //****************************************************************************************
 

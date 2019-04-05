@@ -16,7 +16,7 @@
 		android:textAllCaps="false"
 		android:textSize="10sp"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/btnFindStorePage"
+		app:layout_constraintEnd_toStartOf="@+id/btnSupportPage"
 		app:layout_constraintStart_toEndOf="@+id/btnMyStrainsPage" />
 
 	<Button
@@ -36,21 +36,6 @@
 		app:layout_constraintVertical_bias="1.0" />
 
 	<Button
-		android:id="@id/btnFindStorePage"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="4dp"
-		android:layout_marginBottom="4dp"
-		android:text="Find in Store"
-		android:textAllCaps="false"
-		android:textSize="10sp"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/btnSupportPage"
-		app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage"
-		app:layout_constraintTop_toBottomOf="@+id/divider"
-		app:layout_constraintVertical_bias="1.0" />
-
-	<Button
 		android:id="@+id/btnSupportPage"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -61,8 +46,8 @@
 		android:textAllCaps="false"
 		android:textSize="10sp"
 		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/btnFindStrainsPage"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@+id/btnFindStorePage"
 		app:layout_constraintTop_toBottomOf="@+id/divider"
 		app:layout_constraintVertical_bias="1.0" />
 

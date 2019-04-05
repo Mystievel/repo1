@@ -10,6 +10,7 @@ import android.widget.Button;
 import java.io.IOException;
 import java.sql.SQLException;
 
+// todo: High Priority - Make background clickable and load find strains activity.
 // todo: High Priority - v2 - Find strain in store.
 // todo: Medium Priority - code cleanup - remove use of database calls and store a copy into various arrays as needed. Crunch data in Main (loading screen), and allow all activities to access variables (always make copies when using) - huge speed improvements seen using this concept.
 // todo: Medium Prority - Create "labels" and "buttons" for default use of xml with variable fields across the board.
@@ -92,16 +93,6 @@ public class MainActivity extends AppCompatActivity {
 			}
 		}); //**************************************************************************************
 		//******************************************************************************************
-		// FindStore Page Clicked
-		//******************************************************************************************
-		Button btnFindStore = findViewById(R.id.btnFindStorePage);
-		btnFindStore.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(MainActivity.this, FindInStoreActivity.class));
-			}
-		}); //**************************************************************************************
-		//******************************************************************************************
 		// Support Page Clicked
 		//******************************************************************************************
 		Button btnSupportPage = findViewById(R.id.btnSupportPage);
@@ -121,7 +112,19 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(new Intent(MainActivity.this, MyStrainsActivity.class));
 			}
 		}); //**************************************************************************************
-   }
+		/*
+		//******************************************************************************************
+		// FindStore Page Clicked
+		//******************************************************************************************
+		Button btnFindStore = findViewById(R.id.btnFindStorePage);
+		btnFindStore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, FindInStoreActivity.class));
+			}
+		}); //**************************************************************************************
+*/
+	}
 
    public String getEffectString(int effect) {
     	String effectName;
