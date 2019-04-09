@@ -37,7 +37,7 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 		List<HashMap<String, String>> nearbyPlaceList;
 		DataParser parser = new DataParser();
 		nearbyPlaceList = parser.parse(s);
-		Log.d("onPostExecute","called onPostExecute()");
+		//Log.d("onPostExecute","called onPostExecute()");
 		showNearbyPlaces(nearbyPlaceList);
 	}
 
@@ -54,7 +54,7 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 			String placeName = googlePlace.get("place_name");
 			double lat = Double.parseDouble(googlePlace.get("lat"));
 			double lng = Double.parseDouble(googlePlace.get("lng"));
-			Log.d("showNearbyPlaces","name: " + placeName);
+			//Log.d("showNearbyPlaces","name: " + placeName);
 
 			LatLng latLng = new LatLng(lat, lng);
 			markerOptions.position(latLng);

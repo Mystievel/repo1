@@ -79,7 +79,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 				double latitude = place.getLatLng().latitude;
 				double longitude = place.getLatLng().longitude;
 				String placeName = place.getName();
-				Log.d("MapsSelPl", "Name: " + placeName + ". Lat: " + latitude + ". Lng: " + longitude );//+ ". Types: " + place.getTypes() + ". Plus Code: " + place.getPlusCode());
+				//Log.d("MapsSelPl", "Name: " + placeName + ". Lat: " + latitude + ". Lng: " + longitude );//+ ". Types: " + place.getTypes() + ". Plus Code: " + place.getPlusCode());
 				mMap.clear();
 				moveMapToLocationWithMarker(mMap, latitude, longitude, placeName);
 			}
@@ -87,7 +87,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 			@Override
 			public void onError(Status status) {
 				Toast.makeText(FindInStoreActivity.this, "Error getting map data.", Toast.LENGTH_SHORT).show();
-				Log.d("MapsSelPl", "An error occurred: " + status);
+				//Log.d("MapsSelPl", "An error occurred: " + status);
 			}
 		});
 
@@ -219,7 +219,7 @@ public class FindInStoreActivity extends MainActivity implements OnMapReadyCallb
 		googlePlaceUrl.append("&type=" + nearbyPlace);
 		googlePlaceUrl.append("&sensor=true");
 		googlePlaceUrl.append("&key=" + "AIzaSyDPSfWIKGi6Swv00Y-JTKW6-NTSnkeatCQ");
-		Log.d("MapsActivity", "url = " + googlePlaceUrl.toString());
+		//Log.d("MapsActivity", "url = " + googlePlaceUrl.toString());
 		return googlePlaceUrl.toString();
 	}
 

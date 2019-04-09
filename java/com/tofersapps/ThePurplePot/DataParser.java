@@ -19,7 +19,7 @@ public class DataParser {
 		String longitude ="";
 		String reference ="";
 
-		Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
+		//Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
 
 
 		try {
@@ -68,7 +68,7 @@ public class DataParser {
 	public List<HashMap<String, String>> parse(String jsonData) {
 		JSONArray jsonArray = null;
 		JSONObject jsonObject;
-		Log.d("jsonDataHashMap", jsonData);
+		//Log.d("jsonDataHashMap", jsonData);
 
 		try {
 			jsonObject = new JSONObject(jsonData);

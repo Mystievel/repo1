@@ -1,6 +1,6 @@
 package com.tofersapps.ThePurplePot;
 
-// todo: High Priority - split background to radio button side and text "Happiness" "Relaxed" to left side avoid annoying accidental bug clicks on the radio buttons bringing up the info page.
+// todo: High Priority - split background to radio button side and text "Happiness" "Relaxed" to left side avoid annoying accidental bug clicks on the radio buttons bringing up the info page. Then show info line by line.
 
 public class FindStrainsListItemData extends FindStrainsActivity {
 	private String effect;

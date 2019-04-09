@@ -24,7 +24,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: High Priority - admob final setup, see email/account.
+// todo: High Priority - admob final setup, see email/account. Subscribe to remove ads for $1.
 // todo: High Priority - v2 use the "Reward Video" adMob type and implement after every 2-3 searches or so unless they upgrade to premium to show their search results.
 // todo: Medium Priority - click on list item shows directly on list the "info box" text rather than creating separate pop-up window.
 
@@ -108,10 +108,10 @@ public class FindStrainsActivity extends MainActivity {
 
 				// Show an advertisement. https://developers.google.com/admob/android/quick-start, https://developers.google.com/admob/android/interstitial
 				if (mInterstitialAd.isLoaded()) {
-					Log.d("mInterstitialAdTag", "The interstitial ad will now be shown.");
+					//Log.d("mInterstitialAdTag", "The interstitial ad will now be shown.");
 					mInterstitialAd.show();
 				} else {
-					Log.d("mInterstitialAdTag", "The interstitial ad was not loaded.");
+					//Log.d("mInterstitialAdTag", "The interstitial ad was not loaded.");
 				}
 
 				// Show the results.

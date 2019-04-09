@@ -21,7 +21,7 @@
 			android:name="com.google.android.geo.API_KEY"
 			android:value="@string/google_api_key"/>
 		<meta-data
-			android:name="com.google.android.gms.ads.APPLICATION_ID"
+			android:name="com.google.android.gms.ads.com.tofersapps.ThePurplePot"
 			android:value="ca-app-pub-7421513423472505~9290286998"/>
 
 

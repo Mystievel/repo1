@@ -244,7 +244,7 @@ public class ResultsActivity extends FindStrainsActivity {
 		ArrayList<ResultsListItemData> tempItemsDataArrayList = new ArrayList<>();
 		int tempID;
 		int tempValue;
-		Log.d("listSize", String.format("Effect: %s", getEffectString(filterByValue)));
+		//Log.d("listSize", String.format("Effect: %s", getEffectString(filterByValue)));
 		double[] listValues = db.getDatabaseItemValueByID_double(getEffectString(filterByValue), listOfIDs, listSize);
 
 		// Sort the list.

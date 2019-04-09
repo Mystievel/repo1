@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.sql.SQLException;
 
-// todo: High Priority - v2 - Find strain in store.
+// todo: High Priority - v2 - Finish coding up the find strain in store feature.
 // todo: Medium Priority - code cleanup - remove use of database calls and store a copy into various arrays as needed. Crunch data in Main (loading screen), and allow all activities to access variables (always make copies when using) - huge speed improvements seen using this concept.
 // todo: Medium Prority - Create "labels" and "buttons" for default use of xml with variable fields across the board.
 // todo: Medium Priority - add "blog" smoking tips, cautions, etc. very short easy to read information, no large pages.

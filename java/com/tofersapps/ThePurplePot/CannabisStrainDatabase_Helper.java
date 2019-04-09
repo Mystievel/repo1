@@ -52,12 +52,12 @@ public class CannabisStrainDatabase_Helper extends SQLiteOpenHelper {
 
         // create books table
         db.execSQL(CREATE_DATABASE_TABLE);
-		Log.d("onCreates1", "table created");
+		//Log.d("onCreates1", "table created");
 	}
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w("onUpgrade", "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+        //Log.w("onUpgrade", "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
         // Drop older database table if existed
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
         // Create new table
